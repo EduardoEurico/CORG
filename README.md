@@ -30,9 +30,11 @@ pip install -r requirements.txt
 ```
 
 ### 3. Base de Dados (TSE)
-Para que a análise patrimonial funcione completamente, certifique-se de baixar e colocar os arquivos do TSE na pasta `data/`:
-- `data/bem_candidato_2018.csv`
-- `data/bem_candidato_2022.csv`
+Para que a análise patrimonial funcione completamente, o projeto requer **quatro** arquivos do TSE na pasta `data/`. Você deve baixá-los do portal de dados abertos do TSE:
+- `data/bem_candidato_2018.csv` (Declaração de bens)
+- `data/consulta_cand_2018.csv` (Consulta de candidatos - usado como ponte para descobrir o CPF)
+- `data/bem_candidato_2022.csv` (Declaração de bens)
+- `data/consulta_cand_2022.csv` (Consulta de candidatos - usado como ponte para descobrir o CPF)
 *(Nota: O pipeline é resiliente. Caso não encontre esses arquivos, ele rodará perfeitamente, apenas gerando os campos patrimoniais zerados e concluindo as outras análises).*
 
 ### 4. Executando o Pipeline Principal
