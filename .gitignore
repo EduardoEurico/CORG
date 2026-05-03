@@ -1,9 +1,4 @@
-# Pasta de dados e banco de dados
-data/
-*.db
-*.csv
-*.json
-*.xlsx
+
 
 # Python
 __pycache__/
