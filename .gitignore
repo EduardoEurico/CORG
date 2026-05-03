@@ -1,0 +1,27 @@
+# Pasta de dados e banco de dados
+data/
+*.db
+*.csv
+*.json
+*.xlsx
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+
+# Ignorar pastas especificas de dados (redundante se data/ ja esta sendo ignorado, mas mantido por clareza)
+data/bem_candidato_2018.csv
+data/bem_candidato_2022.csv
+data/consulta_cand_2018.csv
+data/consulta_cand_2022.csv
+data/outputs/
+data/transparencia.db
+data/raw
+
+# Logs e outros
+*.log
+.DS_Store
