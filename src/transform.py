@@ -197,11 +197,20 @@ def gerar_join_perfil(df_historico, df_deputados_atuais):
 # =============================================================================
 
 # Subcotas por categoria — usadas nos KPIs temáticos (Categoria 3)
-_SUBCOTAS_MARKETING   = ['DIVULGAÇÃO DA ATIVIDADE PARLAMENTAR']
+_SUBCOTAS_MARKETING   = [
+    'DIVULGAÇÃO DA ATIVIDADE PARLAMENTAR'
+]
 _SUBCOTAS_LOGISTICA   = [
     'COMBUSTÍVEIS E LUBRIFICANTES',
     'PASSAGENS AÉREAS',
+    'PASSAGEM AÉREA - RPA',
+    'PASSAGEM AÉREA - SIGEPA',
+    'PASSAGEM AÉREA - REEMBOLSO',
     'PASSAGENS TERRESTRES, FLUVIAIS OU LACUSTRES',
+    'PASSAGENS TERRESTRES, MARÍTIMAS OU FLUVIAIS',
+    'LOCAÇÃO DE VEÍCULOS AUTOMOTORES OU FRETAMENTO DE EMBARCAÇÕES',
+    'LOCAÇÃO OU FRETAMENTO DE VEÍCULOS AUTOMOTORES',
+    'LOCAÇÃO OU FRETAMENTO DE AERONAVES'
 ]
 _SUBCOTAS_CONSULTORIA = [
     'CONSULTORIAS, PESQUISAS E TRABALHOS TÉCNICOS',
@@ -329,7 +338,7 @@ def calcular_20_kpis(df_base):
     # CATEGORIA 3 — TEMÁTICOS / SUBCOTA
     # -------------------------------------------------------------------------
 
-    tipo_upper = df_com_historico['tipoDespesa'].str.upper().fillna('')
+    tipo_upper = df_com_historico['tipoDespesa'].str.upper().str.strip().str.rstrip('.').fillna('')
 
     # KPI 9 — % gasto com marketing / divulgação parlamentar
     gasto_mkt = (
