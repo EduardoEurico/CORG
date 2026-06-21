@@ -85,7 +85,7 @@ def run_pipeline():
 
     # --- CAMADA 4: COMPLIANCE PATRIMONIAL (TSE MULTI-ANO) ---
     log_progresso(f"🔎 Iniciando módulo de Compliance: Cruzamento TSE multi-ano ({', '.join(ANOS_TSE)})...")
-    dict_bens_tse = carregar_todos_bens_tse(ANOS_TSE)
+    dict_bens_tse = carregar_todos_bens_tse(ANOS_TSE, df_atuais)
     
     # Executa a função multi-ano de patrimônio
     df_perfil_final = calcular_inconsistencia_patrimonial_multi(
