@@ -98,7 +98,7 @@ def run_pipeline():
     # --- CAMADA 6: OUTPUT (SAÍDA PARA O POWER BI) ---
     os.makedirs('data/outputs', exist_ok=True)
     df_perfil_final.to_parquet(ARQUIVO_FINAL_PARQUET, index=False)
-    df_perfil_final.to_csv(ARQUIVO_FINAL_CSV, index=False, encoding='utf-8-sig')
+    df_perfil_final.to_csv(ARQUIVO_FINAL_CSV, index=False, encoding='utf-8-sig', sep=';', decimal=',')
     
     log_progresso(f"✅ Pipeline finalizado com sucesso! {len(df_perfil_final)} deputados salvos em 'data/outputs/'")
 
