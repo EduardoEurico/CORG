@@ -431,10 +431,14 @@ def calcular_inconsistencia_patrimonial(df_bens_inicio, df_bens_fim,
     """
     if df_bens_inicio.empty or df_bens_fim.empty:
         log_progresso("⚠️ Arquivos TSE ausentes — pulando análise patrimonial.")
+        for col in [f'patrimonio_{ano_inicio}', f'patrimonio_{ano_fim}', 'crescimento_bruto_R$', 'crescimento_percentual_%', 'flag_risco_patrimonial']:
+            df_perfil_kpis[col] = 0
         return df_perfil_kpis
 
     if 'cpf' not in df_perfil_kpis.columns or (df_perfil_kpis['cpf'] == 0).all():
         log_progresso("⚠️ Coluna 'cpf' ausente ou vazia — pulando análise patrimonial.")
+        for col in [f'patrimonio_{ano_inicio}', f'patrimonio_{ano_fim}', 'crescimento_bruto_R$', 'crescimento_percentual_%', 'flag_risco_patrimonial']:
+            df_perfil_kpis[col] = 0
         return df_perfil_kpis
 
     log_progresso(f"🔎 Calculando evolução patrimonial: {ano_inicio} → {ano_fim}...")
