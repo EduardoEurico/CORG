@@ -8,19 +8,15 @@ __pycache__/
 venv/
 .venv/
 
-# Ignorar pastas especificas de dados (redundante se data/ ja esta sendo ignorado, mas mantido por clareza)
-data/bem_candidato_2018.csv
-data/bem_candidato_2020.csv
-data/bem_candidato_2022.csv
-data/bem_candidato_2024.csv
-data/consulta_cand_2018.csv
-data/consulta_cand_2020.csv
-data/consulta_cand_2022.csv
-data/consulta_cand_2024.csv
-
-data/outputs/
-data/transparencia.db
+# Dados brutos do TSE (pesados, regenerados pelo pipeline)
+data/bem_candidato_*.csv
+data/consulta_cand_*.csv
 data/raw
+
+# Caches do pipeline (pesados, regenerados automaticamente)
+data/historico_limpo.parquet
+data/deputados_cpfs_limpos.parquet
+data/transparencia.db
 
 # Logs e outros
 *.log

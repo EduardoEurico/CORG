@@ -1,0 +1,514 @@
+﻿nome,siglaPartido,siglaUf,cpf,tem_historico_gastos,total_gasto_historico,tem_patrimonio_tse,status_cobertura,motivo_lacuna,periodo_tse
+João Carlos,REPUBLICANOS,AM,07489098777,False,0.0,False,❌ Sem dados,Sem histórico de gastos (deputado novo/suplente) | CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Ilacir Bicalho,REPUBLICANOS,MG,15620514668,False,0.0,True,⚠️ Sem gastos,Sem histórico de gastos (deputado novo/suplente),2018→2022
+Inácio Arruda,PCdoB,CE,09050752349,False,0.0,True,⚠️ Sem gastos,Sem histórico de gastos (deputado novo/suplente),2018→2022
+Jorge Araújo,PP,BA,27903464884,False,0.0,True,⚠️ Sem gastos,Sem histórico de gastos (deputado novo/suplente),apenas_2022
+Sérgio Turra,PP,RS,65898508015,False,0.0,True,⚠️ Sem gastos,Sem histórico de gastos (deputado novo/suplente),2018→2022
+Sônia Guajajara,PSOL,SP,93712162634,False,0.0,True,⚠️ Sem gastos,Sem histórico de gastos (deputado novo/suplente),2018→2022
+Vavá,AVANTE,MG,97224855634,False,0.0,True,⚠️ Sem gastos,Sem histórico de gastos (deputado novo/suplente),apenas_2022
+Aline Gurgel,UNIÃO,AP,51150670215,True,2065165.1300000001,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Dilvanda Faro,PT,PA,42935806204,True,1679656.69,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Gabriel Mota,UNIÃO,RR,52635287287,True,1880451.31,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Isnaldo Bulhões Jr.,MDB,AL,67766692449,True,2890715.47,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Matheus Noronha,PL,CE,01697845258,True,1369557.92,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Miguel Ângelo,PT,MG,11737232693,True,1387737.93,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Pastor Henrique Vieira,PSOL,RJ,12281169707,True,1503513.39,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Rogéria Santos,REPUBLICANOS,BA,87207656734,True,1622535.71,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Silvye Alves,UNIÃO,GO,90908856172,True,1166516.4,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+Zé Trovão,PL,SC,36400681817,True,1711514.89,False,⚠️ Sem patrimônio TSE,CPF não encontrado no TSE (não concorreu em eleições disponíveis),N/A
+AJ Albuquerque,PP,CE,97506060353,True,2981247.94,True,✅ Completo,Cobertura completa,2018→2022
+Acácio Favacho,MDB,AP,74287028287,True,3700973.53,True,✅ Completo,Cobertura completa,2018→2022
+Adail Filho,MDB,AM,77267796249,True,1741907.59,True,✅ Completo,Cobertura completa,apenas_2022
+Adilson Barroso,PL,SP,05585378805,True,1556902.46,True,✅ Completo,Cobertura completa,2018→2022
+Adolfo Viana,PSDB,BA,80123848504,True,2950308.33,True,✅ Completo,Cobertura completa,2018→2022
+Adriana Ventura,NOVO,SP,12519851813,True,482783.04,True,✅ Completo,Cobertura completa,2018→2022
+Adriano do Baldy,PP,GO,50746553153,True,3119439.06,True,✅ Completo,Cobertura completa,2018→2022
+Afonso Florence,PT,BA,17734150500,True,4853700.5,True,✅ Completo,Cobertura completa,2018→2022
+Afonso Hamm,PP,RS,37040642034,True,6938151.99,True,✅ Completo,Cobertura completa,2018→2022
+Afonso Motta,PDT,RS,10777296004,True,5553478.99,True,✅ Completo,Cobertura completa,2018→2022
+Aguinaldo Ribeiro,PP,PB,51921146400,True,5853233.71,True,✅ Completo,Cobertura completa,2018→2022
+Airton Faleiro,PT,PA,18836178200,True,3514648.67,True,✅ Completo,Cobertura completa,2018→2022
+Alberto Fraga,PL,DF,11939141168,True,3203635.38,True,✅ Completo,Cobertura completa,2018→2022
+Albuquerque,REPUBLICANOS,RR,44203071291,True,1900560.92,True,✅ Completo,Cobertura completa,apenas_2022
+Alceu Moreira,MDB,RS,17968496004,True,6917643.98143,True,✅ Completo,Cobertura completa,2018→2022
+Alencar Santana,PT,SP,05544839808,True,3234490.13,True,✅ Completo,Cobertura completa,2018→2022
+Alex Manente,CIDADANIA,SP,26838194805,True,4654207.88,True,✅ Completo,Cobertura completa,2018→2022
+Alexandre Guimarães,MDB,TO,01084614162,True,1680964.38,True,✅ Completo,Cobertura completa,apenas_2022
+Alexandre Leite,UNIÃO,SP,22970812860,True,4422446.97,True,✅ Completo,Cobertura completa,2018→2022
+Alexandre Lindenmeyer,PT,RS,47282428034,True,1506825.46,True,✅ Completo,Cobertura completa,apenas_2022
+Alfredinho,PT,SP,01133057888,True,1507025.47,True,✅ Completo,Cobertura completa,2018→2022
+Alfredo Gaspar,PL,AL,72503017487,True,1346561.03,True,✅ Completo,Cobertura completa,apenas_2022
+Alice Portugal,PCdoB,BA,12377392504,True,7368648.01743,True,✅ Completo,Cobertura completa,2018→2022
+Aliel Machado,PV,PR,06908052923,True,4969793.3,True,✅ Completo,Cobertura completa,2018→2022
+Altineu Côrtes,PL,RJ,00007487738,True,3456640.97,True,✅ Completo,Cobertura completa,2018→2022
+Aluisio Mendes,REPUBLICANOS,MA,66746485749,True,5157818.99,True,✅ Completo,Cobertura completa,2018→2022
+Amanda Gentil,PP,MA,01439147310,True,1450578.08,True,✅ Completo,Cobertura completa,apenas_2022
+Amaro Neto,PP,ES,06893749767,True,2899153.02,True,✅ Completo,Cobertura completa,2018→2022
+Amom Mandel,REPUBLICANOS,AM,07284725460,True,65380.2,True,✅ Completo,Cobertura completa,apenas_2022
+Ana Paula Leão,PP,MG,52030849634,True,1498862.56,True,✅ Completo,Cobertura completa,2018→2022
+Ana Paula Lima,PT,SC,51655438972,True,1615320.52,True,✅ Completo,Cobertura completa,2018→2022
+Ana Pimentel,PT,MG,05644598608,True,1493336.56,True,✅ Completo,Cobertura completa,apenas_2022
+Andreia Siqueira,PSB,PA,54305810204,True,1276513.92,True,✅ Completo,Cobertura completa,apenas_2022
+André Abdon,PP,AP,31601928220,True,4338172.89,True,✅ Completo,Cobertura completa,2018→2022
+André Fernandes,PL,CE,06634645361,True,905106.72,True,✅ Completo,Cobertura completa,2018→2022
+André Ferreira,PL,PE,77050363472,True,3616742.81,True,✅ Completo,Cobertura completa,2018→2022
+André Figueiredo,PDT,CE,25905503320,True,7002071.22,True,✅ Completo,Cobertura completa,2018→2022
+André Fufuca,PP,MA,03950788301,True,3372631.8,True,✅ Completo,Cobertura completa,2018→2022
+André Janones,REDE,MG,06630008669,True,2762767.08,True,✅ Completo,Cobertura completa,2018→2022
+Antonio Andrade,PSDB,TO,16618688191,True,1690236.8,True,✅ Completo,Cobertura completa,2018→2022
+Antonio Brito,PSD,BA,51488868549,True,6367278.1128,True,✅ Completo,Cobertura completa,2018→2022
+Antonio Carlos Rodrigues,PL,SP,19990448868,True,1208548.43,True,✅ Completo,Cobertura completa,2018→2022
+Antônia Lúcia,MDB,AC,50791524272,True,3662842.09,True,✅ Completo,Cobertura completa,2018→2022
+Antônio Doido,MDB,PA,90184556520,True,1525313.17,True,✅ Completo,Cobertura completa,apenas_2022
+Any Ortiz,PP,RS,00400820080,True,915577.69,True,✅ Completo,Cobertura completa,2018→2022
+Arlindo Chinaglia,PT,SP,06821146187,True,6654101.0600000005,True,✅ Completo,Cobertura completa,2018→2022
+Arnaldo Jardim,CIDADANIA,SP,04197807856,True,5399195.16,True,✅ Completo,Cobertura completa,2018→2022
+Arthur Lira,PP,AL,67821090425,True,4390157.40756,True,✅ Completo,Cobertura completa,2018→2022
+Arthur Oliveira Maia,UNIÃO,BA,32604637553,True,6786407.148,True,✅ Completo,Cobertura completa,2018→2022
+Augusto Coutinho,REPUBLICANOS,PE,33155623420,True,7209281.64,True,✅ Completo,Cobertura completa,2018→2022
+Aureo Ribeiro,SOLIDARIEDADE,RJ,05355525725,True,6278628.62,True,✅ Completo,Cobertura completa,2018→2022
+Aécio Neves,PSDB,MG,66728983791,True,2888388.56,True,✅ Completo,Cobertura completa,2018→2022
+Bacelar,PV,BA,10626409500,True,5261593.20535,True,✅ Completo,Cobertura completa,2018→2022
+Baleia Rossi,MDB,SP,17816724829,True,3902422.54,True,✅ Completo,Cobertura completa,2018→2022
+Bandeira de Mello,PV,RJ,26403404768,True,1333097.85,True,✅ Completo,Cobertura completa,2018→2022
+Bebeto,PP,RJ,47884118653,True,1582165.29,True,✅ Completo,Cobertura completa,apenas_2022
+Benedita da Silva,PT,RJ,36293334787,True,5975469.347,True,✅ Completo,Cobertura completa,2018→2022
+Benes Leocádio,UNIÃO,RN,40665429487,True,3288559.1,True,✅ Completo,Cobertura completa,2018→2022
+Beto Pereira,REPUBLICANOS,MS,69380007191,True,3689040.44,True,✅ Completo,Cobertura completa,2018→2022
+Beto Preto,PSD,PR,57382050904,True,325065.85,True,✅ Completo,Cobertura completa,apenas_2022
+Beto Richa,PSDB,PR,54191750968,True,1465353.68,True,✅ Completo,Cobertura completa,2018→2022
+Bia Kicis,PL,DF,38567792134,True,2403391.43,True,✅ Completo,Cobertura completa,2018→2022
+Bibo Nunes,PL,RS,27236056049,True,3352980.75,True,✅ Completo,Cobertura completa,2018→2022
+Bohn Gass,PT,RS,12558206249,True,6927831.74,True,✅ Completo,Cobertura completa,2018→2022
+Bruno Farias,REPUBLICANOS,MG,05759623648,True,1591027.3,True,✅ Completo,Cobertura completa,apenas_2022
+Bruno Ganem,PODE,SP,35205827831,True,1404844.71,True,✅ Completo,Cobertura completa,2018→2022
+Cabo Gilberto Silva,PL,PB,03183427400,True,1739545.03,True,✅ Completo,Cobertura completa,2018→2022
+Camila Jara,PT,MS,02749531101,True,1640680.93,True,✅ Completo,Cobertura completa,apenas_2022
+Capitão Alberto Neto,PL,AM,66397545334,True,3147987.03,True,✅ Completo,Cobertura completa,apenas_2022
+Capitão Alden,PL,BA,82145776591,True,1591779.8,True,✅ Completo,Cobertura completa,2018→2022
+Capitão Augusto,PL,SP,05750251829,True,5272392.89502,True,✅ Completo,Cobertura completa,2018→2022
+Carla Dickson,PL,RN,02336272431,True,1846617.08,True,✅ Completo,Cobertura completa,2018→2022
+Carlos Chiodini,MDB,SC,00503190942,True,2203368.14,True,✅ Completo,Cobertura completa,2018→2022
+Carlos Gomes,REPUBLICANOS,RS,02142743730,True,2801095.0,True,✅ Completo,Cobertura completa,2018→2022
+Carlos Henrique Gaguim,UNIÃO,TO,21944202153,True,5170828.49,True,✅ Completo,Cobertura completa,2018→2022
+Carlos Jordy,PL,RJ,09650185712,True,2372628.69,True,✅ Completo,Cobertura completa,2018→2022
+Carlos Sampaio,PSD,SP,06197277808,True,6174884.1,True,✅ Completo,Cobertura completa,2018→2022
+Carlos Veras,PT,PE,03987461411,True,3602973.79,True,✅ Completo,Cobertura completa,2018→2022
+Carlos Zarattini,PT,SP,00398099863,True,7175508.6068,True,✅ Completo,Cobertura completa,2018→2022
+Carol Dartora,PT,PR,04310202993,True,1474835.43,True,✅ Completo,Cobertura completa,2018→2022
+Caroline de Toni,PL,SC,05858392989,True,1162372.27,True,✅ Completo,Cobertura completa,2018→2022
+Castro Neto,MDB,PI,42866367391,True,1647084.04,True,✅ Completo,Cobertura completa,apenas_2022
+Celso Russomanno,REPUBLICANOS,SP,01252958803,True,3012648.2,True,✅ Completo,Cobertura completa,2018→2022
+Celso Sabino,PDT,PA,48992127200,True,2248249.83,True,✅ Completo,Cobertura completa,2018→2022
+Cezinha de Madureira,PL,SP,65188845504,True,3400287.11,True,✅ Completo,Cobertura completa,2018→2022
+Charles Fernandes,PSD,BA,33938903520,True,3366875.97,True,✅ Completo,Cobertura completa,2018→2022
+Chico Alencar,PSOL,RJ,26451379700,True,3914268.83,True,✅ Completo,Cobertura completa,2018→2022
+Chris Tonietto,PL,RJ,10448771705,True,1817443.72,True,✅ Completo,Cobertura completa,2018→2022
+Clarissa Tércio,PP,PE,05967751483,True,1243362.61,True,✅ Completo,Cobertura completa,2018→2022
+Claudio Cajado,PP,BA,29474485534,True,6831191.82,True,✅ Completo,Cobertura completa,2018→2022
+Cleber Verde,MDB,MA,48357600344,True,8049061.5032,True,✅ Completo,Cobertura completa,2018→2022
+Clodoaldo Magalhães,PV,PE,01835730485,True,1586308.24,True,✅ Completo,Cobertura completa,2018→2022
+Cobalchini,MDB,SC,33944709187,True,1393801.31,True,✅ Completo,Cobertura completa,2018→2022
+Coronel Assis,PL,MT,68902417115,True,1535203.92,True,✅ Completo,Cobertura completa,apenas_2022
+Coronel Chrisóstomo,PL,RO,70335591787,True,3718208.93,True,✅ Completo,Cobertura completa,2018→2022
+Coronel Fernanda,PL,MT,55077595100,True,1518866.75,True,✅ Completo,Cobertura completa,2018→2022
+Coronel Meira,PL,PE,56917589772,True,1676442.02,True,✅ Completo,Cobertura completa,apenas_2018
+Coronel Ulysses,UNIÃO,AC,40598560297,True,1897446.79,True,✅ Completo,Cobertura completa,apenas_2022
+Cristiane Lopes,PODE,RO,78147867204,True,1827714.46,True,✅ Completo,Cobertura completa,2018→2022
+Célia Xakriabá,PSOL,MG,10312520611,True,1474422.68,True,✅ Completo,Cobertura completa,apenas_2022
+Célio Silveira,MDB,GO,24453706120,True,4476422.98,True,✅ Completo,Cobertura completa,2018→2022
+Célio Studart,PSD,CE,01420754343,True,2981283.81,True,✅ Completo,Cobertura completa,2018→2022
+Da Vitoria,PP,ES,98042734700,True,3316956.49,True,✅ Completo,Cobertura completa,2018→2022
+Dagoberto Nogueira,PP,MS,00263382893,True,6305364.82,True,✅ Completo,Cobertura completa,2018→2022
+Daiana Santos,PCdoB,RS,00104610000,True,1682206.87,True,✅ Completo,Cobertura completa,apenas_2022
+Dal Barreto,UNIÃO,BA,90105290530,True,1578633.3,True,✅ Completo,Cobertura completa,2018→2022
+Damião Feliciano,UNIÃO,PB,13932772415,True,7015316.233545,True,✅ Completo,Cobertura completa,2018→2022
+Dandara,PT,MG,11264753608,True,1328568.66,True,✅ Completo,Cobertura completa,apenas_2022
+Dani Cunha,PL,RJ,05469169707,True,1599580.85,True,✅ Completo,Cobertura completa,2018→2022
+Daniel Agrobom,PSD,GO,42363381149,True,530035.83,True,✅ Completo,Cobertura completa,apenas_2022
+Daniel Almeida,PCdoB,BA,07894090549,True,7690224.0,True,✅ Completo,Cobertura completa,2018→2022
+Daniel Barbosa,PP,AL,05582522492,True,1593012.08,True,✅ Completo,Cobertura completa,apenas_2022
+Daniel Freitas,PL,SC,03751859926,True,3207401.35,True,✅ Completo,Cobertura completa,2018→2022
+Daniel Trzeciak,PSDB,RS,01297812077,True,2461630.0,True,✅ Completo,Cobertura completa,2018→2022
+Daniela Reinehr,PL,SC,01932951997,True,1591185.88,True,✅ Completo,Cobertura completa,2018→2022
+Daniela do Waguinho,REPUBLICANOS,RJ,07973687793,True,2409039.92,True,✅ Completo,Cobertura completa,2018→2022
+Danilo Forte,PP,CE,12133728368,True,6582258.15,True,✅ Completo,Cobertura completa,2018→2022
+Danrlei de Deus Hinterholz,PSD,RS,70157324087,True,4682325.74,True,✅ Completo,Cobertura completa,2018→2022
+David Soares,PODE,SP,02112481770,True,2902189.41,True,✅ Completo,Cobertura completa,2018→2022
+Defensor Stélio Dener,UNIÃO,RR,38306050215,True,1815204.87,True,✅ Completo,Cobertura completa,apenas_2022
+Delegada Adriana Accorsi,PT,GO,78283035134,True,1247385.61,True,✅ Completo,Cobertura completa,2018→2022
+Delegada Ione,AVANTE,MG,94621632604,True,1489522.27,True,✅ Completo,Cobertura completa,apenas_2022
+Delegada Katarina,PSD,SE,69491348515,True,1656961.45,True,✅ Completo,Cobertura completa,apenas_2022
+Delegado Bruno Lima,PODE,SP,35750325806,True,720878.26,True,✅ Completo,Cobertura completa,2018→2022
+Delegado Caveira,PL,PA,87594390172,True,712348.28,True,✅ Completo,Cobertura completa,2018→2022
+Delegado Fabio Costa,PP,AL,03861274418,True,1634996.88,True,✅ Completo,Cobertura completa,apenas_2022
+Delegado Marcelo Freitas,UNIÃO,MG,03572972612,True,3223280.56,True,✅ Completo,Cobertura completa,2018→2022
+Delegado Matheus Laiola,UNIÃO,PR,22651912808,True,1586037.05,True,✅ Completo,Cobertura completa,apenas_2022
+Delegado Palumbo,PODE,SP,24922395865,True,1481611.04,True,✅ Completo,Cobertura completa,apenas_2022
+Delegado Paulo Bilynskyj,PL,SP,06537203945,True,1389076.29,True,✅ Completo,Cobertura completa,apenas_2022
+Delegado da Cunha,UNIÃO,SP,27197901847,True,1482852.69,True,✅ Completo,Cobertura completa,apenas_2022
+Delegado Éder Mauro,PL,PA,13405551234,True,5702818.58,True,✅ Completo,Cobertura completa,2018→2022
+Denise Pessôa,PT,RS,81193157072,True,1690080.03,True,✅ Completo,Cobertura completa,2018→2022
+Diego Andrade,PSD,MG,99316552672,True,6071123.8565,True,✅ Completo,Cobertura completa,2018→2022
+Diego Coronel,REPUBLICANOS,BA,82411131534,True,1402467.87,True,✅ Completo,Cobertura completa,2018→2022
+Diego Garcia,UNIÃO,PR,04702291955,True,4539180.475,True,✅ Completo,Cobertura completa,2018→2022
+Dilceu Sperafico,PP,PR,11979216991,True,4603251.712787,True,✅ Completo,Cobertura completa,apenas_2022
+Dimas Fabiano,PP,MG,03694339639,True,5981878.56,True,✅ Completo,Cobertura completa,2018→2022
+Dimas Gadelha,PT,RJ,04510489706,True,1346967.05,True,✅ Completo,Cobertura completa,2018→2022
+Domingos Neto,PSD,CE,02827898390,True,6780577.18,True,✅ Completo,Cobertura completa,2018→2022
+Domingos Sávio,PL,MG,22275150668,True,6454610.07,True,✅ Completo,Cobertura completa,2018→2022
+Dorinaldo Malafaia,PDT,AP,59348402234,True,1681222.64,True,✅ Completo,Cobertura completa,apenas_2022
+Doutor Luizinho,PP,RJ,02319953779,True,2465292.16,True,✅ Completo,Cobertura completa,2018→2022
+Dr Flávio,PL,RJ,03258195722,True,150669.67,True,✅ Completo,Cobertura completa,apenas_2022
+Dr. Daniel Soranz,PSD,RJ,29021095807,True,360060.57,True,✅ Completo,Cobertura completa,apenas_2022
+Dr. Fernando Máximo,PL,RO,86309439120,True,1807801.82,True,✅ Completo,Cobertura completa,apenas_2022
+Dr. Francisco,PT,PI,75829819368,True,1703069.21,True,✅ Completo,Cobertura completa,2018→2022
+Dr. Frederico,PRD,MG,07422257717,True,3056419.56,True,✅ Completo,Cobertura completa,2018→2022
+Dr. Ismael Alexandrino,PSD,GO,70225150182,True,1497687.72,True,✅ Completo,Cobertura completa,apenas_2022
+Dr. Jaziel,PL,CE,35761113368,True,3555602.43,True,✅ Completo,Cobertura completa,2018→2022
+Dr. Luiz Ovando,PP,MS,05134552134,True,3007761.7,True,✅ Completo,Cobertura completa,2018→2022
+Dr. Victor Linhalis,PODE,ES,10204305756,True,1516415.46,True,✅ Completo,Cobertura completa,apenas_2022
+Dr. Zacharias Calil,MDB,GO,11833050100,True,2586190.17,True,✅ Completo,Cobertura completa,2018→2022
+Dra. Alessandra Haber,PODE,PA,94578044220,True,1458153.15,True,✅ Completo,Cobertura completa,apenas_2022
+Duarte Jr.,AVANTE,MA,01809077354,True,1278185.4,True,✅ Completo,Cobertura completa,2018→2022
+Duda Ramos,PODE,RR,00006304974,True,1722879.8599999999,True,✅ Completo,Cobertura completa,apenas_2022
+Duda Salabert,PSOL,MG,04967383645,True,1311479.61,True,✅ Completo,Cobertura completa,2018→2022
+Eduardo Bismarck,PV,CE,61882577353,True,2888786.62,True,✅ Completo,Cobertura completa,2018→2022
+Eduardo Velloso,SOLIDARIEDADE,AC,00120712695,True,1681077.31,True,✅ Completo,Cobertura completa,2018→2022
+Eduardo da Fonte,PP,PE,53467108415,True,6453932.252,True,✅ Completo,Cobertura completa,2018→2022
+Elcione Barbalho,MDB,PA,00605387249,True,6684737.2786,True,✅ Completo,Cobertura completa,2018→2022
+Eli Borges,REPUBLICANOS,TO,21821003187,True,2945510.28,True,✅ Completo,Cobertura completa,2018→2022
+Elmar Nascimento,UNIÃO,BA,49465589500,True,5130948.32,True,✅ Completo,Cobertura completa,2018→2022
+Emanuel Pinheiro Neto,PSD,MT,00558574181,True,2712795.45,True,✅ Completo,Cobertura completa,2018→2022
+Emidinho Madeira,PL,MG,60433086653,True,3036798.13,True,✅ Completo,Cobertura completa,2018→2022
+Enfermeira Rejane,PCdoB,RJ,87518210797,True,351332.81,True,✅ Completo,Cobertura completa,2018→2022
+Eriberto Medeiros,PSB,PE,49915320434,True,1638932.16,True,✅ Completo,Cobertura completa,2018→2022
+Erika Hilton,PSOL,SP,39756493801,True,1309241.2,True,✅ Completo,Cobertura completa,apenas_2022
+Erika Kokay,PT,DF,22441107100,True,4496774.33,True,✅ Completo,Cobertura completa,2018→2022
+Eros Biondini,PL,MG,84470666653,True,5583113.55,True,✅ Completo,Cobertura completa,2018→2022
+Eunício Oliveira,MDB,CE,03679004320,True,2008464.28,True,✅ Completo,Cobertura completa,2018→2022
+Evair Vieira de Melo,REPUBLICANOS,ES,02261265794,True,4936628.83,True,✅ Completo,Cobertura completa,2018→2022
+Fabio Garcia,UNIÃO,MT,65165870197,True,1687364.2837,True,✅ Completo,Cobertura completa,2018→2022
+Fabio Reis,PSD,SE,57126500378,True,5031458.99,True,✅ Completo,Cobertura completa,2018→2022
+Fabio Schiochet,UNIÃO,SC,04116230952,True,3255465.45,True,✅ Completo,Cobertura completa,apenas_2022
+Fausto Jr.,UNIÃO,AM,01772713295,True,1218670.14,True,✅ Completo,Cobertura completa,2018→2022
+Fausto Pinato,UNIÃO,SP,28022995819,True,4642651.40338,True,✅ Completo,Cobertura completa,2018→2022
+Felipe Becari,PODE,SP,35687945865,True,1019619.45,True,✅ Completo,Cobertura completa,apenas_2022
+Felipe Carreras,PSB,PE,86488023420,True,2312872.84,True,✅ Completo,Cobertura completa,2018→2022
+Felipe Francischini,PODE,PR,08317508986,True,3358454.63,True,✅ Completo,Cobertura completa,2018→2022
+Fernanda Melchionna,PSOL,RS,00213461005,True,2807718.94,True,✅ Completo,Cobertura completa,2018→2022
+Fernanda Pessoa,PSD,CE,27316939320,True,1642554.19,True,✅ Completo,Cobertura completa,2018→2022
+Fernando Coelho Filho,UNIÃO,PE,04921093466,True,5922940.203555,True,✅ Completo,Cobertura completa,2018→2022
+Fernando Mineiro,PT,RN,17003440482,True,1522542.0,True,✅ Completo,Cobertura completa,2018→2022
+Fernando Monteiro,PSD,PE,83146270463,True,4886669.33,True,✅ Completo,Cobertura completa,2018→2022
+Fernando Rodolfo,PRD,PE,04445225495,True,3597387.67,True,✅ Completo,Cobertura completa,apenas_2022
+Filipe Barros,PL,PR,05825760911,True,3313039.55,True,✅ Completo,Cobertura completa,2018→2022
+Filipe Martins,PL,TO,94764832100,True,1589481.9,True,✅ Completo,Cobertura completa,2018→2022
+Florentino Neto,PT,PI,32744811300,True,1489865.95,True,✅ Completo,Cobertura completa,apenas_2022
+Flávia Morais,MDB,GO,54779537134,True,5951016.522,True,✅ Completo,Cobertura completa,2018→2022
+Flávio Nogueira,PT,PI,04826604300,True,4047534.43,True,✅ Completo,Cobertura completa,2018→2022
+Franciane Bayer,REPUBLICANOS,RS,01320484000,True,1755842.59,True,✅ Completo,Cobertura completa,2018→2022
+Fred Costa,PRD,MG,02505101620,True,2882578.15,True,✅ Completo,Cobertura completa,2018→2022
+Fred Linhares,REPUBLICANOS,DF,70388997168,True,1351834.54,True,✅ Completo,Cobertura completa,apenas_2022
+Fábio Macedo,PODE,MA,65002865372,True,1234330.02,True,✅ Completo,Cobertura completa,2018→2022
+Fábio Teruel,MDB,SP,10104866837,True,945708.46,True,✅ Completo,Cobertura completa,apenas_2022
+Félix Mendonça Júnior,PDT,BA,24263630530,True,6451342.89397,True,✅ Completo,Cobertura completa,2018→2022
+Gabriel Nunes,PSD,BA,01082083542,True,1726069.9,True,✅ Completo,Cobertura completa,apenas_2022
+General Girão,PL,RN,45312346772,True,3666418.25,True,✅ Completo,Cobertura completa,2018→2022
+General Pazuello,PL,RJ,73412503720,True,1439261.82,True,✅ Completo,Cobertura completa,apenas_2022
+Geovania de Sá,REPUBLICANOS,SC,81095910949,True,4409202.82,True,✅ Completo,Cobertura completa,2018→2022
+Geraldo Mendes,UNIÃO,PR,05025019958,True,1409426.59,True,✅ Completo,Cobertura completa,apenas_2022
+Geraldo Resende,UNIÃO,MS,12896918191,True,5720429.1368,True,✅ Completo,Cobertura completa,2018→2022
+Gervásio Maia,PCdoB,PB,88623327420,True,2597504.81,True,✅ Completo,Cobertura completa,2018→2022
+Giacobo,PSD,PR,71827404949,True,7543727.39,True,✅ Completo,Cobertura completa,2018→2022
+Gilberto Abramo,REPUBLICANOS,MG,08567392861,True,2971020.89,True,✅ Completo,Cobertura completa,2018→2022
+Gilberto Nascimento,PODE,SP,64817407891,True,4672035.82,True,✅ Completo,Cobertura completa,2018→2022
+Gilson Daniel,PODE,ES,07454479707,True,1585366.56,True,✅ Completo,Cobertura completa,apenas_2022
+Gilson Marques,NOVO,SC,00824207939,True,738163.08,True,✅ Completo,Cobertura completa,2018→2022
+Gilvan da Federal,PL,ES,08449011728,True,1261717.23,True,✅ Completo,Cobertura completa,2018→2022
+Giovani Cherini,PL,RS,31050778049,True,7150836.9444,True,✅ Completo,Cobertura completa,2018→2022
+Glaustin da Fokus,PODE,GO,60751266191,True,2825897.84,True,✅ Completo,Cobertura completa,2018→2022
+Gleisi Hoffmann,PT,PR,67677061915,True,2950095.07,True,✅ Completo,Cobertura completa,2018→2022
+Greyce Elias,PL,MG,05132597670,True,2019365.64,True,✅ Completo,Cobertura completa,2018→2022
+Guilherme Derrite,PP,SP,31200606825,True,1492719.16,True,✅ Completo,Cobertura completa,2018→2022
+Guilherme Uchoa,PSD,PE,65280849472,True,1648300.58,True,✅ Completo,Cobertura completa,2018→2022
+Gustavo Gayer,PL,GO,93405456134,True,1068055.27,True,✅ Completo,Cobertura completa,apenas_2022
+Gustinho Ribeiro,PP,SE,82706522534,True,3466168.11,True,✅ Completo,Cobertura completa,2018→2022
+Gutemberg Reis,MDB,RJ,07733341736,True,2990562.84,True,✅ Completo,Cobertura completa,2018→2022
+Heitor Schuch,PSD,RS,45479453068,True,4899609.26,True,✅ Completo,Cobertura completa,2018→2022
+Helder Salomão,PT,ES,76808742715,True,4087100.04,True,✅ Completo,Cobertura completa,2018→2022
+Helena Lima,PSD,RR,44710623287,True,1869980.89,True,✅ Completo,Cobertura completa,apenas_2022
+Helio Lopes,PL,RJ,00891743723,True,2441791.76,True,✅ Completo,Cobertura completa,apenas_2022
+Heloísa Helena,REDE,RJ,36450316420,True,40023.8,True,✅ Completo,Cobertura completa,2018→2022
+Henderson Pinto,UNIÃO,PA,58022180297,True,1691471.75,True,✅ Completo,Cobertura completa,2018→2022
+Hercílio Coelho Diniz,MDB,MG,45869820634,True,1239698.14,True,✅ Completo,Cobertura completa,2018→2022
+Hildo Rocha,MDB,MA,17571243300,True,4594314.2,True,✅ Completo,Cobertura completa,2018→2022
+Hugo Leal,PSD,RJ,41365585620,True,5970177.92771,True,✅ Completo,Cobertura completa,2018→2022
+Hugo Motta,REPUBLICANOS,PB,04796249419,True,7114070.19,True,✅ Completo,Cobertura completa,2018→2022
+Icaro de Valmir,REPUBLICANOS,SE,07393231565,True,1360006.0,True,✅ Completo,Cobertura completa,apenas_2022
+Idilvan Alencar,PSB,CE,38167565300,True,2804165.0,True,✅ Completo,Cobertura completa,2018→2022
+Igor Timo,UNIÃO,MG,01374904619,True,3176967.58,True,✅ Completo,Cobertura completa,2018→2022
+Ismael,PL,SC,51371944920,True,1391759.65,True,✅ Completo,Cobertura completa,2018→2022
+Ivoneide Caetano,PT,BA,67016332500,True,1524151.51,True,✅ Completo,Cobertura completa,apenas_2022
+Iza Arruda,MDB,PE,07527737476,True,1518466.95,True,✅ Completo,Cobertura completa,apenas_2022
+Jack Rocha,PT,ES,10106629700,True,1445955.68,True,✅ Completo,Cobertura completa,2018→2022
+Jadyel Alencar,REPUBLICANOS,PI,64754570359,True,1674374.8,True,✅ Completo,Cobertura completa,apenas_2022
+Jandira Feghali,PCdoB,RJ,43428169700,True,5595557.8902,True,✅ Completo,Cobertura completa,2018→2022
+Jeferson Rodrigues,PSDB,GO,88090850197,True,1361542.27,True,✅ Completo,Cobertura completa,apenas_2022
+Jefferson Campos,PL,SP,02684165831,True,6747216.65,True,✅ Completo,Cobertura completa,2018→2022
+Jilmar Tatto,PT,SP,03946999808,True,2714263.11,True,✅ Completo,Cobertura completa,2018→2022
+Joaquim Passarinho,PL,PA,13606328249,True,4800950.75,True,✅ Completo,Cobertura completa,2018→2022
+Jonas Donizette,PSB,SP,09696450826,True,1975889.55,True,✅ Completo,Cobertura completa,apenas_2022
+Jorge Braz,REPUBLICANOS,RJ,35201487734,True,2815592.64,True,✅ Completo,Cobertura completa,2018→2022
+Jorge Goetten,REPUBLICANOS,SC,43927998915,True,1337905.38,True,✅ Completo,Cobertura completa,2018→2022
+Jorge Solla,PT,BA,19530773587,True,5185514.05,True,✅ Completo,Cobertura completa,2018→2022
+Joseildo Ramos,PT,BA,15963330572,True,3511977.53,True,✅ Completo,Cobertura completa,2018→2022
+Josenildo,PDT,AP,43230849272,True,1731338.66,True,✅ Completo,Cobertura completa,apenas_2022
+Josivaldo JP,UNIÃO,MA,63253313387,True,2501370.61,True,✅ Completo,Cobertura completa,2018→2022
+José Airton Félix Cirilo,PT,CE,09257357368,True,7926490.68,True,✅ Completo,Cobertura completa,2018→2022
+José Medeiros,PL,MT,42442540134,True,3226109.53,True,✅ Completo,Cobertura completa,2018→2022
+José Nelto,UNIÃO,GO,22002570159,True,3027436.76,True,✅ Completo,Cobertura completa,2018→2022
+José Priante,MDB,PA,17293618204,True,4724982.2,True,✅ Completo,Cobertura completa,2018→2022
+José Rocha,UNIÃO,BA,04789113515,True,6844015.465207,True,✅ Completo,Cobertura completa,2018→2022
+João Carlos Bacelar,PL,BA,15345931879,True,7210016.77,True,✅ Completo,Cobertura completa,2018→2022
+João Cury,MDB,SP,14820733826,True,574191.02,True,✅ Completo,Cobertura completa,apenas_2022
+João Daniel,PT,SE,51625091591,True,5405563.13,True,✅ Completo,Cobertura completa,apenas_2018
+João Maia,PP,RN,06662978191,True,6038424.8636,True,✅ Completo,Cobertura completa,2018→2022
+Juarez Costa,REPUBLICANOS,MT,47843080910,True,2744462.04,True,✅ Completo,Cobertura completa,2018→2022
+Julia Zanatta,PL,SC,04796165908,True,1577302.76,True,✅ Completo,Cobertura completa,apenas_2022
+Juliana Cardoso,PT,SP,27636191857,True,1587922.86,True,✅ Completo,Cobertura completa,2018→2022
+Julio Arcoverde,PP,PI,77309766768,True,1560871.35,True,✅ Completo,Cobertura completa,2018→2022
+Julio Cesar Ribeiro,REPUBLICANOS,DF,15791563809,True,2276690.9,True,✅ Completo,Cobertura completa,apenas_2018
+Julio Lopes,PP,RJ,59245220753,True,3725818.91,True,✅ Completo,Cobertura completa,2018→2022
+Juninho do Pneu,PSDB,RJ,07845799700,True,3070942.03,True,✅ Completo,Cobertura completa,2018→2022
+Junio Amaral,PL,MG,07554049631,True,1806936.73,True,✅ Completo,Cobertura completa,2018→2022
+Junior Lourenço,MDB,MA,78247128349,True,3263946.7,True,✅ Completo,Cobertura completa,apenas_2018
+Juscelino Filho,PSDB,MA,85290211349,True,4366031.45,True,✅ Completo,Cobertura completa,2018→2022
+Júlio Cesar,PSD,PI,01102125334,True,7842119.64,True,✅ Completo,Cobertura completa,2018→2022
+Júnior Ferrari,PSD,PA,23211253220,True,1724909.07,True,✅ Completo,Cobertura completa,2018→2022
+Júnior Mano,PSB,CE,97891231320,True,3424385.37,True,✅ Completo,Cobertura completa,2018→2022
+Keniston Braga,MDB,PA,21023867249,True,1709752.86,True,✅ Completo,Cobertura completa,apenas_2022
+Kiko Celeguim,PT,SP,32870200803,True,1630769.42,True,✅ Completo,Cobertura completa,apenas_2022
+Kim Kataguiri,MISSÃO,SP,39313495864,True,1407518.21,True,✅ Completo,Cobertura completa,2018→2022
+Lafayette de Andrada,PL,MG,38105195100,True,3272001.93,True,✅ Completo,Cobertura completa,2018→2022
+Laura Carneiro,PSD,RJ,79401546720,True,2842223.76,True,✅ Completo,Cobertura completa,2018→2022
+Leandre,PSD,PR,80635083949,True,3126267.53,True,✅ Completo,Cobertura completa,2018→2022
+Leo Prates,REPUBLICANOS,BA,94328145568,True,1574886.57,True,✅ Completo,Cobertura completa,2018→2022
+Leonardo Monteiro,PT,MG,20811845672,True,6845839.3719,True,✅ Completo,Cobertura completa,2018→2022
+Leur Lomanto Júnior,UNIÃO,BA,87594749120,True,3389554.42,True,✅ Completo,Cobertura completa,2018→2022
+Lincoln Portela,PL,MG,10254730191,True,6949267.60526,True,✅ Completo,Cobertura completa,2018→2022
+Lindbergh Farias,PT,RJ,69049351468,True,1147470.77,True,✅ Completo,Cobertura completa,2018→2022
+Lucas Ramos,PSB,PE,06172468405,True,1769742.34,True,✅ Completo,Cobertura completa,2018→2022
+Lucas Redecker,PSD,RS,71471278115,True,2508626.55,True,✅ Completo,Cobertura completa,2018→2022
+Luciano Amaral,PSD,AL,06376277411,True,1782166.95,True,✅ Completo,Cobertura completa,apenas_2022
+Luciano Bivar,MDB,PE,01818961415,True,2367264.61,True,✅ Completo,Cobertura completa,2018→2022
+Luciano Ducci,PSB,PR,20732376068,True,4737798.44,True,✅ Completo,Cobertura completa,2018→2022
+Luciano Vieira,PSDB,RJ,12188750705,True,1316148.88,True,✅ Completo,Cobertura completa,apenas_2022
+Lucio Mosquini,PL,RO,28649923291,True,5070507.6,True,✅ Completo,Cobertura completa,2018→2022
+Luisa Canziani,UNIÃO,PR,05823529910,True,3313399.51,True,✅ Completo,Cobertura completa,2018→2022
+Luiz Carlos Busato,UNIÃO,RS,05698960020,True,3560214.19,True,✅ Completo,Cobertura completa,apenas_2022
+Luiz Carlos Hauly,PODE,PR,08682607972,True,3552464.1,True,✅ Completo,Cobertura completa,2018→2022
+Luiz Carlos Motta,PL,SP,03035521824,True,2107472.92,True,✅ Completo,Cobertura completa,2018→2022
+Luiz Couto,PT,PB,02043033468,True,4944496.048892,True,✅ Completo,Cobertura completa,2018→2022
+Luiz Fernando Faria,UNIÃO,MG,30736250620,True,5045739.5200000005,True,✅ Completo,Cobertura completa,2018→2022
+Luiz Gastão,PSD,CE,67163696787,True,1747937.68,True,✅ Completo,Cobertura completa,apenas_2022
+Luiz Lima,NOVO,RJ,07616393730,True,3098949.07,True,✅ Completo,Cobertura completa,2018→2022
+Luiz Nishimori,PSD,PR,08781460910,True,6637910.08,True,✅ Completo,Cobertura completa,2018→2022
+Luiz Philippe de Orleans e Bragança,PL,SP,11844856828,True,1958369.24,True,✅ Completo,Cobertura completa,2018→2022
+Luiza Erundina,PSOL,SP,00480584400,True,5573420.91,True,✅ Completo,Cobertura completa,2018→2022
+Luizianne Lins,REDE,CE,38208563315,True,5538464.58,True,✅ Completo,Cobertura completa,2018→2022
+Lula da Fonte,PP,PE,09222861400,True,1700788.89,True,✅ Completo,Cobertura completa,apenas_2022
+Lêda Borges,REPUBLICANOS,GO,57695180653,True,1365790.99,True,✅ Completo,Cobertura completa,2018→2022
+Lídice da Mata,PSB,BA,14672049515,True,4008030.48,True,✅ Completo,Cobertura completa,2018→2022
+Magda Mofatto,PL,GO,13205285115,True,6010721.04,True,✅ Completo,Cobertura completa,2018→2022
+Marangoni,PODE,SP,28384209847,True,1569013.53,True,✅ Completo,Cobertura completa,apenas_2022
+Marcel van Hattem,NOVO,RS,00731302060,True,1231721.97,True,✅ Completo,Cobertura completa,2018→2022
+Marcelo Crivella,REPUBLICANOS,RJ,46392319700,True,1560581.54,True,✅ Completo,Cobertura completa,apenas_2022
+Marcelo Moraes,PL,RS,96520418072,True,1834302.27,True,✅ Completo,Cobertura completa,2018→2022
+Marcelo Nilo,REPUBLICANOS,BA,11875194568,True,1820446.61,True,✅ Completo,Cobertura completa,2018→2022
+Marcelo Queiroz,PSDB,RJ,11004696728,True,1297076.54,True,✅ Completo,Cobertura completa,2018→2022
+Marcelo Álvaro Antônio,PL,MG,00649039661,True,4055139.67,True,✅ Completo,Cobertura completa,2018→2022
+Marcio Alvino,PL,SP,10115711880,True,1455301.21,True,✅ Completo,Cobertura completa,2018→2022
+Marcon,PT,RS,43434339000,True,6604271.21,True,✅ Completo,Cobertura completa,2018→2022
+Marcos Aurélio Sampaio,MDB,PI,01742564348,True,3582637.52,True,✅ Completo,Cobertura completa,2018→2022
+Marcos Pereira,REPUBLICANOS,SP,00963578782,True,3120918.87,True,✅ Completo,Cobertura completa,2018→2022
+Marcos Pollon,PL,MS,71036091104,True,1552843.93,True,✅ Completo,Cobertura completa,apenas_2022
+Marcos Soares,PSDB,RJ,05217856777,True,3588427.35,True,✅ Completo,Cobertura completa,2018→2022
+Marcos Tavares,PDT,RJ,07969890792,True,1277917.85,True,✅ Completo,Cobertura completa,2018→2022
+Maria Arraes,PSB,PE,10304815470,True,1625808.44,True,✅ Completo,Cobertura completa,apenas_2022
+Maria Rosas,REPUBLICANOS,SP,61433934787,True,2907472.99,True,✅ Completo,Cobertura completa,2018→2022
+Maria do Rosário,PT,RS,48989371015,True,6323271.12377,True,✅ Completo,Cobertura completa,2018→2022
+Marina Silva,REDE,SP,11980761272,True,1.13,True,✅ Completo,Cobertura completa,2018→2022
+Mario Frias,PL,SP,02105129706,True,1406420.97,True,✅ Completo,Cobertura completa,apenas_2022
+Marussa Boldrin,REPUBLICANOS,GO,02710089114,True,1458405.33,True,✅ Completo,Cobertura completa,apenas_2022
+Marx Beltrão,UNIÃO,AL,02696564485,True,4594807.88,True,✅ Completo,Cobertura completa,2018→2022
+Mauricio Marcon,PL,RS,01117026078,True,1520329.02,True,✅ Completo,Cobertura completa,2018→2022
+Mauricio Neves,PP,SP,28632985850,True,1484198.43,True,✅ Completo,Cobertura completa,apenas_2022
+Mauricio do Vôlei,PL,MG,36009756847,True,1515886.12,True,✅ Completo,Cobertura completa,apenas_2022
+Mauro Benevides Filho,UNIÃO,CE,15336735191,True,2474066.5,True,✅ Completo,Cobertura completa,2018→2022
+Maurício Carvalho,UNIÃO,RO,90399331204,True,1628892.06,True,✅ Completo,Cobertura completa,2018→2022
+Max Lemos,PDT,RJ,75061600720,True,1583478.14,True,✅ Completo,Cobertura completa,2018→2022
+Meire Serafim,UNIÃO,AC,57923990263,True,1787599.53,True,✅ Completo,Cobertura completa,2018→2022
+Mendonça Filho,PL,PE,40530086468,True,4220269.8042,True,✅ Completo,Cobertura completa,2018→2022
+Merlong Solano,PT,PI,13891820372,True,3023507.62,True,✅ Completo,Cobertura completa,2018→2022
+Mersinho Lucena,PSD,PB,03071906412,True,1331260.61,True,✅ Completo,Cobertura completa,apenas_2022
+Messias Donato,UNIÃO,ES,04365812726,True,1534466.01,True,✅ Completo,Cobertura completa,apenas_2022
+Miguel Lombardi,PL,SP,05209979806,True,3796579.19,True,✅ Completo,Cobertura completa,2018→2022
+Milton Vieira,REPUBLICANOS,SP,04976912809,True,2388831.75,True,✅ Completo,Cobertura completa,2018→2022
+Misael Varella,PSD,MG,28492803649,True,5042620.05,True,✅ Completo,Cobertura completa,2018→2022
+Missionário José Olimpio,PL,SP,79507646868,True,3321213.1492,True,✅ Completo,Cobertura completa,2018→2022
+Moses Rodrigues,UNIÃO,CE,47721740363,True,5403706.0089,True,✅ Completo,Cobertura completa,2018→2022
+Murillo Gouvea,PSDB,RJ,11519951779,True,1588397.05,True,✅ Completo,Cobertura completa,apenas_2022
+Murilo Galdino,REPUBLICANOS,PB,03182571494,True,1694524.65,True,✅ Completo,Cobertura completa,apenas_2022
+Márcio Biolchi,MDB,RS,80686958004,True,3592061.15,True,✅ Completo,Cobertura completa,2018→2022
+Márcio Honaiser,SOLIDARIEDADE,MA,27848779300,True,1384506.16,True,✅ Completo,Cobertura completa,2018→2022
+Márcio Jerry,PCdoB,MA,29246830334,True,2877539.52,True,✅ Completo,Cobertura completa,2018→2022
+Márcio Marinho,REPUBLICANOS,BA,01895263786,True,7243216.0,True,✅ Completo,Cobertura completa,2018→2022
+Mário Heringer,PDT,MG,28539249634,True,5161067.096117,True,✅ Completo,Cobertura completa,2018→2022
+Mário Negromonte Jr.,PSB,BA,00031226540,True,5210402.99565,True,✅ Completo,Cobertura completa,2018→2022
+Natália Bonavides,PT,RN,05352897400,True,3553467.73,True,✅ Completo,Cobertura completa,2018→2022
+Nelson Barbudo,PODE,MT,01862797870,True,2494612.92,True,✅ Completo,Cobertura completa,2018→2022
+Nely Aquino,PODE,MG,03553151650,True,1461258.93,True,✅ Completo,Cobertura completa,2018→2022
+Neto Carletto,AVANTE,BA,04738738500,True,1628526.33,True,✅ Completo,Cobertura completa,apenas_2022
+Newton Cardoso Jr,MDB,MG,01266637699,True,4484320.2,True,✅ Completo,Cobertura completa,2018→2022
+Nicoletti,PL,RR,99445700015,True,3634479.15,True,✅ Completo,Cobertura completa,2018→2022
+Nikolas Ferreira,PL,MG,11701442680,True,1098864.11,True,✅ Completo,Cobertura completa,apenas_2022
+Nilto Tatto,PT,SP,03380916889,True,4864043.2,True,✅ Completo,Cobertura completa,2018→2022
+Odair Cunha,PT,MG,94892393649,True,5575752.823737,True,✅ Completo,Cobertura completa,2018→2022
+Olival Marques,PODE,PA,66514010253,True,3726623.26,True,✅ Completo,Cobertura completa,2018→2022
+Orlando Silva,PCdoB,SP,56524455568,True,5013224.37,True,✅ Completo,Cobertura completa,2018→2022
+Osmar Terra,PL,RS,19971478072,True,5772661.83426,True,✅ Completo,Cobertura completa,2018→2022
+Otoni de Paula,PSD,RJ,07217877709,True,3000190.92,True,✅ Completo,Cobertura completa,apenas_2022
+Padovani,PP,PR,01984308920,True,1406018.33,True,✅ Completo,Cobertura completa,apenas_2022
+Padre João,PT,MG,72425610600,True,6314036.74,True,✅ Completo,Cobertura completa,2018→2022
+Pastor Diniz,UNIÃO,RR,65822960278,True,1727692.96,True,✅ Completo,Cobertura completa,apenas_2022
+Pastor Eurico,PSDB,PE,23340541434,True,6533647.4784,True,✅ Completo,Cobertura completa,2018→2022
+Pastor Gil,PL,MA,57088071304,True,2965151.08,True,✅ Completo,Cobertura completa,2018→2022
+Pastor Sargento Isidório,AVANTE,BA,22977040544,True,1549478.83,True,✅ Completo,Cobertura completa,2018→2022
+Patrus Ananias,PT,MG,17486440687,True,4010459.24,True,✅ Completo,Cobertura completa,2018→2022
+Paulinho da Força,SOLIDARIEDADE,SP,21006768904,True,4151556.58054,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Abi-Ackel,PSDB,MG,30825628172,True,6869303.26,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Alexandre Barbosa,PSDB,SP,25928369859,True,875515.99,True,✅ Completo,Cobertura completa,apenas_2022
+Paulo Azi,UNIÃO,BA,28870646572,True,5182524.81,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Folletto,PSB,ES,47909463715,True,5254371.8,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Freire Costa,PL,SP,93876912849,True,6288664.909923,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Guedes,PT,MG,86753991620,True,3215222.03,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Lemos,PT,AP,40187365253,True,26306.27,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Litro,UNIÃO,PR,07196225902,True,1663212.78,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Magalhães,PSD,BA,06015530553,True,6452127.936949,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Marinho Jr,PL,MA,66488737368,True,758546.01,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Pimenta,PT,RS,42844924034,True,6653720.4348,True,✅ Completo,Cobertura completa,2018→2022
+Paulo Teixeira,PT,SP,02441369806,True,5511232.86,True,✅ Completo,Cobertura completa,2018→2022
+Paulão,PT,AL,14433290459,True,5560456.53,True,✅ Completo,Cobertura completa,2018→2022
+Pedro Aihara,PP,MG,08116672606,True,1326095.17,True,✅ Completo,Cobertura completa,apenas_2022
+Pedro Campos,PSB,PE,10779586417,True,1548545.07,True,✅ Completo,Cobertura completa,apenas_2022
+Pedro Lucas Fernandes,UNIÃO,MA,82994684349,True,3626522.39,True,✅ Completo,Cobertura completa,2018→2022
+Pedro Lupion,REPUBLICANOS,PR,04328943901,True,3211369.47,True,✅ Completo,Cobertura completa,2018→2022
+Pedro Paulo,PSD,RJ,00262905701,True,3776124.11,True,✅ Completo,Cobertura completa,2018→2022
+Pedro Uczai,PT,SC,47721855934,True,6631695.67,True,✅ Completo,Cobertura completa,2018→2022
+Pedro Westphalen,PP,RS,20040954072,True,3520961.49,True,✅ Completo,Cobertura completa,2018→2022
+Pezenti,MDB,SC,05735414933,True,1120468.44,True,✅ Completo,Cobertura completa,apenas_2022
+Pinheirinho,PP,MG,10627817670,True,2795649.95,True,✅ Completo,Cobertura completa,2018→2022
+Pompeo de Mattos,PDT,RS,28346890087,True,6445376.74,True,✅ Completo,Cobertura completa,2018→2022
+Pr. Marco Feliciano,PL,SP,13117532811,True,6062146.961799,True,✅ Completo,Cobertura completa,2018→2022
+Prof. Reginaldo Veras,PV,DF,63501015100,True,1093522.55,True,✅ Completo,Cobertura completa,2018→2022
+Professor Alcides,PSDB,GO,09242643149,True,3189804.12,True,✅ Completo,Cobertura completa,2018→2022
+Professora Luciene Cavalcante,PSOL,SP,28202400899,True,1152190.64,True,✅ Completo,Cobertura completa,2018→2022
+Professora Marcivania,PCdoB,AP,32770553291,True,4446119.53,True,✅ Completo,Cobertura completa,2018→2022
+Rafael Brito,MDB,AL,01035489473,True,1553844.37,True,✅ Completo,Cobertura completa,apenas_2022
+Rafael Fera,PODE,RO,99668432215,True,290634.21,True,✅ Completo,Cobertura completa,apenas_2022
+Rafael Prudente,MDB,DF,00066296102,True,1270817.65,True,✅ Completo,Cobertura completa,2018→2022
+Rafael Simoes,UNIÃO,MG,45754276672,True,1538669.52,True,✅ Completo,Cobertura completa,apenas_2022
+Raimundo Costa,PSD,BA,17672538500,True,3388441.11,True,✅ Completo,Cobertura completa,2018→2022
+Raimundo Santos,PSD,PA,03409244204,True,1552914.4,True,✅ Completo,Cobertura completa,2018→2022
+Reginaldo Lopes,PT,MG,90330862634,True,6322477.12,True,✅ Completo,Cobertura completa,2018→2022
+Reimont,PT,RJ,48751626691,True,1532040.49,True,✅ Completo,Cobertura completa,2018→2022
+Renata Abreu,PODE,SP,30669688800,True,4300983.7662,True,✅ Completo,Cobertura completa,2018→2022
+Renilce Nicodemos,MDB,PA,63758377234,True,1683433.76,True,✅ Completo,Cobertura completa,2018→2022
+Renildo Calheiros,PCdoB,PE,20936079487,True,2691953.77,True,✅ Completo,Cobertura completa,2018→2022
+Ribamar Silva,PODE,SP,21462900801,True,522878.72000000003,True,✅ Completo,Cobertura completa,apenas_2022
+Ribeiro Neto,SOLIDARIEDADE,MA,01543858325,True,21466.05,True,✅ Completo,Cobertura completa,apenas_2022
+Ricardo Abrão,PSDB,RJ,03028910721,True,597348.11,True,✅ Completo,Cobertura completa,apenas_2022
+Ricardo Ayres,REPUBLICANOS,TO,69196133104,True,1581336.51,True,✅ Completo,Cobertura completa,2018→2022
+Ricardo Barros,PP,PR,42478979934,True,3564789.5853,True,✅ Completo,Cobertura completa,2018→2022
+Ricardo Guidi,PL,SC,95128140997,True,1926712.86,True,✅ Completo,Cobertura completa,2018→2022
+Ricardo Maia,MDB,BA,90586360549,True,1536605.48,True,✅ Completo,Cobertura completa,apenas_2022
+Ricardo Salles,NOVO,SP,25298000819,True,1621987.53,True,✅ Completo,Cobertura completa,2018→2022
+Roberta Roma,PL,BA,94604690510,True,1560539.0,True,✅ Completo,Cobertura completa,apenas_2022
+Roberto Duarte,REPUBLICANOS,AC,67681468072,True,1659164.21,True,✅ Completo,Cobertura completa,2018→2022
+Roberto Monteiro Pai,PL,RJ,45989508700,True,1365320.24,True,✅ Completo,Cobertura completa,apenas_2022
+Robinson Faria,PP,RN,15705099487,True,1544896.69,True,✅ Completo,Cobertura completa,2018→2022
+Robério Monteiro,PSB,CE,37788566349,True,2470128.22,True,✅ Completo,Cobertura completa,2018→2022
+Rodolfo Nogueira,PL,MS,77389557168,True,1696195.41,True,✅ Completo,Cobertura completa,2018→2022
+Rodrigo Gambale,PODE,SP,32968822861,True,1405842.6,True,✅ Completo,Cobertura completa,2018→2022
+Rodrigo Rollemberg,PSB,DF,24529850153,True,556384.88,True,✅ Completo,Cobertura completa,2018→2022
+Rodrigo Valadares,PL,SE,04389715585,True,1416519.76,True,✅ Completo,Cobertura completa,2018→2022
+Rodrigo da Zaeli,PL,MT,01739752910,True,598127.16,True,✅ Completo,Cobertura completa,2018→2022
+Rodrigo de Castro,UNIÃO,MG,83035605653,True,6685755.74,True,✅ Completo,Cobertura completa,2018→2022
+Rogério Correia,PT,MG,47102500653,True,3259125.41,True,✅ Completo,Cobertura completa,2018→2022
+Romero Rodrigues,PODE,PB,45107793487,True,2063239.64,True,✅ Completo,Cobertura completa,apenas_2022
+Rosana Valle,PL,SP,10851776884,True,2728274.12,True,✅ Completo,Cobertura completa,2018→2022
+Rosangela Gomes,REPUBLICANOS,RJ,82863989715,True,3165371.75,True,✅ Completo,Cobertura completa,2018→2022
+Rosangela Moro,PL,SP,92260055915,True,1172792.71,True,✅ Completo,Cobertura completa,apenas_2022
+Rosângela Reis,PL,MG,64328929615,True,1538171.16,True,✅ Completo,Cobertura completa,2018→2022
+Rubens Otoni,PT,GO,13334727149,True,6587579.7558,True,✅ Completo,Cobertura completa,2018→2022
+Rubens Pereira Júnior,PT,MA,00441514383,True,4689671.87,True,✅ Completo,Cobertura completa,2018→2022
+Rui Falcão,PT,SP,61464686815,True,2996573.14,True,✅ Completo,Cobertura completa,2018→2022
+Ruy Carneiro,PODE,PB,01859237711,True,4997178.6874,True,✅ Completo,Cobertura completa,2018→2022
+Samuel Viana,UNIÃO,MG,06373252655,True,1539095.4,True,✅ Completo,Cobertura completa,apenas_2022
+Sanderson,PL,RS,49941720053,True,3087225.04,True,✅ Completo,Cobertura completa,2018→2022
+Sandro Alex,PSD,PR,77535405991,True,3659027.0241,True,✅ Completo,Cobertura completa,2018→2022
+Sargento Fahur,PL,PR,53447468904,True,1655044.26,True,✅ Completo,Cobertura completa,2018→2022
+Sargento Gonçalves,PL,RN,01217732489,True,1330467.9,True,✅ Completo,Cobertura completa,2018→2022
+Sargento Portugal,PODE,RJ,07296013745,True,1395476.31,True,✅ Completo,Cobertura completa,apenas_2022
+Saullo Vianna,MDB,AM,77715748234,True,1161861.28,True,✅ Completo,Cobertura completa,2018→2022
+Saulo Pedroso,PSD,SP,30420230874,True,1173851.47,True,✅ Completo,Cobertura completa,apenas_2022
+Sergio Souza,MDB,PR,75687658904,True,5111397.65,True,✅ Completo,Cobertura completa,2018→2022
+Sidney Leite,PSD,AM,24067857268,True,3774366.24,True,✅ Completo,Cobertura completa,2018→2022
+Silvia Cristina,PP,RO,01739396782,True,3750223.5,True,✅ Completo,Cobertura completa,2018→2022
+Silvio Antonio,PL,MA,40450619320,True,197069.9,True,✅ Completo,Cobertura completa,2018→2022
+Silvio Costa Filho,REPUBLICANOS,PE,03500720439,True,2324172.51,True,✅ Completo,Cobertura completa,2018→2022
+Simone Marquetto,PP,SP,25187356828,True,1524109.56,True,✅ Completo,Cobertura completa,apenas_2022
+Socorro Neri,PP,AC,35942070210,True,1631599.63,True,✅ Completo,Cobertura completa,apenas_2022
+Soraya Santos,PL,RJ,49125290797,True,3841611.06,True,✅ Completo,Cobertura completa,2018→2022
+Stefano Aguiar,PSD,MG,00001608657,True,5784187.179216,True,✅ Completo,Cobertura completa,2018→2022
+Sâmia Bomfim,PSOL,SP,39154732867,True,2823645.53,True,✅ Completo,Cobertura completa,2018→2022
+Sérgio Brito,PSD,BA,18635458591,True,5475712.058788,True,✅ Completo,Cobertura completa,2018→2022
+Sóstenes Cavalcante,PL,RJ,95188100606,True,4786547.29,True,✅ Completo,Cobertura completa,2018→2022
+Tabata Amaral,PSB,SP,38848319840,True,3088245.48,True,✅ Completo,Cobertura completa,2018→2022
+Tadeu Veneri,PT,PR,18438660991,True,1490637.16,True,✅ Completo,Cobertura completa,2018→2022
+Talíria Petrone,PSOL,RJ,11138295752,True,2771262.32,True,✅ Completo,Cobertura completa,2018→2022
+Tarcísio Motta,PSOL,RJ,02045962709,True,1328441.36,True,✅ Completo,Cobertura completa,2018→2022
+Thiago Flores,UNIÃO,RO,21933933895,True,1640994.31,True,✅ Completo,Cobertura completa,apenas_2022
+Thiago de Joaldo,REPUBLICANOS,SE,78723345500,True,1486568.72,True,✅ Completo,Cobertura completa,apenas_2022
+Tiago Dimas,PODE,TO,01657051161,True,2137470.36,True,✅ Completo,Cobertura completa,2018→2022
+Tiririca,PSD,SP,44833881349,True,3470731.668,True,✅ Completo,Cobertura completa,2018→2022
+Tião Medeiros,PP,PR,04092237944,True,1591135.79,True,✅ Completo,Cobertura completa,2018→2022
+Toninho Wandscheer,PP,PR,18591035968,True,5276145.22,True,✅ Completo,Cobertura completa,2018→2022
+Túlio Gadêlha,PSD,PE,06016298417,True,3053167.6,True,✅ Completo,Cobertura completa,apenas_2022
+Valmir Assunção,PT,BA,02333314842,True,6676713.5516,True,✅ Completo,Cobertura completa,2018→2022
+Vander Loubet,PT,MS,32247753191,True,7426065.6676,True,✅ Completo,Cobertura completa,2018→2022
+Vanderlan Alves,SOLIDARIEDADE,CE,02964896380,True,92464.42,True,✅ Completo,Cobertura completa,apenas_2022
+Vermelho,PL,PR,33286957968,True,3489843.55,True,✅ Completo,Cobertura completa,2018→2022
+Vicentinho Júnior,PSDB,TO,99898659149,True,4862149.47,True,✅ Completo,Cobertura completa,2018→2022
+Vinicius Carvalho,PL,SP,82286019720,True,5561799.525,True,✅ Completo,Cobertura completa,2018→2022
+Vinicius Gurgel,PL,AP,51004224249,True,7044388.93,True,✅ Completo,Cobertura completa,2018→2022
+Vitor Lippi,PSD,SP,00168780860,True,4860598.39,True,✅ Completo,Cobertura completa,2018→2022
+Waldemar Oliveira,AVANTE,PE,84669748491,True,1718908.16,True,✅ Completo,Cobertura completa,2018→2022
+Waldenor Pereira,PT,BA,10866655549,True,6789688.3516,True,✅ Completo,Cobertura completa,2018→2022
+Weliton Prado,SOLIDARIEDADE,MG,84719850634,True,5920171.5057,True,✅ Completo,Cobertura completa,2018→2022
+Wellington Roberto,PSD,PB,26254166453,True,8620654.09,True,✅ Completo,Cobertura completa,2018→2022
+Welter,PT,PR,68145888972,True,1441548.77,True,✅ Completo,Cobertura completa,apenas_2022
+Wilson Santiago,REPUBLICANOS,PB,16159977415,True,4259085.27,True,✅ Completo,Cobertura completa,2018→2022
+Yandra Moura,UNIÃO,SE,05866690519,True,1360009.95,True,✅ Completo,Cobertura completa,apenas_2022
+Yury do Paredão,MDB,CE,02364444330,True,1330017.17,True,✅ Completo,Cobertura completa,apenas_2022
+Zeca Dirceu,PT,PR,03098871946,True,6784649.8415,True,✅ Completo,Cobertura completa,2018→2022
+Zezinho Barbary,PP,AC,23356235249,True,1745412.58,True,✅ Completo,Cobertura completa,apenas_2022
+Zucco,PL,RS,72434325068,True,1149346.63,True,✅ Completo,Cobertura completa,2018→2022
+Zé Adriano,PP,AC,21636230253,True,708748.63,True,✅ Completo,Cobertura completa,2018→2022
+Zé Haroldo Cathedral,UNIÃO,RR,96150793168,True,1864620.57,True,✅ Completo,Cobertura completa,apenas_2022
+Zé Neto,PT,BA,38247186500,True,3219662.83,True,✅ Completo,Cobertura completa,2018→2022
+Zé Silva,UNIÃO,MG,43422780653,True,5715868.23,True,✅ Completo,Cobertura completa,2018→2022
+Zé Vitor,PL,MG,07284044608,True,3050737.44,True,✅ Completo,Cobertura completa,2018→2022
+Átila Lins,PSD,AM,00694584215,True,7855347.996,True,✅ Completo,Cobertura completa,2018→2022
+Átila Lira,PP,PI,74568701368,True,1609707.09,True,✅ Completo,Cobertura completa,2018→2022
