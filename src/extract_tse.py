@@ -89,11 +89,21 @@ def baixar_tse_se_necessario(ano, pasta_destino='data'):
     return sucesso
 
 
-def carregar_bens_tse(caminho_csv):
+class TSEIdentityTracker:
+    def __init__(self, df_atuais):
+        self.cpfs_alvo = set(df_atuais['cpf'].astype(str).str.replace(r'\D', '', regex=True).str.zfill(11))
+        self.nomes_uf_alvo = {
+            f"{str(nome).upper().strip()}|{str(uf).upper().strip()}": str(cpf).replace(r'\D', '').zfill(11) 
+            for cpf, nome, uf in zip(df_atuais['cpf'], df_atuais['nome'], df_atuais['siglaUf']) 
+            if pd.notna(nome) and pd.notna(uf)
+        }
+        self.titulo_to_cpf = {}
+
+def carregar_bens_tse(caminho_csv, tracker):
     """
     Carrega o CSV de declaração de bens e cruza com a consulta de candidatos para obter o CPF.
+    Usa um sistema Multi-Chave (CPF -> Título -> Nome) para contornar bloqueios da LGPD.
     """
-    # Descobre automaticamente o nome do arquivo de consulta baseado no ano do arquivo de bens
     caminho_consulta = caminho_csv.replace('bem_candidato', 'consulta_cand')
 
     if not os.path.exists(caminho_csv) or not os.path.exists(caminho_consulta):
@@ -118,37 +128,88 @@ def carregar_bens_tse(caminho_csv):
         
     df_bens_agrupado = df_bens.groupby('SQ_CANDIDATO', as_index=False)['VR_BEM_CANDIDATO'].sum()
 
-    # 4. Isola a ponte (Sequencial -> CPF)
-    df_ponte = df_consulta[['SQ_CANDIDATO', 'NR_CPF_CANDIDATO']].drop_duplicates()
+    # 4. Cascata de Cruzamento (Multi-Key)
+    if 'NR_CPF_CANDIDATO' in df_consulta.columns:
+        df_consulta['cpf_limpo'] = df_consulta['NR_CPF_CANDIDATO'].astype(str).str.replace(r'\D', '', regex=True).str.zfill(11)
+    else:
+        df_consulta['cpf_limpo'] = '-4'
+        
+    match_cpf = df_consulta['cpf_limpo'].isin(tracker.cpfs_alvo)
+    
+    # Aprender títulos novos dos candidatos que deram match no CPF
+    if 'NR_TITULO_ELEITORAL_CANDIDATO' in df_consulta.columns:
+        novos_titulos = df_consulta[match_cpf][['NR_TITULO_ELEITORAL_CANDIDATO', 'cpf_limpo']].dropna()
+        for _, r in novos_titulos.iterrows():
+            tit = str(r['NR_TITULO_ELEITORAL_CANDIDATO']).strip()
+            if tit != '-4' and tit != 'nan' and tit != '0':
+                tracker.titulo_to_cpf[tit] = r['cpf_limpo']
+                
+        # Preparar match por Título
+        df_consulta['titulo_limpo'] = df_consulta['NR_TITULO_ELEITORAL_CANDIDATO'].astype(str).str.strip()
+        match_titulo = df_consulta['titulo_limpo'].map(tracker.titulo_to_cpf)
+    else:
+        match_titulo = pd.Series([None] * len(df_consulta), index=df_consulta.index)
 
-    # 5. Cruza os bens com a ponte para descobrir o CPF
+    # Preparar match por Nome (Fallback LGPD)
+    if 'NM_CANDIDATO' in df_consulta.columns and 'SG_UF' in df_consulta.columns:
+        df_consulta['nome_limpo'] = df_consulta['NM_CANDIDATO'].astype(str).str.upper().str.strip()
+        df_consulta['uf_limpo'] = df_consulta['SG_UF'].astype(str).str.upper().str.strip()
+        df_consulta['nome_uf_chave'] = df_consulta['nome_limpo'] + '|' + df_consulta['uf_limpo']
+        match_nome = df_consulta['nome_uf_chave'].map(tracker.nomes_uf_alvo)
+    else:
+        match_nome = pd.Series([None] * len(df_consulta), index=df_consulta.index)
+
+    # Consolidar CPF final priorizando CPF > Titulo > Nome
+    df_consulta['cpf_final'] = None
+    df_consulta.loc[match_cpf, 'cpf_final'] = df_consulta.loc[match_cpf, 'cpf_limpo']
+    
+    mask_vazio = df_consulta['cpf_final'].isnull()
+    df_consulta.loc[mask_vazio, 'cpf_final'] = match_titulo[mask_vazio]
+    
+    mask_vazio = df_consulta['cpf_final'].isnull()
+    df_consulta.loc[mask_vazio, 'cpf_final'] = match_nome[mask_vazio]
+    
+    # Log de quem foi recuperado via Fallback (opcional para debug)
+    recuperados_titulo = match_titulo.notnull() & (~match_cpf)
+    recuperados_nome = match_nome.notnull() & (~match_cpf) & match_titulo.isnull()
+    
+    qtd_titulo = recuperados_titulo.sum()
+    qtd_nome = recuperados_nome.sum()
+    if qtd_titulo > 0 or qtd_nome > 0:
+        log_progresso(f"      🛟  LGPD Fallback: {qtd_titulo} via Título | {qtd_nome} via Nome.")
+
+    # 5. Isola a ponte (Sequencial -> CPF Final)
+    df_ponte = df_consulta.dropna(subset=['cpf_final'])[['SQ_CANDIDATO', 'cpf_final']].drop_duplicates()
+
+    # 6. Cruza os bens com a ponte
     df_final = pd.merge(df_bens_agrupado, df_ponte, on='SQ_CANDIDATO', how='inner')
 
-    # 6. Padroniza colunas para o transform.py
+    # 7. Padroniza colunas
     df_final = df_final.rename(columns={
-        'NR_CPF_CANDIDATO': 'cpf',
+        'cpf_final': 'cpf',
         'VR_BEM_CANDIDATO': 'valor_bem'
     })
-    
-    # 7. Limpeza blindada do CPF
-    df_final['cpf'] = df_final['cpf'].astype(str).str.replace(r'\D', '', regex=True).str.zfill(11)
     
     return df_final[['cpf', 'valor_bem']]
 
 
-def carregar_todos_bens_tse(anos, pasta_dados='data'):
+def carregar_todos_bens_tse(anos, df_atuais, pasta_dados='data'):
     """
     Carrega dados de bens do TSE para múltiplos anos.
-    Para cada ano, tenta baixar os dados se não existirem.
-    Retorna um dicionário {ano_str: DataFrame}.
+    Usa um Tracker de Identidade para manter CPFs e Títulos em memória através dos anos.
     """
+    tracker = TSEIdentityTracker(df_atuais)
     dict_bens = {}
-    for ano in anos:
+    
+    # Processa na ordem cronológica para que o tracker "aprenda" os títulos antes de chegar em 2024
+    anos_ordenados = sorted(anos)
+    
+    for ano in anos_ordenados:
         # Tentar baixar se necessário
         baixar_tse_se_necessario(ano, pasta_dados)
 
         caminho_csv = os.path.join(pasta_dados, f'bem_candidato_{ano}.csv')
-        df = carregar_bens_tse(caminho_csv)
+        df = carregar_bens_tse(caminho_csv, tracker)
 
         if not df.empty:
             dict_bens[str(ano)] = df
