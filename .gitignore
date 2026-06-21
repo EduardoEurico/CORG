@@ -14,7 +14,6 @@ data/consulta_cand_*.csv
 data/raw
 
 # Caches do pipeline (pesados, regenerados automaticamente)
-data/deputados_cpfs_limpos.parquet
 data/transparencia.db
 
 # Logs e outros
