@@ -451,7 +451,7 @@ def calcular_20_kpis(df_base):
     # -------------------------------------------------------------------------
     # fillna inteligente: strings recebem 'N/A', numéricos recebem 0
     for col in perfil.columns:
-        if perfil[col].dtype == 'object':
+        if pd.api.types.is_string_dtype(perfil[col]) or perfil[col].dtype == 'object':
             perfil[col] = perfil[col].fillna('N/A')
         else:
             perfil[col] = perfil[col].fillna(0)
@@ -575,7 +575,7 @@ def calcular_inconsistencia_patrimonial_multi(dict_bens_por_ano, df_perfil_kpis)
     )
     # fillna inteligente: strings recebem 'N/A', numéricos recebem 0
     for col in df_enriquecido.columns:
-        if df_enriquecido[col].dtype == 'object':
+        if pd.api.types.is_string_dtype(df_enriquecido[col]) or df_enriquecido[col].dtype == 'object':
             df_enriquecido[col] = df_enriquecido[col].fillna('N/A')
         else:
             df_enriquecido[col] = df_enriquecido[col].fillna(0)
