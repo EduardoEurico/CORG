@@ -10,9 +10,14 @@ venv/
 
 # Ignorar pastas especificas de dados (redundante se data/ ja esta sendo ignorado, mas mantido por clareza)
 data/bem_candidato_2018.csv
+data/bem_candidato_2020.csv
 data/bem_candidato_2022.csv
+data/bem_candidato_2024.csv
 data/consulta_cand_2018.csv
+data/consulta_cand_2020.csv
 data/consulta_cand_2022.csv
+data/consulta_cand_2024.csv
+
 data/outputs/
 data/transparencia.db
 data/raw

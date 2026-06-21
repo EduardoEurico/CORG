@@ -143,8 +143,8 @@ def processar_historico_completo(lista_caminhos_json):
 def gerar_join_perfil(df_historico, df_deputados_atuais):
     """
     Cruza o histórico completo com a lista de quem está no mandato hoje.
-    Retorna em granularidade de nota fiscal (não agrupado) para que
-    calcular_20_kpis possa trabalhar sobre os dados brutos.
+    Usa RIGHT JOIN para manter TODOS os deputados, mesmo os que não têm
+    histórico de gastos nos JSONs (ex: suplentes recém-empossados).
     Requer que df_deputados_atuais já tenha a coluna 'cpf'
     (populada por camara.enriquecer_cpfs).
     """
@@ -166,12 +166,28 @@ def gerar_join_perfil(df_historico, df_deputados_atuais):
         df_dep[colunas_dep],
         left_on='idDeputado',
         right_on='id',
-        how='inner'
+        how='right'   # mantém TODOS os deputados, mesmo sem histórico
     )
 
+    total_deputados = df_cruzado['id'].nunique()
+    com_historico = df_cruzado.dropna(subset=['valorDocumento'])['id'].nunique()
+    sem_historico = total_deputados - com_historico
+
+    if sem_historico > 0:
+        ids_sem = set(df_cruzado['id'].unique()) - set(
+            df_cruzado.dropna(subset=['valorDocumento'])['id'].unique()
+        )
+        nomes_sem = df_cruzado[df_cruzado['id'].isin(ids_sem)][['nome', 'siglaPartido', 'siglaUf']].drop_duplicates()
+        log_progresso(
+            f"⚠️ {sem_historico} deputados SEM histórico de gastos:"
+        )
+        for _, r in nomes_sem.iterrows():
+            log_progresso(f"   → {r['nome']} ({r['siglaPartido']}/{r['siglaUf']})")
+
     log_progresso(
-        f"✅ Join realizado: {len(df_cruzado):,} notas "
-        f"para {df_cruzado['id'].nunique()} deputados."
+        f"✅ Join realizado: {len(df_cruzado):,} registros "
+        f"para {total_deputados} deputados "
+        f"({com_historico} com histórico + {sem_historico} sem)."
     )
     return df_cruzado
 
@@ -197,6 +213,7 @@ def calcular_20_kpis(df_base):
     """
     Recebe o DataFrame no nível de nota fiscal (saída de gerar_join_perfil)
     e retorna um DataFrame com um deputado por linha e 20 KPIs calculados.
+    Deputados sem histórico de gastos são mantidos com KPIs = 0.
     """
     log_progresso("📊 Calculando os 20 KPIs de perfil...")
 
@@ -209,9 +226,21 @@ def calcular_20_kpis(df_base):
         grupo.append('cpf')
 
     # -------------------------------------------------------------------------
-    # BASE — agrupamento principal
+    # SEPARAR deputados sem histórico (vindos do right join)
+    # Eles têm valorDocumento = NaN porque não casaram com nenhuma nota
     # -------------------------------------------------------------------------
-    perfil = df_base.groupby(grupo).agg(
+    mask_sem_historico = df_base['valorDocumento'].isna()
+    df_sem_historico = df_base[mask_sem_historico][grupo].drop_duplicates()
+    df_com_historico = df_base[~mask_sem_historico].copy()
+
+    if df_com_historico.empty:
+        log_progresso("⚠️ Nenhum deputado com histórico de gastos.")
+        return pd.DataFrame()
+
+    # -------------------------------------------------------------------------
+    # BASE — agrupamento principal (apenas deputados COM dados)
+    # -------------------------------------------------------------------------
+    perfil = df_com_historico.groupby(grupo).agg(
         total_gasto_historico=('valorDocumento', 'sum'),
         qtd_total_notas      =('valorDocumento', 'count'),
         primeiro_registro    =('dataDocumento',  'min'),
@@ -229,22 +258,22 @@ def calcular_20_kpis(df_base):
 
     # KPI 2 — Maior nota única emitida
     max_nota = (
-        df_base.groupby('id')['valorDocumento'].max()
+        df_com_historico.groupby('id')['valorDocumento'].max()
         .rename('kpi_max_nota_unica')
     )
     perfil = perfil.merge(max_nota, on='id', how='left')
 
     # KPI 3 — Volatilidade (desvio padrão dos valores por nota)
     std_nota = (
-        df_base.groupby('id')['valorDocumento'].std()
+        df_com_historico.groupby('id')['valorDocumento'].std()
         .rename('kpi_volatilidade_gastos')
     )
     perfil = perfil.merge(std_nota, on='id', how='left')
 
     # KPI 4 — Gasto no ano mais recente disponível nos dados
-    ano_recente = int(df_base['dataDocumento'].dt.year.max())
+    ano_recente = int(df_com_historico['dataDocumento'].dt.year.max())
     gasto_recente = (
-        df_base[df_base['dataDocumento'].dt.year == ano_recente]
+        df_com_historico[df_com_historico['dataDocumento'].dt.year == ano_recente]
         .groupby('id')['valorDocumento'].sum()
         .rename(f'kpi_gasto_{ano_recente}')
     )
@@ -255,13 +284,13 @@ def calcular_20_kpis(df_base):
     # -------------------------------------------------------------------------
 
     gastos_por_cnpj = (
-        df_base.groupby(['id', 'cnpjCpfFornecedor'])['valorDocumento']
+        df_com_historico.groupby(['id', 'cnpjCpfFornecedor'])['valorDocumento']
         .sum().reset_index()
     )
 
     # KPI 5 — Quantidade de fornecedores únicos (CNPJs distintos)
     fornecedores_unicos = (
-        df_base.groupby('id')['cnpjCpfFornecedor'].nunique()
+        df_com_historico.groupby('id')['cnpjCpfFornecedor'].nunique()
         .rename('kpi_qtd_fornecedores')
     )
     perfil = perfil.merge(fornecedores_unicos, on='id', how='left')
@@ -284,7 +313,7 @@ def calcular_20_kpis(df_base):
 
     # KPI 7 — Máximo de notas emitidas pelo mesmo CNPJ (fidelidade ao fornecedor)
     fidelidade = (
-        df_base.groupby(['id', 'cnpjCpfFornecedor']).size()
+        df_com_historico.groupby(['id', 'cnpjCpfFornecedor']).size()
         .groupby(level='id').max()
         .rename('kpi_max_notas_mesmo_cnpj')
     )
@@ -300,11 +329,11 @@ def calcular_20_kpis(df_base):
     # CATEGORIA 3 — TEMÁTICOS / SUBCOTA
     # -------------------------------------------------------------------------
 
-    tipo_upper = df_base['tipoDespesa'].str.upper().fillna('')
+    tipo_upper = df_com_historico['tipoDespesa'].str.upper().fillna('')
 
     # KPI 9 — % gasto com marketing / divulgação parlamentar
     gasto_mkt = (
-        df_base[tipo_upper.isin(_SUBCOTAS_MARKETING)]
+        df_com_historico[tipo_upper.isin(_SUBCOTAS_MARKETING)]
         .groupby('id')['valorDocumento'].sum()
         .rename('_gasto_mkt')
     )
@@ -314,7 +343,7 @@ def calcular_20_kpis(df_base):
 
     # KPI 10 — % gasto com logística (combustível + passagens)
     gasto_log = (
-        df_base[tipo_upper.isin(_SUBCOTAS_LOGISTICA)]
+        df_com_historico[tipo_upper.isin(_SUBCOTAS_LOGISTICA)]
         .groupby('id')['valorDocumento'].sum()
         .rename('_gasto_log')
     )
@@ -324,7 +353,7 @@ def calcular_20_kpis(df_base):
 
     # KPI 11 — % gasto com consultoria e serviços técnicos
     gasto_cons = (
-        df_base[tipo_upper.isin(_SUBCOTAS_CONSULTORIA)]
+        df_com_historico[tipo_upper.isin(_SUBCOTAS_CONSULTORIA)]
         .groupby('id')['valorDocumento'].sum()
         .rename('_gasto_cons')
     )
@@ -334,7 +363,7 @@ def calcular_20_kpis(df_base):
 
     # KPI 12 — Subcota mais frequente (moda da tipoDespesa)
     subcota_moda = (
-        df_base.groupby('id')['tipoDespesa']
+        df_com_historico.groupby('id')['tipoDespesa']
         .agg(lambda x: x.mode().iloc[0] if not x.mode().empty else None)
         .rename('kpi_subcota_mais_frequente')
     )
@@ -354,14 +383,14 @@ def calcular_20_kpis(df_base):
 
     # KPI 14 — Anos distintos com pelo menos um registro de gasto
     anos_ativos = (
-        df_base.groupby('id')['dataDocumento']
+        df_com_historico.groupby('id')['dataDocumento']
         .apply(lambda x: x.dt.year.nunique())
         .rename('kpi_anos_ativos')
     )
     perfil = perfil.merge(anos_ativos, on='id', how='left')
 
     # KPI 15 — % de notas emitidas em fins de semana (sábado=5, domingo=6)
-    df_tmp = df_base[['id', 'dataDocumento']].copy()
+    df_tmp = df_com_historico[['id', 'dataDocumento']].copy()
     df_tmp['_fds'] = df_tmp['dataDocumento'].dt.dayofweek >= 5
     notas_fds = (
         df_tmp.groupby('id')['_fds'].mean()
@@ -371,7 +400,7 @@ def calcular_20_kpis(df_base):
 
     # KPI 16 — Recorrência (meses com gasto / total de meses no período)
     meses_com_gasto = (
-        df_base.groupby('id')['dataDocumento']
+        df_com_historico.groupby('id')['dataDocumento']
         .apply(lambda x: x.dt.to_period('M').nunique())
         .rename('_meses_com_gasto')
     )
@@ -411,57 +440,117 @@ def calcular_20_kpis(df_base):
     perfil['kpi_percentil_gasto'] = perfil['total_gasto_historico'].rank(pct=True) * 100
 
     # -------------------------------------------------------------------------
+    # REINSERIR deputados sem histórico (KPIs = 0)
+    # -------------------------------------------------------------------------
+    if not df_sem_historico.empty:
+        log_progresso(f"📋 Reinserindo {len(df_sem_historico)} deputados sem histórico (KPIs = 0).")
+        perfil = pd.concat([perfil, df_sem_historico], ignore_index=True)
+
+    # -------------------------------------------------------------------------
     # FINALIZAÇÃO
     # -------------------------------------------------------------------------
-    perfil = perfil.fillna(0)
+    # fillna inteligente: strings recebem 'N/A', numéricos recebem 0
+    for col in perfil.columns:
+        if perfil[col].dtype == 'object':
+            perfil[col] = perfil[col].fillna('N/A')
+        else:
+            perfil[col] = perfil[col].fillna(0)
     log_progresso(f"✅ KPIs calculados para {len(perfil)} deputados.")
     return perfil
 
 
 # =============================================================================
-# CAMADA 4 — ENRIQUECIMENTO PATRIMONIAL (TSE)
+# CAMADA 4 — ENRIQUECIMENTO PATRIMONIAL (TSE) — MULTI-ANO
 # =============================================================================
 
-def calcular_inconsistencia_patrimonial(df_bens_inicio, df_bens_fim,
-                                        df_perfil_kpis, ano_inicio, ano_fim):
+def calcular_inconsistencia_patrimonial_multi(dict_bens_por_ano, df_perfil_kpis):
     """
-    Cruza a evolução patrimonial do TSE com o perfil de gastos da Câmara.
-    O join é feito por CPF — que deve estar presente em df_perfil_kpis,
-    vindo de df_deputados_atuais enriquecido por camara.enriquecer_cpfs().
+    Versão multi-ano da análise patrimonial.
+    Recebe um dicionário {ano_str: DataFrame_bens} com todos os anos disponíveis
+    e escolhe o melhor par (mais antigo → mais recente) para cada deputado.
+
+    Colunas de saída:
+      - patrimonio_inicio, patrimonio_fim, ano_inicio_tse, ano_fim_tse
+      - crescimento_bruto_R$, crescimento_percentual_%
+      - periodo_tse (ex: "2018→2024")
+      - flag_risco_patrimonial
     """
-    if df_bens_inicio.empty or df_bens_fim.empty:
-        log_progresso("⚠️ Arquivos TSE ausentes — pulando análise patrimonial.")
-        for col in [f'patrimonio_{ano_inicio}', f'patrimonio_{ano_fim}', 'crescimento_bruto_R$', 'crescimento_percentual_%', 'flag_risco_patrimonial']:
+    # Filtrar apenas anos com dados válidos
+    anos_validos = {ano: df for ano, df in dict_bens_por_ano.items()
+                    if df is not None and not df.empty}
+
+    if len(anos_validos) < 2:
+        log_progresso("⚠️ Menos de 2 anos TSE disponíveis — pulando análise patrimonial.")
+        for col in ['patrimonio_inicio', 'patrimonio_fim', 'ano_inicio_tse',
+                    'ano_fim_tse', 'crescimento_bruto_R$', 'crescimento_percentual_%',
+                    'periodo_tse', 'flag_risco_patrimonial']:
             df_perfil_kpis[col] = 0
         return df_perfil_kpis
 
     if 'cpf' not in df_perfil_kpis.columns or (df_perfil_kpis['cpf'] == 0).all():
         log_progresso("⚠️ Coluna 'cpf' ausente ou vazia — pulando análise patrimonial.")
-        for col in [f'patrimonio_{ano_inicio}', f'patrimonio_{ano_fim}', 'crescimento_bruto_R$', 'crescimento_percentual_%', 'flag_risco_patrimonial']:
+        for col in ['patrimonio_inicio', 'patrimonio_fim', 'ano_inicio_tse',
+                    'ano_fim_tse', 'crescimento_bruto_R$', 'crescimento_percentual_%',
+                    'periodo_tse', 'flag_risco_patrimonial']:
             df_perfil_kpis[col] = 0
         return df_perfil_kpis
 
-    log_progresso(f"🔎 Calculando evolução patrimonial: {ano_inicio} → {ano_fim}...")
+    anos_ordenados = sorted(anos_validos.keys())
+    log_progresso(f"🔎 Calculando evolução patrimonial multi-ano: {', '.join(anos_ordenados)}...")
 
-    patrimonio_inicio = (
-        df_bens_inicio.groupby('cpf')['valor_bem'].sum().reset_index()
-        .rename(columns={'valor_bem': f'patrimonio_{ano_inicio}'})
-    )
-    patrimonio_fim = (
-        df_bens_fim.groupby('cpf')['valor_bem'].sum().reset_index()
-        .rename(columns={'valor_bem': f'patrimonio_{ano_fim}'})
-    )
+    # Montar tabela longa: cpf | ano | patrimonio_total
+    lista_patrim = []
+    for ano, df_bens in anos_validos.items():
+        patrim_ano = (
+            df_bens.groupby('cpf')['valor_bem'].sum().reset_index()
+            .rename(columns={'valor_bem': 'patrimonio_total'})
+        )
+        patrim_ano['ano'] = ano
+        lista_patrim.append(patrim_ano)
 
-    evolucao = pd.merge(patrimonio_inicio, patrimonio_fim, on='cpf', how='outer').fillna(0)
-    evolucao['crescimento_bruto_R$'] = (
-        evolucao[f'patrimonio_{ano_fim}'] - evolucao[f'patrimonio_{ano_inicio}']
-    )
+    df_patrim_longo = pd.concat(lista_patrim, ignore_index=True)
+
+    # Para cada CPF, encontrar o ano mais antigo e o mais recente com dados
+    melhor_par = df_patrim_longo.groupby('cpf').agg(
+        ano_inicio=('ano', 'min'),
+        ano_fim=('ano', 'max'),
+    ).reset_index()
+
+    # Só considerar CPFs com pelo menos 2 anos distintos para evolução
+    melhor_par = melhor_par[melhor_par['ano_inicio'] != melhor_par['ano_fim']]
+
+    # Buscar o valor do patrimônio no ano início e ano fim
+    df_inicio = df_patrim_longo.rename(columns={'patrimonio_total': 'patrimonio_inicio', 'ano': 'ano_inicio'})
+    df_fim = df_patrim_longo.rename(columns={'patrimonio_total': 'patrimonio_fim', 'ano': 'ano_fim'})
+
+    evolucao = melhor_par.merge(df_inicio, on=['cpf', 'ano_inicio'], how='left')
+    evolucao = evolucao.merge(df_fim, on=['cpf', 'ano_fim'], how='left')
+    evolucao = evolucao.fillna(0)
+
+    evolucao['crescimento_bruto_R$'] = evolucao['patrimonio_fim'] - evolucao['patrimonio_inicio']
     evolucao['crescimento_percentual_%'] = evolucao.apply(
-        lambda r: (r['crescimento_bruto_R$'] / r[f'patrimonio_{ano_inicio}'] * 100)
-                  if r[f'patrimonio_{ano_inicio}'] > 0 else 0,
+        lambda r: (r['crescimento_bruto_R$'] / r['patrimonio_inicio'] * 100)
+                  if r['patrimonio_inicio'] > 0 else 0,
         axis=1
     )
+    evolucao['periodo_tse'] = evolucao['ano_inicio'] + '→' + evolucao['ano_fim']
+    evolucao.rename(columns={'ano_inicio': 'ano_inicio_tse', 'ano_fim': 'ano_fim_tse'}, inplace=True)
 
+    # Adicionar CPFs que aparecem em apenas 1 ano (sem evolução, mas com patrimônio)
+    cpfs_com_evolucao = set(evolucao['cpf'].unique())
+    cpfs_1_ano = df_patrim_longo[~df_patrim_longo['cpf'].isin(cpfs_com_evolucao)]
+    if not cpfs_1_ano.empty:
+        # Pegar o registro mais recente para cada CPF de 1 ano
+        cpfs_1_ano_agg = cpfs_1_ano.sort_values('ano').drop_duplicates('cpf', keep='last')
+        cpfs_1_ano_agg = cpfs_1_ano_agg.rename(columns={'patrimonio_total': 'patrimonio_fim', 'ano': 'ano_fim_tse'})
+        cpfs_1_ano_agg['patrimonio_inicio'] = 0
+        cpfs_1_ano_agg['ano_inicio_tse'] = 'N/A'
+        cpfs_1_ano_agg['crescimento_bruto_R$'] = 0
+        cpfs_1_ano_agg['crescimento_percentual_%'] = 0
+        cpfs_1_ano_agg['periodo_tse'] = 'apenas_' + cpfs_1_ano_agg['ano_fim_tse']
+        evolucao = pd.concat([evolucao, cpfs_1_ano_agg[evolucao.columns]], ignore_index=True)
+
+    # Merge com perfil
     df_perfil_kpis = df_perfil_kpis.copy()
     df_perfil_kpis['cpf'] = (
         df_perfil_kpis['cpf'].astype(str)
@@ -469,12 +558,25 @@ def calcular_inconsistencia_patrimonial(df_bens_inicio, df_bens_fim,
         .str.zfill(11)
     )
 
-    df_enriquecido = pd.merge(df_perfil_kpis, evolucao, on='cpf', how='left')
+    colunas_evolucao = ['cpf', 'patrimonio_inicio', 'patrimonio_fim',
+                        'ano_inicio_tse', 'ano_fim_tse',
+                        'crescimento_bruto_R$', 'crescimento_percentual_%',
+                        'periodo_tse']
+    df_enriquecido = pd.merge(df_perfil_kpis, evolucao[colunas_evolucao], on='cpf', how='left')
     df_enriquecido['flag_risco_patrimonial'] = (
         df_enriquecido['crescimento_bruto_R$'] > 3_000_000
     )
 
-    casamentos = df_enriquecido[f'patrimonio_{ano_fim}'].gt(0).sum()
-    log_progresso(f"✅ Patrimônio cruzado: {casamentos} deputados com dados TSE encontrados.")
-
-    return df_enriquecido.fillna(0)
+    casamentos = df_enriquecido['patrimonio_fim'].gt(0).sum()
+    total = len(df_enriquecido)
+    log_progresso(
+        f"✅ Patrimônio cruzado: {casamentos}/{total} deputados com dados TSE encontrados "
+        f"(anos: {', '.join(anos_ordenados)})."
+    )
+    # fillna inteligente: strings recebem 'N/A', numéricos recebem 0
+    for col in df_enriquecido.columns:
+        if df_enriquecido[col].dtype == 'object':
+            df_enriquecido[col] = df_enriquecido[col].fillna('N/A')
+        else:
+            df_enriquecido[col] = df_enriquecido[col].fillna(0)
+    return df_enriquecido

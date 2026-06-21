@@ -1,13 +1,17 @@
 import os
+import sys
 import pandas as pd
+
+sys.stdout.reconfigure(encoding='utf-8')
 from src.extractors import camara
-from src.extract_tse import carregar_bens_tse
+from src.extract_tse import carregar_todos_bens_tse
 from src.transform import (
     processar_historico_completo, 
     gerar_join_perfil, 
     calcular_20_kpis, 
-    calcular_inconsistencia_patrimonial
+    calcular_inconsistencia_patrimonial_multi
 )
+from src.relatorio_cobertura import gerar_relatorio_cobertura
 from src.utils import log_progresso
 
 def run_pipeline():
@@ -16,8 +20,11 @@ def run_pipeline():
     ARQUIVO_FINAL_PARQUET = 'data/outputs/perfil_final_politicos.parquet'
     ARQUIVO_FINAL_CSV = 'data/outputs/perfil_final_politicos.csv'
     
-    # NOVO: Caminho para o nosso Save Point
+    # Save Points
     SAVE_POINT_HISTORICO = 'data/historico_limpo.parquet' 
+
+    # Anos do TSE para buscar dados patrimoniais
+    ANOS_TSE = ['2018', '2020', '2022', '2024']
 
     log_progresso("🚀 Iniciando Pipeline de Ciência de Dados (Corrup.ORG)...")
 
@@ -62,7 +69,7 @@ def run_pipeline():
         log_progresso("❌ Erro: Não foi possível obter os deputados.")
         return
 
-    # Cruzamento de histórico e deputados atuais
+    # Cruzamento de histórico e deputados atuais (RIGHT JOIN: mantém todos os 513)
     df_cruzado = gerar_join_perfil(df_historico, df_atuais)
     if df_cruzado.empty:
         log_progresso("❌ Erro: O cruzamento (Join) resultou em uma base vazia.")
@@ -76,22 +83,24 @@ def run_pipeline():
         log_progresso("⚠️ Aviso: O dataframe de perfis gerou vazio no cálculo de KPIs.")
         return
 
-    # --- CAMADA 4: COMPLIANCE PATRIMONIAL (TSE) ---
-    log_progresso("🔎 Iniciando módulo de Compliance: Cruzamento com dados do TSE...")
-    df_tse_2018 = carregar_bens_tse('data/bem_candidato_2018.csv')
-    df_tse_2022 = carregar_bens_tse('data/bem_candidato_2022.csv')
+    # --- CAMADA 4: COMPLIANCE PATRIMONIAL (TSE MULTI-ANO) ---
+    log_progresso(f"🔎 Iniciando módulo de Compliance: Cruzamento TSE multi-ano ({', '.join(ANOS_TSE)})...")
+    dict_bens_tse = carregar_todos_bens_tse(ANOS_TSE)
     
-    # Executa a função dinâmica de patrimônio
-    df_perfil_final = calcular_inconsistencia_patrimonial(
-        df_tse_2018, df_tse_2022, df_perfil_kpis, '2018', '2022'
+    # Executa a função multi-ano de patrimônio
+    df_perfil_final = calcular_inconsistencia_patrimonial_multi(
+        dict_bens_tse, df_perfil_kpis
     )
 
-    # --- CAMADA 5: OUTPUT (SAÍDA PARA O POWER BI) ---
+    # --- CAMADA 5: RELATÓRIO DE COBERTURA ---
+    gerar_relatorio_cobertura(df_perfil_final)
+
+    # --- CAMADA 6: OUTPUT (SAÍDA PARA O POWER BI) ---
     os.makedirs('data/outputs', exist_ok=True)
     df_perfil_final.to_parquet(ARQUIVO_FINAL_PARQUET, index=False)
     df_perfil_final.to_csv(ARQUIVO_FINAL_CSV, index=False, encoding='utf-8-sig')
     
-    log_progresso(f"✅ Pipeline finalizado com sucesso! Arquivos salvos em 'data/outputs/'")
+    log_progresso(f"✅ Pipeline finalizado com sucesso! {len(df_perfil_final)} deputados salvos em 'data/outputs/'")
 
 if __name__ == "__main__":
     run_pipeline()
