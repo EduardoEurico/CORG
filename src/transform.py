@@ -482,16 +482,18 @@ def calcular_inconsistencia_patrimonial_multi(dict_bens_por_ano, df_perfil_kpis)
     if len(anos_validos) < 2:
         log_progresso("⚠️ Menos de 2 anos TSE disponíveis — pulando análise patrimonial.")
         for col in ['patrimonio_inicio', 'patrimonio_fim', 'ano_inicio_tse',
-                    'ano_fim_tse', 'crescimento_bruto_R$', 'crescimento_percentual_%',
-                    'periodo_tse', 'flag_risco_patrimonial']:
+                    'ano_fim_tse', 'crescimento_bruto_R$', 'crescimento_bruto',
+                    'crescimento_percentual_%', 'crescimento_percentual',
+                    'periodo_tse', 'flag_risco_patrimonial', 'patrimonio_2018', 'patrimonio_2022']:
             df_perfil_kpis[col] = 0
         return df_perfil_kpis
 
     if 'cpf' not in df_perfil_kpis.columns or (df_perfil_kpis['cpf'] == 0).all():
         log_progresso("⚠️ Coluna 'cpf' ausente ou vazia — pulando análise patrimonial.")
         for col in ['patrimonio_inicio', 'patrimonio_fim', 'ano_inicio_tse',
-                    'ano_fim_tse', 'crescimento_bruto_R$', 'crescimento_percentual_%',
-                    'periodo_tse', 'flag_risco_patrimonial']:
+                    'ano_fim_tse', 'crescimento_bruto_R$', 'crescimento_bruto',
+                    'crescimento_percentual_%', 'crescimento_percentual',
+                    'periodo_tse', 'flag_risco_patrimonial', 'patrimonio_2018', 'patrimonio_2022']:
             df_perfil_kpis[col] = 0
         return df_perfil_kpis
 
@@ -528,11 +530,13 @@ def calcular_inconsistencia_patrimonial_multi(dict_bens_por_ano, df_perfil_kpis)
     evolucao = evolucao.fillna(0)
 
     evolucao['crescimento_bruto_R$'] = evolucao['patrimonio_fim'] - evolucao['patrimonio_inicio']
+    evolucao['crescimento_bruto'] = evolucao['crescimento_bruto_R$']
     evolucao['crescimento_percentual_%'] = evolucao.apply(
         lambda r: (r['crescimento_bruto_R$'] / r['patrimonio_inicio'] * 100)
                   if r['patrimonio_inicio'] > 0 else 0,
         axis=1
     )
+    evolucao['crescimento_percentual'] = evolucao['crescimento_percentual_%']
     evolucao['periodo_tse'] = evolucao['ano_inicio'] + '→' + evolucao['ano_fim']
     evolucao.rename(columns={'ano_inicio': 'ano_inicio_tse', 'ano_fim': 'ano_fim_tse'}, inplace=True)
 
@@ -546,7 +550,9 @@ def calcular_inconsistencia_patrimonial_multi(dict_bens_por_ano, df_perfil_kpis)
         cpfs_1_ano_agg['patrimonio_inicio'] = 0
         cpfs_1_ano_agg['ano_inicio_tse'] = 'N/A'
         cpfs_1_ano_agg['crescimento_bruto_R$'] = 0
+        cpfs_1_ano_agg['crescimento_bruto'] = 0
         cpfs_1_ano_agg['crescimento_percentual_%'] = 0
+        cpfs_1_ano_agg['crescimento_percentual'] = 0
         cpfs_1_ano_agg['periodo_tse'] = 'apenas_' + cpfs_1_ano_agg['ano_fim_tse']
         evolucao = pd.concat([evolucao, cpfs_1_ano_agg[evolucao.columns]], ignore_index=True)
 
@@ -560,12 +566,23 @@ def calcular_inconsistencia_patrimonial_multi(dict_bens_por_ano, df_perfil_kpis)
 
     colunas_evolucao = ['cpf', 'patrimonio_inicio', 'patrimonio_fim',
                         'ano_inicio_tse', 'ano_fim_tse',
-                        'crescimento_bruto_R$', 'crescimento_percentual_%',
+                        'crescimento_bruto_R$', 'crescimento_bruto',
+                        'crescimento_percentual_%', 'crescimento_percentual',
                         'periodo_tse']
     df_enriquecido = pd.merge(df_perfil_kpis, evolucao[colunas_evolucao], on='cpf', how='left')
     df_enriquecido['flag_risco_patrimonial'] = (
         df_enriquecido['crescimento_bruto_R$'] > 3_000_000
     )
+
+    # Buscar especificamente patrimonio_2018 e patrimonio_2022 para retrocompatibilidade com o Power BI antigo
+    for ano in ['2018', '2022']:
+        col_name = f'patrimonio_{ano}'
+        if ano in dict_bens_por_ano and dict_bens_por_ano[ano] is not None and not dict_bens_por_ano[ano].empty:
+            df_ano = dict_bens_por_ano[ano].groupby('cpf')['valor_bem'].sum().reset_index().rename(columns={'valor_bem': col_name})
+            df_ano['cpf'] = df_ano['cpf'].astype(str).str.replace(r'\D', '', regex=True).str.zfill(11)
+            df_enriquecido = pd.merge(df_enriquecido, df_ano, on='cpf', how='left')
+        else:
+            df_enriquecido[col_name] = 0
 
     casamentos = df_enriquecido['patrimonio_fim'].gt(0).sum()
     total = len(df_enriquecido)
