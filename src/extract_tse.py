@@ -48,6 +48,11 @@ def baixar_tse_se_necessario(ano, pasta_destino='data'):
                                if f.lower().endswith('.csv')
                                and tipo.lower() in f.lower()]
 
+                # Tentar encontrar a versão consolidada do BRASIL primeiro
+                csv_brasil = [f for f in csvs_no_zip if 'brasil' in f.lower()]
+                if csv_brasil:
+                    csvs_no_zip = csv_brasil
+
                 if not csvs_no_zip:
                     # Fallback: pegar qualquer CSV grande
                     csvs_no_zip = [f for f in zf.namelist()

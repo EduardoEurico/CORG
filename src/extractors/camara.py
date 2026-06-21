@@ -61,21 +61,3 @@ def enriquecer_cpfs(df_atuais):
     log_progresso("✅ Enriquecimento de CPFs concluído com sucesso!")
     
     return df_final
-
-def migrar_jsons_historicos(diretorio_data='data'):
-    """Processa e salva os dados no SQLite."""
-    padrao = os.path.join(diretorio_data, "*.json")
-    arquivos = sorted(glob.glob(padrao))
-    
-    if not arquivos:
-        log_progresso(f"⚠️ Nenhum arquivo JSON encontrado em: {diretorio_data}")
-        return
-
-    for caminho in arquivos:
-        log_progresso(f"⏳ Processando: {os.path.basename(caminho)}")
-        df_limpo = processar_historico_completo([caminho])
-        
-        if not df_limpo.empty:
-            salvar_no_banco(df_limpo, "gastos_camara")
-    
-    log_progresso("✅ Migração finalizada.")

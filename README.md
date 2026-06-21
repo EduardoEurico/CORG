@@ -60,3 +60,44 @@ Após a criação dos outputs pelo `main.py`, utilize o script de teste para con
 $env:PYTHONUTF8=1; python teste.py
 ```
 Isso mostrará no seu terminal o **Top 10 de Maior Evolução Patrimonial** e o **Top 10 de Score de Risco Geral**, garantindo que tudo funcionou conforme o esperado.
+
+## Dicionário de KPIs (Indicadores de Risco e Perfil)
+
+Abaixo está a lista detalhada de todas as métricas (KPIs) geradas pelo sistema para cada deputado no arquivo final (`perfil_final_politicos.csv`), dividida por categorias.
+
+### Categoria 1: Financeiros
+- **`kpi_ticket_medio`**: Ticket médio por nota fiscal (Total gasto dividido pela quantidade de notas emitidas).
+- **`kpi_max_nota_unica`**: O valor da maior nota fiscal única emitida pelo deputado.
+- **`kpi_volatilidade_gastos`**: Desvio padrão dos valores das notas, indicando se os gastos são constantes ou possuem picos muito anormais.
+- **`kpi_gasto_{ano}`**: O total de gastos do deputado no ano mais recente disponível (ex: `kpi_gasto_2026`).
+
+### Categoria 2: Concentração e Fornecedores
+- **`kpi_qtd_fornecedores`**: Quantidade total de fornecedores únicos (CNPJs distintos) contratados.
+- **`kpi_concentracao_fornecedor`**: Qual a porcentagem do gasto total do deputado que foi destinado a um único fornecedor principal (varia de 0 a 1).
+- **`kpi_max_notas_mesmo_cnpj`**: O número máximo de notas emitidas para um mesmo fornecedor (indicando fidelidade ou possível dependência).
+- **`kpi_diversidade_fornecedor`**: Razão entre o total de notas e a quantidade de fornecedores únicos. Quanto menor, mais concentrado em poucos fornecedores.
+
+### Categoria 3: Temáticos / Subcotas
+- **`kpi_pct_marketing`**: Porcentagem do gasto total destinada à "Divulgação da Atividade Parlamentar".
+- **`kpi_pct_logistica`**: Porcentagem do gasto total destinada à logística (Combustíveis, Lubrificantes, Passagens).
+- **`kpi_pct_consultoria`**: Porcentagem do gasto total com serviços de consultoria, pesquisa, trabalhos técnicos e segurança privada.
+- **`kpi_subcota_mais_frequente`**: A categoria de despesa (subcota) com maior frequência de uso (moda).
+
+### Categoria 4: Temporal e Frequência
+- **`kpi_notas_por_mes`**: Média de notas fiscais emitidas por cada mês ativo do mandato.
+- **`kpi_anos_ativos`**: Quantidade de anos distintos em que houve pelo menos um registro de gasto.
+- **`kpi_pct_notas_fds`**: Porcentagem de notas fiscais emitidas em fins de semana (sábados e domingos).
+- **`kpi_recorrencia`**: Proporção de meses em que houve emissão de notas (Meses com gasto / Total de meses do período avaliado).
+
+### Categoria 5: Scores e Benchmarks
+- **`kpi_zscore_partido`**: Desvio do gasto total do deputado em relação à média dos gastos de seu próprio partido.
+- **`kpi_zscore_uf`**: Desvio do gasto total do deputado em relação à média dos gastos dos deputados de seu próprio estado (UF).
+- **`kpi_score_risco`**: Score ponderado geral de risco (0 a 1), baseado na concentração de fornecedores, volatilidade de gastos, uso de notas no final de semana, desvio de gasto do partido e alto uso de consultorias.
+- **`kpi_percentil_gasto`**: Onde o deputado se encontra na distribuição geral de gastos (ex: 99 significa que ele gasta mais do que 99% dos outros deputados).
+
+### Categoria 6: Evolução Patrimonial (TSE)
+- **`patrimonio_inicio`** e **`patrimonio_fim`**: Valor total declarado em bens no início (ano mais antigo detectado) e no fim (ano mais recente).
+- **`ano_inicio_tse`** e **`ano_fim_tse`**: Os anos que demarcam o período da análise patrimonial (ex: 2018 e 2022).
+- **`crescimento_bruto_R$`** e **`crescimento_percentual_%`**: O valor exato do crescimento dos bens (em Reais e em Porcentagem).
+- **`flag_risco_patrimonial`**: Alerta (Verdadeiro ou Falso) se o enriquecimento bruto for maior que R$ 3.000.000,00 no período.
+- **`patrimonio_2018`** e **`patrimonio_2022`**: Campos de retrocompatibilidade garantindo os valores exatos de patrimônio nestes anos para sistemas legados como o Power BI antigo.

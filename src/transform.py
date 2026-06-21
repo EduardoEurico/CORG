@@ -574,15 +574,13 @@ def calcular_inconsistencia_patrimonial_multi(dict_bens_por_ano, df_perfil_kpis)
         df_enriquecido['crescimento_bruto_R$'] > 3_000_000
     )
 
-    # Buscar especificamente patrimonio_2018 e patrimonio_2022 para retrocompatibilidade com o Power BI antigo
+    # Retrocompatibilidade: adicionar colunas de patrimônio de 2018 e 2022 para o Power BI
     for ano in ['2018', '2022']:
-        col_name = f'patrimonio_{ano}'
-        if ano in dict_bens_por_ano and dict_bens_por_ano[ano] is not None and not dict_bens_por_ano[ano].empty:
-            df_ano = dict_bens_por_ano[ano].groupby('cpf')['valor_bem'].sum().reset_index().rename(columns={'valor_bem': col_name})
-            df_ano['cpf'] = df_ano['cpf'].astype(str).str.replace(r'\D', '', regex=True).str.zfill(11)
-            df_enriquecido = pd.merge(df_enriquecido, df_ano, on='cpf', how='left')
-        else:
-            df_enriquecido[col_name] = 0
+        df_enriquecido[f'patrimonio_{ano}'] = 0
+        if ano in anos_validos:
+            mapa = anos_validos[ano].groupby('cpf')['valor_bem'].sum()
+            mapa.index = mapa.index.astype(str).str.replace(r'\D', '', regex=True).str.zfill(11)
+            df_enriquecido[f'patrimonio_{ano}'] = df_enriquecido['cpf'].map(mapa).fillna(0)
 
     casamentos = df_enriquecido['patrimonio_fim'].gt(0).sum()
     total = len(df_enriquecido)
