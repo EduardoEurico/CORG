@@ -1,0 +1,62 @@
+[
+  {
+    "cnpjCpfFornecedor":"08202116000115",
+    "nomeFornecedor":"AUTO POSTO AEROPORTO LTDA",
+    "qtd_deputados":383,
+    "gasto_total":582337.76
+  },
+  {
+    "cnpjCpfFornecedor":"12132854000100",
+    "nomeFornecedor":"WMS COMERCIO DE ARTIGOS DE PAPELARIA LTDA-ME",
+    "qtd_deputados":308,
+    "gasto_total":1446619.1899999999
+  },
+  {
+    "cnpjCpfFornecedor":"00097626000400",
+    "nomeFornecedor":"BRASAL COMBUSTIVEIS LTDA",
+    "qtd_deputados":299,
+    "gasto_total":320643.78
+  },
+  {
+    "cnpjCpfFornecedor":"04473193000159",
+    "nomeFornecedor":"POSTO DA TORRE EIRELI EPP",
+    "qtd_deputados":282,
+    "gasto_total":393573.13
+  },
+  {
+    "cnpjCpfFornecedor":"12132854000100",
+    "nomeFornecedor":"WMS COMERCIO DE ARTIGOS DE PAPELARIA LTDA",
+    "qtd_deputados":281,
+    "gasto_total":760686.4300000001
+  },
+  {
+    "cnpjCpfFornecedor":"00692418000611",
+    "nomeFornecedor":"AUTO POSTO CINCO ESTRELAS LTDA",
+    "qtd_deputados":273,
+    "gasto_total":424331.24
+  },
+  {
+    "cnpjCpfFornecedor":"33469172001644",
+    "nomeFornecedor":"SERVICO NACIONAL DE APRENDIZAGEM COMERCIAL SENAC",
+    "qtd_deputados":254,
+    "gasto_total":335232.89
+  },
+  {
+    "cnpjCpfFornecedor":"00306597003112",
+    "nomeFornecedor":"031 - 302 NORTE - CASCOL COMBUSTIVEIS PARA VEICULOS LTDA",
+    "qtd_deputados":245,
+    "gasto_total":929364.11
+  },
+  {
+    "cnpjCpfFornecedor":"00692418000107",
+    "nomeFornecedor":"AUTO POSTO CINCO ESTRELAS LTDA",
+    "qtd_deputados":235,
+    "gasto_total":234729.66
+  },
+  {
+    "cnpjCpfFornecedor":"38194212000120",
+    "nomeFornecedor":"AUTO POSTO 303 NORTE LTDA",
+    "qtd_deputados":233,
+    "gasto_total":776491.99
+  }
+]

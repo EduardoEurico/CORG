@@ -1,0 +1,72 @@
+[
+  {
+    "cnpjCpfFornecedor":"02610235000120",
+    "nomeFornecedor":"DMD Gestão Administrativa LTDA - ME",
+    "gasto_total":1834786.5600000001,
+    "qtd_notas":75,
+    "qtd_deputados":3
+  },
+  {
+    "cnpjCpfFornecedor":"22005529000130",
+    "nomeFornecedor":"DOUGLAS CUNHA DA SILVA ME",
+    "gasto_total":1309122.6000000001,
+    "qtd_notas":86,
+    "qtd_deputados":6
+  },
+  {
+    "cnpjCpfFornecedor":"23127399000171",
+    "nomeFornecedor":"LEITE, FIGUEIREDO & SANTOS ADVOGADOS ASSOCIADOS",
+    "gasto_total":1294547.1000000001,
+    "qtd_notas":42,
+    "qtd_deputados":1
+  },
+  {
+    "cnpjCpfFornecedor":"19923146000137",
+    "nomeFornecedor":"BRASAO VIGILANCIA E SEGURANCA LTDA",
+    "gasto_total":1129767.3300000001,
+    "qtd_notas":152,
+    "qtd_deputados":3
+  },
+  {
+    "cnpjCpfFornecedor":"01263813000137",
+    "nomeFornecedor":"ADVOCACIA ROGERIO AVELAR S\/C",
+    "gasto_total":746000.0,
+    "qtd_notas":54,
+    "qtd_deputados":1
+  },
+  {
+    "cnpjCpfFornecedor":"04831284000119",
+    "nomeFornecedor":"DUAILIBE ADVOGADOS ASSOCIADOS S\/S",
+    "gasto_total":712300.0,
+    "qtd_notas":61,
+    "qtd_deputados":1
+  },
+  {
+    "cnpjCpfFornecedor":"13902258000125",
+    "nomeFornecedor":"Fabiano Zica E Advogados Associados Sociedade de Advogados",
+    "gasto_total":698200.0,
+    "qtd_notas":53,
+    "qtd_deputados":1
+  },
+  {
+    "cnpjCpfFornecedor":"21793072000103",
+    "nomeFornecedor":"CARVALHO DA SILVA SOCIEDADE INDIVIDUAL DE ADVOCACIA",
+    "gasto_total":688584.15,
+    "qtd_notas":61,
+    "qtd_deputados":4
+  },
+  {
+    "cnpjCpfFornecedor":"20164504000154",
+    "nomeFornecedor":"MAGNA - SOCIEDADE INDIVIDUAL DE ADVOCACIA",
+    "gasto_total":655587.4,
+    "qtd_notas":33,
+    "qtd_deputados":2
+  },
+  {
+    "cnpjCpfFornecedor":"10698461000133",
+    "nomeFornecedor":"Oliveira de Vasconcelos Advocacia S\/S",
+    "gasto_total":642753.6,
+    "qtd_notas":42,
+    "qtd_deputados":1
+  }
+]

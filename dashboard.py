@@ -365,7 +365,10 @@ def render_content(tab):
         ])
         
     elif tab == 'tab-especifica':
-        # Aba 5: Análises Específicas (Contexto de compliance, Fornecedores Suspeitos, Crescimento Mágico)
+        # Aba 5: Análises Específicas (Contexto de compliance, Fornecedores Suspeitos, Crescimento Mágico, Pearson)
+        import os
+        import json
+
         # Top 10 Consultoria
         top_cons = df.sort_values(by='kpi_pct_consultoria', ascending=False).head(10).to_dict('records')
         for r in top_cons:
@@ -388,13 +391,264 @@ def render_content(tab):
             r['total_gasto_historico'] = f"R$ {r['total_gasto_historico']/1000000:,.2f}M"
             r['kpi_score_risco'] = f"{r['kpi_score_risco']*100:.1f}%"
 
+        # Tabela 1: Enriquecimento Patrimonial (> R$ 3 Milhões) - 26 deputados
+        df_enriquecimento = df[df['flag_risco_patrimonial'] == 1].sort_values(by='crescimento_bruto_R$', ascending=False).to_dict('records')
+        for r in df_enriquecimento:
+            r['crescimento_bruto_R$'] = f"R$ {r['crescimento_bruto_R$']/1000000:,.2f}M"
+            r['crescimento_percentual_%'] = f"{r['crescimento_percentual_%']:.1f}%" if pd.notnull(r['crescimento_percentual_%']) else "N/A"
+            r['total_gasto_historico'] = f"R$ {r['total_gasto_historico']/1000000:,.2f}M"
+            r['kpi_score_risco'] = f"{r['kpi_score_risco']*100:.1f}%"
+
+        # Tabela 2: Acúmulo de Bandeiras Vermelhas
+        dff_flags = df.copy()
+        dff_flags['flag_score'] = (dff_flags['kpi_score_risco'] > 0.30).astype(int)
+        dff_flags['flag_patrimonial'] = (dff_flags['flag_risco_patrimonial'] == 1).astype(int)
+        dff_flags['flag_concentracao'] = (dff_flags['kpi_concentracao_fornecedor'] > 40.0).astype(int)
+        dff_flags['flag_consultoria'] = (dff_flags['kpi_pct_consultoria'] > 15.0).astype(int)
+        dff_flags['flag_fds'] = (dff_flags['kpi_pct_notas_fds'] > 15.0).astype(int)
+        dff_flags['qtd_bandeiras'] = (
+            dff_flags['flag_score'] + 
+            dff_flags['flag_patrimonial'] + 
+            dff_flags['flag_concentracao'] + 
+            dff_flags['flag_consultoria'] + 
+            dff_flags['flag_fds']
+        )
+        top_flags = dff_flags.sort_values(by=['qtd_bandeiras', 'kpi_score_risco'], ascending=False).head(10).to_dict('records')
+        for r in top_flags:
+            r['kpi_score_risco'] = f"{r['kpi_score_risco']*100:.1f}%"
+            r['crescimento_bruto_R$'] = f"R$ {r['crescimento_bruto_R$']/1000000:,.2f}M"
+            r['kpi_concentracao_fornecedor'] = f"{r['kpi_concentracao_fornecedor']:.1f}%"
+            r['kpi_pct_consultoria'] = f"{r['kpi_pct_consultoria']:.1f}%"
+            r['kpi_pct_notas_fds'] = f"{r['kpi_pct_notas_fds']:.1f}%"
+
+        # Tabela 3: Matriz de Correlação de Pearson
+        r_conc_gasto = df['kpi_concentracao_fornecedor'].corr(df['total_gasto_historico'])
+        r_vol_gasto = df['kpi_volatilidade_gastos'].corr(df['total_gasto_historico'])
+        r_risco_consult = df['kpi_score_risco'].corr(df['kpi_pct_consultoria'])
+        r_risco_conc = df['kpi_score_risco'].corr(df['kpi_concentracao_fornecedor'])
+        r_mkt_cresc = df['kpi_pct_marketing'].corr(df['crescimento_bruto_R$'])
+        r_consult_cresc = df['kpi_pct_consultoria'].corr(df['crescimento_bruto_R$'])
+        r_gasto_cresc = df['total_gasto_historico'].corr(df['crescimento_bruto_R$'])
+        r_gasto_pat = df['total_gasto_historico'].corr(df['patrimonio_fim'])
+        
+        correlacoes = [
+            {"par": "Concentração ↔ Gasto Total", "coef": f"{r_conc_gasto:.4f}", "forca": "Moderada Negativa", "interpr": "Quem gasta mais, tende a diversificar fornecedores"},
+            {"par": "Volatilidade ↔ Gasto Total", "coef": f"{r_vol_gasto:.4f}", "forca": "Moderada Positiva", "interpr": "Gastos maiores naturalmente têm picos mais elevados"},
+            {"par": "Score Risco ↔ % Consultoria", "coef": f"{r_risco_consult:.4f}", "forca": "Forte Positiva", "interpr": "Gastos em consultoria são o maior preditor de risco"},
+            {"par": "Score Risco ↔ Concentração", "coef": f"{r_risco_conc:.4f}", "forca": "Moderada Positiva", "interpr": "Alta dependência de CNPJ único influi bastante no score"},
+            {"par": "Marketing % ↔ Crescimento Bens", "coef": f"{r_mkt_cresc:.4f}", "forca": "Fraca Positiva", "interpr": "Divulgação de marketing apresenta leve vínculo com evolução de bens"},
+            {"par": "Consultoria % ↔ Crescimento Bens", "coef": f"{r_consult_cresc:.4f}", "forca": "Nula", "interpr": "Sem correlação linear direta observável"},
+            {"par": "Gasto Total ↔ Crescimento Bens", "coef": f"{r_gasto_cresc:.4f}", "forca": "Nula", "interpr": "Gasto da cota parlamentar NÃO explica enriquecimento do deputado"},
+            {"par": "Gasto Total ↔ Patrimônio Final", "coef": f"{r_gasto_pat:.4f}", "forca": "Nula", "interpr": "Zero correlação com o volume final de bens acumulados"}
+        ]
+
+        # Tabela 4: Fornecedores do Histórico
+        path_extrema = 'data/outputs/fornecedores_concentracao_extrema.json'
+        path_shared = 'data/outputs/fornecedores_compartilhados.json'
+        path_mkt = 'data/outputs/fornecedores_marketing.json'
+        path_cons = 'data/outputs/fornecedores_consultoria.json'
+        
+        fornecedores_extrema = []
+        if os.path.exists(path_extrema):
+            try:
+                fornecedores_extrema = pd.read_json(path_extrema).to_dict('records')
+                for r in fornecedores_extrema:
+                    r['gasto_fornec'] = f"R$ {r['gasto_fornec']/1000000:,.2f}M"
+                    r['gasto_total_dep'] = f"R$ {r['gasto_total_dep']/1000000:,.2f}M"
+                    r['pct_concentracao'] = f"{r['pct_concentracao']:.1f}%"
+            except Exception as e:
+                print(f"Erro ao ler fornecedores_extrema: {e}")
+                
+        fornecedores_shared = []
+        if os.path.exists(path_shared):
+            try:
+                fornecedores_shared = pd.read_json(path_shared).to_dict('records')
+                for r in fornecedores_shared:
+                    r['gasto_total'] = f"R$ {r['gasto_total']/1000000:,.2f}M"
+            except Exception as e:
+                print(f"Erro ao ler fornecedores_shared: {e}")
+                
+        fornecedores_mkt = []
+        if os.path.exists(path_mkt):
+            try:
+                fornecedores_mkt = pd.read_json(path_mkt).to_dict('records')
+                for r in fornecedores_mkt:
+                    r['gasto_total'] = f"R$ {r['gasto_total']/1000000:,.2f}M"
+            except Exception as e:
+                print(f"Erro ao ler fornecedores_mkt: {e}")
+                
+        fornecedores_cons = []
+        if os.path.exists(path_cons):
+            try:
+                fornecedores_cons = pd.read_json(path_cons).to_dict('records')
+                for r in fornecedores_cons:
+                    r['gasto_total'] = f"R$ {r['gasto_total']/1000000:,.2f}M"
+            except Exception as e:
+                print(f"Erro ao ler fornecedores_cons: {e}")
+
         return html.Div([
+            # Cabeçalho da Aba
             html.Div(style=SECTION_STYLE, children=[
-                html.H2("🔍 Análises Específicas de Compliance", style={'color': '#58a6ff', 'marginTop': '0'}),
-                html.P("Esta seção traz os aprofundamentos metodológicos detalhados e cruzamentos de dados avançados.", style={'color': '#8b949e'})
+                html.H2("🔍 Análises Específicas & Compliance Avançado", style={'color': '#58a6ff', 'marginTop': '0'}),
+                html.P("Esta seção reúne análises complexas baseadas em cruzamentos avançados de dados patrimoniais e no processamento completo do histórico de notas fiscais.", style={'color': '#8b949e'})
             ]),
             
-            # Sub-seção A: Crescimento Mágico
+            # Sub-seção 1: Enriquecimento Patrimonial (> R$ 3 Milhões)
+            html.Div(style=SECTION_STYLE, children=[
+                html.H3("⚠️ Alerta Patrimonial: 26 Deputados com Enriquecimento > R$ 3 Milhões", style={'fontSize': '18px', 'color': '#ff7b72', 'marginTop': '0'}),
+                html.P("Cruzamento com os dados oficiais do TSE detalhando a evolução absoluta dos bens declarados entre as campanhas analisadas.", style={'color': '#8b949e', 'fontSize': '13px'}),
+                dash_table.DataTable(
+                    columns=[
+                        {"name": "Nome", "id": "nome"},
+                        {"name": "Partido", "id": "siglaPartido"},
+                        {"name": "UF", "id": "siglaUf"},
+                        {"name": "Crescimento Absoluto", "id": "crescimento_bruto_R$"},
+                        {"name": "Variação (%)", "id": "crescimento_percentual_%"},
+                        {"name": "Gasto da Cota", "id": "total_gasto_historico"},
+                        {"name": "Score de Risco", "id": "kpi_score_risco"}
+                    ],
+                    data=df_enriquecimento,
+                    sort_action="native",
+                    page_size=6,
+                    style_header={'backgroundColor': '#21262d', 'color': '#c9d1d9', 'fontWeight': 'bold'},
+                    style_cell={'backgroundColor': '#161b22', 'color': '#8b949e', 'border': '1px solid #30363d', 'padding': '10px'},
+                    style_data_conditional=[{
+                        'if': {'column_id': 'crescimento_bruto_R$'},
+                        'color': '#ff7b72', 'fontWeight': 'bold'
+                    }]
+                )
+            ]),
+
+            # Sub-seção 2: Acúmulo de Bandeiras Vermelhas
+            html.Div(style=SECTION_STYLE, children=[
+                html.H3("🚨 Top 10 Deputados com Mais Bandeiras Vermelhas Simultâneas", style={'fontSize': '18px', 'color': '#ff7b72', 'marginTop': '0'}),
+                html.P("Contagem de acúmulo de alertas independentes nas 5 dimensões: Score de Risco > 30%, Enriquecimento > 3M, Concentração > 40%, Consultoria > 15% e Notas FDS > 15%.", style={'color': '#8b949e', 'fontSize': '13px'}),
+                dash_table.DataTable(
+                    columns=[
+                        {"name": "Nome", "id": "nome"},
+                        {"name": "Partido", "id": "siglaPartido"},
+                        {"name": "UF", "id": "siglaUf"},
+                        {"name": "Alertas Ativos", "id": "qtd_bandeiras"},
+                        {"name": "Score Risco", "id": "kpi_score_risco"},
+                        {"name": "Crescimento", "id": "crescimento_bruto_R$"},
+                        {"name": "Concentração", "id": "kpi_concentracao_fornecedor"},
+                        {"name": "Consultoria", "id": "kpi_pct_consultoria"},
+                        {"name": "Fins de Semana", "id": "kpi_pct_notas_fds"}
+                    ],
+                    data=top_flags,
+                    sort_action="native",
+                    page_size=10,
+                    style_header={'backgroundColor': '#21262d', 'color': '#c9d1d9', 'fontWeight': 'bold'},
+                    style_cell={'backgroundColor': '#161b22', 'color': '#8b949e', 'border': '1px solid #30363d', 'padding': '10px'},
+                    style_data_conditional=[{
+                        'if': {'column_id': 'qtd_bandeiras', 'filter_query': '{qtd_bandeiras} >= 4'},
+                        'backgroundColor': '#8b1e1d', 'color': '#ffffff', 'fontWeight': 'bold'
+                    }]
+                )
+            ]),
+
+            # Sub-seção 3: Matriz de Correlação de Pearson
+            html.Div(style=SECTION_STYLE, children=[
+                html.H3("📊 Matriz de Correlação de Pearson (Cruzamentos)", style={'fontSize': '18px', 'color': '#58a6ff', 'marginTop': '0'}),
+                html.P("Coeficientes lineares calculados dinamicamente sobre a base total. Valores de -1 a +1 determinam a força de conexão estatística.", style={'color': '#8b949e', 'fontSize': '13px'}),
+                dash_table.DataTable(
+                    columns=[
+                        {"name": "Par de Indicadores", "id": "par"},
+                        {"name": "Correlação", "id": "coef"},
+                        {"name": "Força", "id": "forca"},
+                        {"name": "Interpretação Contextualizada", "id": "interpr"}
+                    ],
+                    data=correlacoes,
+                    sort_action="native",
+                    style_header={'backgroundColor': '#21262d', 'color': '#c9d1d9', 'fontWeight': 'bold'},
+                    style_cell={'backgroundColor': '#161b22', 'color': '#8b949e', 'border': '1px solid #30363d', 'padding': '10px'}
+                )
+            ]),
+
+            # Sub-seção 4: Fornecedores do Histórico (5.13M de notas)
+            html.Div(style=SECTION_STYLE, children=[
+                html.H3("🏢 Fornecedores e CNPJs Reais (Mapeamento do Histórico)", style={'fontSize': '18px', 'color': '#58a6ff', 'marginTop': '0'}),
+                html.P("Resultados extraídos diretamente da base de notas fiscais integradas pelo pipeline de big data.", style={'color': '#8b949e', 'fontSize': '13px'}),
+                
+                # Grid 2x2 para os quatro recortes de fornecedores
+                html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '20px', 'marginTop': '15px'}, children=[
+                    
+                    # 4a: Concentração Extrema
+                    html.Div(style={'border': '1px solid #30363d', 'padding': '15px', 'borderRadius': '10px'}, children=[
+                        html.H4("Concentração Extrema (> 40% de Cota em um Fornecedor Único)", style={'color': '#ff7b72', 'margin': '0 0 10px 0', 'fontSize': '14px'}),
+                        dash_table.DataTable(
+                            columns=[
+                                {"name": "Político", "id": "nome"},
+                                {"name": "Part/UF", "id": "siglaPartido"},
+                                {"name": "Fornecedor Principal", "id": "nomeFornecedor"},
+                                {"name": "% Conc.", "id": "pct_concentracao"}
+                            ],
+                            data=fornecedores_extrema,
+                            sort_action="native",
+                            page_size=5,
+                            style_header={'backgroundColor': '#21262d', 'color': '#c9d1d9', 'fontSize': '11px', 'fontWeight': 'bold'},
+                            style_cell={'backgroundColor': '#0d1117', 'color': '#8b949e', 'border': '1px solid #30363d', 'padding': '6px', 'fontSize': '11px'}
+                        )
+                    ]),
+
+                    # 4b: Shared
+                    html.Div(style={'border': '1px solid #30363d', 'padding': '15px', 'borderRadius': '10px'}, children=[
+                        html.H4("Fornecedores Compartilhados de Alta Frequência (Excl. concessionárias)", style={'color': '#58a6ff', 'margin': '0 0 10px 0', 'fontSize': '14px'}),
+                        dash_table.DataTable(
+                            columns=[
+                                {"name": "Fornecedor", "id": "nomeFornecedor"},
+                                {"name": "CNPJ", "id": "cnpjCpfFornecedor"},
+                                {"name": "Deputados Atendidos", "id": "qtd_deputados"},
+                                {"name": "Gasto Total", "id": "gasto_total"}
+                            ],
+                            data=fornecedores_shared,
+                            sort_action="native",
+                            page_size=5,
+                            style_header={'backgroundColor': '#21262d', 'color': '#c9d1d9', 'fontSize': '11px', 'fontWeight': 'bold'},
+                            style_cell={'backgroundColor': '#0d1117', 'color': '#8b949e', 'border': '1px solid #30363d', 'padding': '6px', 'fontSize': '11px'}
+                        )
+                    ]),
+
+                    # 4c: Marketing
+                    html.Div(style={'border': '1px solid #30363d', 'padding': '15px', 'borderRadius': '10px'}, children=[
+                        html.H4("Maiores Recebedores de Marketing (Divulgação, Excl. Meta)", style={'color': '#d2a8ff', 'margin': '0 0 10px 0', 'fontSize': '14px'}),
+                        dash_table.DataTable(
+                            columns=[
+                                {"name": "Fornecedor", "id": "nomeFornecedor"},
+                                {"name": "CNPJ", "id": "cnpjCpfFornecedor"},
+                                {"name": "Gasto Total", "id": "gasto_total"},
+                                {"name": "Deputados", "id": "qtd_deputados"}
+                            ],
+                            data=fornecedores_mkt,
+                            sort_action="native",
+                            page_size=5,
+                            style_header={'backgroundColor': '#21262d', 'color': '#c9d1d9', 'fontSize': '11px', 'fontWeight': 'bold'},
+                            style_cell={'backgroundColor': '#0d1117', 'color': '#8b949e', 'border': '1px solid #30363d', 'padding': '6px', 'fontSize': '11px'}
+                        )
+                    ]),
+
+                    # 4d: Consultoria
+                    html.Div(style={'border': '1px solid #30363d', 'padding': '15px', 'borderRadius': '10px'}, children=[
+                        html.H4("Maiores Recebedores de Consultorias Técnicas", style={'color': '#3fb950', 'margin': '0 0 10px 0', 'fontSize': '14px'}),
+                        dash_table.DataTable(
+                            columns=[
+                                {"name": "Fornecedor", "id": "nomeFornecedor"},
+                                {"name": "CNPJ", "id": "cnpjCpfFornecedor"},
+                                {"name": "Gasto Total", "id": "gasto_total"},
+                                {"name": "Deputados", "id": "qtd_deputados"}
+                            ],
+                            data=fornecedores_cons,
+                            sort_action="native",
+                            page_size=5,
+                            style_header={'backgroundColor': '#21262d', 'color': '#c9d1d9', 'fontSize': '11px', 'fontWeight': 'bold'},
+                            style_cell={'backgroundColor': '#0d1117', 'color': '#8b949e', 'border': '1px solid #30363d', 'padding': '6px', 'fontSize': '11px'}
+                        )
+                    ]),
+
+                ])
+            ]),
+
+            # Sub-seção 5: Crescimento Mágico
             html.Div(style=SECTION_STYLE, children=[
                 html.H3("✨ Crescimento Patrimonial Inexplicável ('Crescimento Mágico')", style={'fontSize': '18px', 'color': '#58a6ff', 'marginTop': '0'}),
                 html.P("Deputados federais que declararam evolução patrimonial superior a R$ 3 milhões ao TSE, mas mantiveram gastos de cota parlamentar abaixo da mediana da Câmara. Esse fenômeno demonstra que o enriquecimento pessoal do político não possui qualquer correlação matemática com o recebimento e uso de cotas públicas, provindo de fontes externas.", style={'color': '#8b949e', 'fontSize': '13px'}),
@@ -415,7 +669,7 @@ def render_content(tab):
                 )
             ]),
             
-            # Sub-seção B: Marketing e Consultoria
+            # Sub-seção 6: Marketing e Consultoria
             html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '20px'}, children=[
                 html.Div(style=SECTION_STYLE, children=[
                     html.H3("📈 Top 10 — % Gasto com Marketing (Divulgação)", style={'fontSize': '16px', 'color': '#58a6ff', 'marginTop': '0'}),

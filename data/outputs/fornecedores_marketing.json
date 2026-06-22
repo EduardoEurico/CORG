@@ -1,0 +1,72 @@
+[
+  {
+    "cnpjCpfFornecedor":"37894749000130",
+    "nomeFornecedor":"ELDORADO COMUNICACAO E JORNALISMO LTDA",
+    "gasto_total":2711056.0699999998,
+    "qtd_notas":439,
+    "qtd_deputados":36
+  },
+  {
+    "cnpjCpfFornecedor":"02773723000159",
+    "nomeFornecedor":"MAIS PROPAGANDA LTDA.",
+    "gasto_total":2215465.6000000001,
+    "qtd_notas":109,
+    "qtd_deputados":2
+  },
+  {
+    "cnpjCpfFornecedor":"07436265000186",
+    "nomeFornecedor":"GALZON EDITORA GRAFICA LTDA",
+    "gasto_total":1971152.5,
+    "qtd_notas":57,
+    "qtd_deputados":1
+  },
+  {
+    "cnpjCpfFornecedor":"42006710000179",
+    "nomeFornecedor":"FRAME COMUNICACAO DIGITAL LTDA",
+    "gasto_total":1848085.5,
+    "qtd_notas":107,
+    "qtd_deputados":4
+  },
+  {
+    "cnpjCpfFornecedor":"08345631000154",
+    "nomeFornecedor":"LIBRE COMUNICAÇÃO E MARKETING EIRELI",
+    "gasto_total":1847246.0,
+    "qtd_notas":239,
+    "qtd_deputados":9
+  },
+  {
+    "cnpjCpfFornecedor":"18606754000155",
+    "nomeFornecedor":"DELPHOS SERVICOS DE MARKETING E COMUNICACAO LTDA",
+    "gasto_total":1834709.0,
+    "qtd_notas":212,
+    "qtd_deputados":7
+  },
+  {
+    "cnpjCpfFornecedor":"08865615000192",
+    "nomeFornecedor":"WORKING ASSOCIAÇÃO DE INTEGRAÇÃO PROFISSIONAL",
+    "gasto_total":1687744.04,
+    "qtd_notas":170,
+    "qtd_deputados":24
+  },
+  {
+    "cnpjCpfFornecedor":"15705697000173",
+    "nomeFornecedor":"EVAG COMUNICAÇÃO E TECNOLOGIA LTDA",
+    "gasto_total":1420323.49,
+    "qtd_notas":290,
+    "qtd_deputados":4
+  },
+  {
+    "cnpjCpfFornecedor":"23558127000126",
+    "nomeFornecedor":"CARNAUBA ASSESSORIA DE COM E PIBLICIDADE",
+    "gasto_total":1326195.1000000001,
+    "qtd_notas":32,
+    "qtd_deputados":2
+  },
+  {
+    "cnpjCpfFornecedor":"49494655000152",
+    "nomeFornecedor":"ORBE PRODUTORA & SERVIÇOS LTDA",
+    "gasto_total":1224140.0,
+    "qtd_notas":40,
+    "qtd_deputados":2
+  }
+]
