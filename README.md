@@ -108,85 +108,203 @@ PYTHONUTF8=1 python main.py
 
 #### Score de Risco Médio por Partido
 
-O `kpi_score_risco` (0 a 1) combina 5 componentes ponderados. Quanto mais alto, mais padrões atípicos o partido concentra em seus deputados.
+O `kpi_score_risco` (0 a 1) combina 5 componentes ponderados. Quanto mais alto, mais padrões atípicos o partido concentra em seus deputados. Para manter o gráfico limpo e evitar sobreposição de rótulos, exibimos os 8 partidos com maiores médias:
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
 xychart-beta
-    title "Score de Risco Medio por Partido"
-    x-axis ["CIDADAN.", "PRD", "PDT", "PSOL", "PP", "PSB", "UNIAO", "PT", "PSD", "PV", "PCdoB", "PSDB", "REDE", "PL", "MDB"]
+    title "Score de Risco Medio por Partido (Top 8)"
+    x-axis ["CIDADANIA", "PRD", "PDT", "PSB", "UNIAO", "PSOL", "PT", "PP"]
     y-axis "Score Medio" 0 --> 0.30
-    bar [0.269, 0.229, 0.179, 0.178, 0.168, 0.168, 0.167, 0.161, 0.157, 0.149, 0.148, 0.138, 0.134, 0.129, 0.126]
+    bar [0.269, 0.229, 0.179, 0.168, 0.167, 0.163, 0.161, 0.161]
 ```
 
-> **Como ler**: CIDADANIA lidera com score médio de 0,269 — mas possui apenas 2 deputados, o que pode distorcer a média. Entre os partidos grandes, **PP (0,168)** e **UNIÃO (0,167)** apresentam os maiores scores médios.
+##### 📊 Tabela Completa de Indicadores por Partido (Todos os Partidos)
+Para consulta detalhada de compliance e cruzamento com sistemas de BI, abaixo estão listadas todas as 21 legendas ativas analisadas no pipeline:
 
-#### Concentração Média de Fornecedores por Partido
+| # | Partido | Score de Risco Médio | Qtd. Deputados | Concentração Média | Ticket Médio por Nota |
+|---|:---:|:---:|:---:|:---:|:---:|
+| 1 | **CIDADANIA** | **0.269** | 2 | 27.08% | R$ 779 |
+| 2 | **PRD** | **0.229** | 3 | 22.32% | R$ 1.114 |
+| 3 | **PDT** | **0.179** | 10 | 30.03% | R$ 1.183 |
+| 4 | **PSB** | **0.168** | 16 | 21.04% | R$ 1.152 |
+| 5 | **UNIÃO** | **0.167** | 49 | 19.81% | R$ 1.458 |
+| 6 | **PSOL** | **0.163** | 12 | 25.08% | R$ 850 |
+| 7 | **PT** | **0.161** | 66 | 19.55% | R$ 984 |
+| 8 | **PP** | **0.161** | 47 | 18.46% | R$ 1.166 |
+| 9 | **PSD** | 0.157 | 47 | 21.53% | R$ 1.081 |
+| 10 | **PV** | 0.149 | 6 | 19.73% | R$ 1.108 |
+| 11 | **PSDB** | 0.138 | 18 | 23.72% | R$ 1.682 |
+| 12 | **PCdoB** | 0.135 | 11 | 14.77% | R$ 1.008 |
+| 13 | **REDE** | 0.134 | 4 | **41.92%** | R$ 2.997 |
+| 14 | **PL** | 0.129 | 95 | 20.73% | R$ 1.079 |
+| 15 | **MDB** | 0.126 | 38 | 24.92% | R$ 1.440 |
+| 16 | **NOVO** | 0.125 | 5 | 26.67% | R$ 718 |
+| 17 | **PODE** | 0.125 | 27 | 23.11% | R$ 1.731 |
+| 18 | **REPUBLICANOS** | 0.106 | 43 | 20.63% | R$ 1.144 |
+| 19 | **SOLIDARIEDADE** | 0.103 | 7 | 21.29% | R$ 1.125 |
+| 20 | **AVANTE** | 0.054 | 6 | 20.89% | R$ 1.137 |
+| 21 | **MISSÃO** | 0.000 | 1 | **57.80%** | R$ 994 |
 
-O `kpi_concentracao_fornecedor` mede que **% do gasto total** de cada deputado vai para um único CNPJ. Média alta pode indicar uso recorrente de empresas "laranja".
-
-| Partido | Concentração Média | Deputados | Interpretação |
-|:---:|---:|:---:|:---|
-| MISSÃO | 57,80% | 1 | ⚠️ Amostra mínima (Kim Kataguiri) |
-| REDE | 41,92% | 4 | 🔴 Alerta: média 2x acima do geral |
-| PDT | 30,03% | 10 | 🟡 Acima da mediana (19,2%) |
-| PSOL | 27,36% | 11 | 🟡 Acima da mediana |
-| MDB | 24,92% | 38 | 🟡 Bancada grande com concentração elevada |
-| PL | 18,62% | 95 | 🟢 Abaixo da mediana |
+> **Insight**: REDE e MISSÃO apresentam as maiores concentrações de fornecedores, mas possuem bancadas mínimas, o que distorce suas médias gerais. Entre os grandes partidos com bancadas representativas (> 10 deputados), o **PDT (30.03%)**, **PSDB (23.72%)** e **MDB (24.92%)** apresentam a maior dependência de CNPJs únicos.
 
 #### Crescimento Patrimonial Médio por Partido
 
-Média do crescimento bruto em R$ dos deputados com dados patrimoniais positivos (dados do TSE, 2018→2022/2024):
+Média de crescimento patrimonial em R$ dos deputados que apresentaram variação positiva no TSE (2018→2022/2024), destacando as 8 maiores médias:
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
 xychart-beta
     title "Crescimento Patrimonial Medio por Partido (R$ milhoes)"
-    x-axis ["MDB", "UNIAO", "PSDB", "SOLID.", "PDT", "PV", "PSB", "PSD", "PP", "PL"]
+    x-axis ["MDB", "UNIAO", "PSDB", "SOLID.", "PDT", "PV", "PSB", "PSD"]
     y-axis "R$ (milhoes)" 0 --> 6.5
-    bar [5.93, 2.70, 2.59, 2.53, 2.41, 1.75, 1.73, 1.50, 1.03, 1.01]
+    bar [5.93, 2.70, 2.59, 2.53, 2.41, 1.75, 1.73, 1.50]
 ```
 
-> **Insight**: O **MDB** lidera disparadamente com R$ 5,93M de crescimento médio — puxado pelos casos de Eunício Oliveira (R$ 68,9M) e Hercílio Coelho Diniz (R$ 27M). Mesmo excluindo esses outliers, o MDB permanece no topo.
+##### 📊 Tabela Completa de Crescimento Patrimonial por Partido (Todos os Partidos)
+Esta tabela exibe o crescimento médio de todos os partidos com deputados que declararam bens nas eleições analisadas:
+
+| # | Partido | Crescimento Médio (Positivos) | Deputados com Evolução | Principal Outlier (Caso Máximo) |
+|---|:---:|---:|:---:|:---|
+| 1 | **MDB** | **R$ 5.933.644** | 19 | Eunício Oliveira (R$ 68.9M) |
+| 2 | **UNIÃO** | **R$ 2.699.621** | 19 | José Nelto (R$ 40.6M) |
+| 3 | **PSDB** | **R$ 2.589.407** | 7 | Luciano Vieira (R$ 6.9M) |
+| 4 | **SOLIDARIEDADE** | **R$ 2.531.730** | 5 | Márcio Honaiser (R$ 8.2M) |
+| 5 | **PDT** | **R$ 2.407.087** | 5 | Mário Heringer (R$ 7.5M) |
+| 6 | **PV** | **R$ 1.749.554** | 2 | Bandeira de Mello (R$ 6.1M) |
+| 7 | **PSB** | **R$ 1.734.548** | 8 | Felipe Carreras (R$ 9.4M) |
+| 8 | **PSD** | **R$ 1.495.905** | 22 | Misael Varella (R$ 23.0M) |
+| 9 | **PP** | R$ 1.032.769 | 24 | Átila Lira (R$ 5.0M) |
+| 10 | **PL** | R$ 1.011.449 | 38 | Vinicius Gurgel (R$ 6.7M) |
+| 11 | **CIDADANIA** | R$ 853.520 | 1 | Arnaldo Jardim (R$ 1.1M) |
+| 12 | **PODE** | R$ 799.775 | 16 | Glaustin da Fokus (R$ 7.6M) |
+| 13 | **AVANTE** | R$ 797.131 | 3 | Waldemar Oliveira (R$ 2.3M) |
+| 14 | **PRD** | R$ 651.241 | 1 | Fred Costa (R$ 1.0M) |
+| 15 | **REPUBLICANOS** | R$ 534.710 | 19 | Jorge Goetten (R$ 2.1M) |
+| 16 | **PT** | R$ 446.023 | 25 | Vander Loubet (R$ 3.8M) |
+| 17 | **NOVO** | R$ 383.248 | 2 | Gilson Marques (R$ 841K) |
+| 18 | **MISSÃO** | R$ 223.579 | 1 | Kim Kataguiri (R$ 223K) |
+| 19 | **PCdoB** | R$ 169.076 | 4 | Renildo Calheiros (R$ 330K) |
+| 20 | **PSOL** | R$ 98.978 | 7 | Luiza Erundina (R$ 291K) |
+| 21 | **REDE** | R$ 60.449 | 2 | André Janones (R$ 118K) |
 
 ---
 
 ### 2️⃣ Análise Regional (por UF)
 
-**O que é**: Comparação dos indicadores por estado para identificar padrões regionais — "corredores de risco" geográficos onde anomalias se concentram.
+**O que é**: Comparação dos indicadores por estado para identificar padrões regionais — "corredores de risco" geográficos onde se concentram desvios de patrimônio ou cota.
 
-#### Score de Risco Médio por Estado
+#### Score de Risco Médio por Estado (Top 8)
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
 xychart-beta
-    title "Score de Risco Medio por UF (top 10)"
-    x-axis ["AP", "MA", "PB", "GO", "PI", "DF", "BA", "CE", "MG", "PR"]
+    title "Score de Risco Medio por UF (Top 8)"
+    x-axis ["AP", "MA", "PB", "GO", "PI", "DF", "BA", "CE"]
     y-axis "Score Medio" 0 --> 0.25
-    bar [0.222, 0.208, 0.206, 0.195, 0.183, 0.178, 0.176, 0.171, 0.160, 0.160]
+    bar [0.222, 0.208, 0.205, 0.195, 0.183, 0.178, 0.171, 0.163]
 ```
 
-#### Crescimento Patrimonial Médio por Estado
+##### 📊 Tabela Completa: Score de Risco por UF (Todos os 27 Estados)
+Abaixo estão detalhados os scores médios de risco de todas as Unidades da Federação, listadas em ordem decrescente de atenção:
 
-| # | UF | Cresc. Médio | Dep. c/ Dados | Principal Caso |
-|:---:|:---:|---:|:---:|:---|
-| 1 | **CE** | R$ 6.548.450 | 11 | Eunício Oliveira (R$ 68,9M) |
-| 2 | **GO** | R$ 5.237.830 | 11 | José Nelto (R$ 40,6M) |
-| 3 | **MG** | R$ 2.814.607 | 26 | Hercílio C. Diniz (R$ 27M) |
-| 4 | **MS** | R$ 2.120.108 | 6 | Rodolfo Nogueira (R$ 4,3M) |
-| 5 | **AP** | R$ 1.688.727 | 5 | Vinicius Gurgel (R$ 6,7M) |
+| # | UF | Score de Risco Médio | Qtd. Deputados Analisados |
+|---|:---:|:---:|:---:|
+| 1 | **AP** | **0.222** | 8 |
+| 2 | **MA** | **0.208** | 18 |
+| 3 | **PB** | **0.205** | 12 |
+| 4 | **GO** | **0.195** | 17 |
+| 5 | **PI** | **0.183** | 10 |
+| 6 | **DF** | **0.178** | 8 |
+| 7 | **BA** | **0.171** | 39 |
+| 8 | **CE** | **0.163** | 22 |
+| 9 | **PR** | **0.160** | 30 |
+| 10 | **MG** | 0.154 | 53 |
+| 11 | **RS** | 0.154 | 31 |
+| 12 | **PE** | 0.148 | 25 |
+| 13 | **SP** | 0.142 | 70 |
+| 14 | **TO** | 0.141 | 8 |
+| 15 | **MS** | 0.135 | 8 |
+| 16 | **RN** | 0.125 | 8 |
+| 17 | **PA** | 0.117 | 17 |
+| 18 | **SE** | 0.104 | 8 |
+| 19 | **RR** | 0.103 | 8 |
+| 20 | **SC** | 0.100 | 16 |
+| 21 | **AL** | 0.099 | 9 |
+| 22 | **RJ** | 0.099 | 46 |
+| 23 | **ES** | 0.097 | 10 |
+| 24 | **AM** | 0.093 | 8 |
+| 25 | **MT** | 0.087 | 8 |
+| 26 | **RO** | 0.066 | 8 |
+| 27 | **AC** | 0.057 | 8 |
 
-#### Concentração de Fornecedores por Estado
+#### Crescimento Patrimonial Médio por Estado (Todas as UFs)
+Lista de todas as 27 Unidades da Federação ordenada pelo crescimento médio bruto dos parlamentares com dados patrimoniais de evolução:
 
-| # | UF | Concentr. Média | Interpretação |
-|:---:|:---:|---:|:---|
-| 1 | **AM** | 37,65% | 🔴 Quase 2x a mediana nacional (19,2%) |
-| 2 | **AP** | 30,24% | 🔴 Alto — Amapá aparece em múltiplas análises |
-| 3 | **SE** | 27,69% | 🟡 Acima da mediana |
-| 4 | **GO** | 27,58% | 🟡 Goiás também com crescimento patrimonial alto |
-| 5 | **AL** | 27,24% | 🟡 Alagoas acima da mediana |
+| # | UF | Crescimento Médio | Deputados com Dados | Principal Caso (Outlier Regional) |
+|---|:---:|---:|:---:|:---|
+| 1 | **GO** | **R$ 3.374.006** | 13 | José Nelto (R$ 40.6M) |
+| 2 | **CE** | **R$ 3.029.970** | 19 | Eunício Oliveira (R$ 68.9M) |
+| 3 | **MS** | **R$ 1.586.037** | 7 | Rodolfo Nogueira (R$ 4.3M) |
+| 4 | **MG** | **R$ 1.204.869** | 45 | Hercílio Coelho Diniz (R$ 27.1M) |
+| 5 | **TO** | **R$ 1.156.771** | 7 | Filipe Martins (R$ 3.3M) |
+| 6 | **MA** | **R$ 1.112.522** | 16 | Márcio Honaiser (R$ 8.2M) |
+| 7 | **AP** | **R$ 1.055.455** | 5 | Vinicius Gurgel (R$ 6.7M) |
+| 8 | **PA** | **R$ 931.711** | 13 | Elcione Barbalho (R$ 3.0M) |
+| 9 | **AC** | **R$ 758.583** | 5 | Eduardo Velloso (R$ 3.8M) |
+| 10 | **PE** | **R$ 647.172** | 19 | Felipe Carreras (R$ 9.4M) |
+| 11 | **SE** | R$ 576.979 | 5 | Gustinho Ribeiro (R$ 1.9M) |
+| 12 | **BA** | R$ 501.532 | 34 | João Carlos Bacelar (R$ 6.0M) |
+| 13 | **AL** | R$ 485.452 | 6 | Arthur Lira (R$ 4.2M) |
+| 14 | **RR** | R$ 480.008 | 3 | Zé Haroldo Cathedral (R$ 2.7M) |
+| 15 | **PI** | R$ 462.667 | 7 | Átila Lira (R$ 5.0M) |
+| 16 | **SC** | R$ 422.649 | 13 | Jorge Goetten (R$ 2.1M) |
+| 17 | **RS** | R$ 400.540 | 29 | Giovani Cherini (R$ 4.8M) |
+| 18 | **RJ** | R$ 399.260 | 37 | Luciano Vieira (R$ 6.9M) |
+| 19 | **RO** | R$ 395.445 | 5 | Lucio Mosquini (R$ 1.7M) |
+| 20 | **ES** | R$ 362.569 | 7 | Da Vitória (R$ 1.5M) |
+| 21 | **PB** | R$ 315.498 | 11 | Aguinaldo Ribeiro (R$ 2.0M) |
+| 22 | **DF** | R$ 266.340 | 6 | Rodrigo Rollemberg (R$ 2.1M) |
+| 23 | **MT** | R$ 235.099 | 7 | Fabio Garcia (R$ 1.1M) |
+| 24 | **AM** | R$ 188.442 | 7 | Átila Lins (R$ 0.8M) |
+| 25 | **PR** | R$ 24.710 | 26 | Ricardo Barros (R$ 3.2M) |
+| 26 | **SP** | -R$ 77.049 | 59 | Vinicius Carvalho (R$ 2.1M) |
+| 27 | **RN** | -R$ 766.495 | 8 | Sargento Gonçalves (R$ 0.0M) |
 
-> **Insight**: **Amapá (AP)** aparece simultaneamente no top 3 de score de risco, concentração de fornecedores E crescimento patrimonial — uma tríplice presença que sugere padrões regionais sistêmicos.
+#### Concentração de Fornecedores por Estado (Todas as UFs)
+Proporção média da cota enviada a um único fornecedor por estado. Unidades da Federação com altas taxas indicam propensão a prestadores hegemônicos regionais:
+
+| # | UF | Concentração Média | Nível de Atenção / Observação |
+|---|:---:|---:|:---|
+| 1 | **AM** | **32.94%** | 🔴 Muito Alto (Amazonas lidera com ampla margem) |
+| 2 | **AP** | **30.24%** | 🔴 Alto (Amapá aparece com risco elevado em várias frentes) |
+| 3 | **SE** | **27.69%** | 🟡 Acima da mediana nacional |
+| 4 | **GO** | **27.58%** | 🟡 Goiás também com crescimento patrimonial alto |
+| 5 | **AL** | **27.24%** | 🟡 Alagoas acima da mediana |
+| 6 | **RJ** | 25.13% | 🟡 Rio de Janeiro |
+| 7 | **PA** | 24.43% | 🟡 Pará |
+| 8 | **RR** | 23.94% | 🟡 Roraima |
+| 9 | **SC** | 23.82% | 🟡 Santa Catarina |
+| 10 | **SP** | 23.11% | 🟡 São Paulo |
+| 11 | **CE** | 22.48% | Ceará |
+| 12 | **MA** | 22.23% | Maranhão |
+| 13 | **PE** | 21.53% | Pernambuco |
+| 14 | **RO** | 21.46% | Rondônia |
+| 15 | **DF** | 21.24% | Distrito Federal |
+| 16 | **RN** | 20.89% | Rio Grande do Norte |
+| 17 | **MS** | 20.05% | Mato Grosso do Sul |
+| 18 | **PI** | 18.72% | Piauí |
+| 19 | **PB** | 18.69% | Paraíba |
+| 20 | **MG** | 18.41% | Minas Gerais |
+| 21 | **TO** | 18.34% | Tocantins |
+| 22 | **PR** | 17.61% | Paraná |
+| 23 | **BA** | 16.81% | Bahia |
+| 24 | **ES** | 16.70% | Espírito Santo |
+| 25 | **RS** | 16.60% | Rio Grande do Sul |
+| 26 | **AC** | 16.50% | Acre |
+| 27 | **MT** | 16.44% | Mato Grosso |
+
+> **Insight**: **Amapá (AP)** e **Goiás (GO)** destacam-se conjuntamente com altos níveis de risco, concentração de fornecedores e crescimento patrimonial. O Amazonas (AM) possui a maior concentração média de cota do país, sendo uma UF prioritária de compliance.
 
 ---
 
@@ -404,25 +522,37 @@ pie showData
 
 A mediana da Câmara é apenas **0,9%** em consultorias. Estes deputados estão muito acima:
 
-| # | Deputado | Partido | % Consultoria | Gasto Total | Crescimento TSE |
+| # | Deputado | Partido/UF | % Consultoria | Gasto Total | Crescimento TSE |
 |:---:|:---|:---:|---:|---:|---:|
-| 1 | **Vicentinho Júnior** | PSDB | 🔴 **48,8%** | R$ 4,9M | R$ 601.689 |
-| 2 | **Aline Gurgel** | UNIÃO | 🔴 **39,4%** | R$ 2,1M | R$ 0 |
-| 3 | **Gustinho Ribeiro** | PP | 🔴 **38,2%** | R$ 3,5M | R$ 1.870.000 |
-| 4 | **Domingos Neto** | PSD | 🔴 **32,1%** | R$ 6,8M | -R$ 49.383 |
-| 5 | **Julio Cesar Ribeiro** | REPUBLICANOS | **25,6%** | R$ 1,5M | R$ 0 |
+| 1 | **Vicentinho Júnior** | PSDB/TO | 🔴 **48.8%** | R$ 4.9M | R$ 601,689 |
+| 2 | **Aline Gurgel** | UNIÃO/AP | 🔴 **39.4%** | R$ 2.1M | R$ 0 |
+| 3 | **Erika Kokay** | PT/DF | 🔴 **38.9%** | R$ 4.5M | -R$ 11,234 |
+| 4 | **Gustinho Ribeiro** | PP/SE | 🔴 **38.2%** | R$ 3.5M | R$ 1,870,000 |
+| 5 | **Domingos Neto** | PSD/CE | 🔴 **32.1%** | R$ 6.8M | -R$ 49,383 |
+| 6 | **Rosangela Gomes** | REPUBLICANOS/RJ | 🔴 **28.2%** | R$ 3.2M | -R$ 13,884 |
+| 7 | **Flávio Nogueira** | PT/PI | 🔴 **27.7%** | R$ 4.0M | -R$ 356,403 |
+| 8 | **Célio Silveira** | MDB/GO | 🔴 **26.8%** | R$ 4.5M | R$ 1,730,041 |
+| 9 | **Celso Sabino** | PDT/PA | 🔴 **26.0%** | R$ 2.2M | R$ 2,840,523 |
+| 10 | **Julio Cesar Ribeiro** | REPUBLICANOS/DF | 🔴 **25.6%** | R$ 2.3M | R$ 0 |
 
 > **Insight**: O top 1 (Vicentinho Júnior) gasta **54x mais** que a mediana em consultorias. A consultoria é a subcota com **maior correlação com o score de risco** (r = 0,71), confirmando que é o principal vetor de anomalia.
 
 #### Top 10 — Maior % de Gasto em Marketing
 
-| # | Deputado | Partido | % Marketing | Gasto Total | Crescimento TSE |
+| # | Deputado | Partido/UF | % Marketing | Gasto Total | Crescimento TSE |
 |:---:|:---|:---:|---:|---:|---:|
-| 1 | **Paulo Lemos** | PT | 🔴 **86,9%** | R$ 497K | R$ 0 |
-| 2 | **José Nelto** | UNIÃO | 🔴 **69,8%** | R$ 3,0M | R$ 40.649.515 |
-| 3 | **Glaustin da Fokus** | PODE | **62,3%** | R$ 2,8M | R$ 7.556.935 |
+| 1 | **Heloísa Helena** | REDE/RJ | 🔴 **87.1%** | R$ 40K | -R$ 61,655 |
+| 2 | **Fábio Macedo** | PODE/MA | 🔴 **83.2%** | R$ 1.2M | R$ 29,753 |
+| 3 | **Hercílio Coelho Diniz** | MDB/MG | 🔴 **79.5%** | R$ 1.2M | R$ 27,059,043 |
+| 4 | **Yury do Paredão** | MDB/CE | 🔴 **77.3%** | R$ 1.3M | R$ 0 |
+| 5 | **Marcelo Crivella** | REPUBLICANOS/RJ | 🔴 **76.4%** | R$ 1.6M | -R$ 30,839 |
+| 6 | **Silvio Antonio** | PL/MA | 🔴 **75.7%** | R$ 197K | R$ 556,336 |
+| 7 | **Albuquerque** | REPUBLICANOS/RR | 🔴 **75.2%** | R$ 1.9M | R$ 120,000 |
+| 8 | **Dorinaldo Malafaia** | PDT/AP | 🔴 **73.6%** | R$ 1.7M | R$ 0 |
+| 9 | **Alberto Fraga** | PL/DF | 🔴 **72.9%** | R$ 3.2M | R$ 15,438 |
+| 10 | **Eunício Oliveira** | MDB/CE | 🔴 **72.8%** | R$ 2.0M | R$ 68,945,783 |
 
-> **Insight**: José Nelto gasta 69,8% em marketing E cresceu R$ 40,6M — uma combinação extremamente suspeita.
+> **Insight**: Hercílio Coelho Diniz e Eunício Oliveira concentram mais de 70% de seus gastos em marketing E aparecem com crescimentos patrimoniais multimilionários no TSE, consolidando um forte sinal de alerta.
 
 ---
 
@@ -459,21 +589,33 @@ Z-Score = (Gasto do Deputado - Média do Grupo) / Desvio Padrão do Grupo
 
 | # | Deputado | Partido | Gasto Total | Z-Score | Interpretação |
 |:---:|:---|:---:|---:|---:|:---|
-| 1 | Cleber Verde | MDB | R$ 8,0M | **+2,76** | Gasta 2,76 desvios acima da média do MDB |
-| 2 | Márcio Marinho | REPUBLICANOS | R$ 7,2M | **+2,73** | Destoa fortemente dos Republicanos |
-| 3 | João C. Bacelar | PL | R$ 7,2M | **+2,45** | Top outlier do PL |
-| 4 | Wellington Roberto | PSD | R$ 8,6M | **+2,15** | Mais de 2 desvios no PSD |
-| 5 | Paulo Abi-Ackel | PSDB | R$ 6,9M | **+2,19** | Fortemente acima do PSDB |
+| 1 | Cleber Verde | MDB | R$ 8.0M | **+2.76** | Gasta 2.76 desvios acima da média do MDB |
+| 2 | Márcio Marinho | REPUBLICANOS | R$ 7.2M | **+2.73** | Gasta 2.73 desvios acima da média do REPUBLICANOS |
+| 3 | Augusto Coutinho | REPUBLICANOS | R$ 7.2M | **+2.71** | Gasta 2.71 desvios acima da média do REPUBLICANOS |
+| 4 | Hugo Motta | REPUBLICANOS | R$ 7.1M | **+2.65** | Gasta 2.65 desvios acima da média do REPUBLICANOS |
+| 5 | João Carlos Bacelar | PL | R$ 7.2M | **+2.45** | Gasta 2.45 desvios acima da média do PL |
+| 6 | Giovani Cherini | PL | R$ 7.2M | **+2.42** | Gasta 2.42 desvios acima da média do PL |
+| 7 | Vinicius Gurgel | PL | R$ 7.0M | **+2.36** | Gasta 2.36 desvios acima da média do PL |
+| 8 | Lincoln Portela | PL | R$ 6.9M | **+2.31** | Gasta 2.31 desvios acima da média do PL |
+| 9 | Luiza Erundina | PSOL | R$ 5.6M | **+2.30** | Gasta 2.30 desvios acima da média do PSOL |
+| 10 | Ruy Carneiro | PODE | R$ 5.0M | **+2.28** | Gasta 2.28 desvios acima da média do PODE |
 
 #### Top 10 — Maior Z-Score por UF (quem mais destoa do próprio estado)
 
 | # | Deputado | UF | Gasto Total | Z-Score UF |
 |:---:|:---|:---:|---:|---:|
-| 1 | Hugo Leal | RJ | R$ 5,97M | **+2,28** |
-| 2 | João Maia | RN | R$ 6,04M | **+1,97** |
-| 3 | Eduardo da Fonte | PE | R$ 6,45M | **+1,86** |
+| 1 | Pedro Uczai | SC | R$ 6.6M | **+2.92** |
+| 2 | Cleber Verde | MA | R$ 8.0M | **+2.53** |
+| 3 | Júlio Cesar | PI | R$ 7.8M | **+2.51** |
+| 4 | Aureo Ribeiro | RJ | R$ 6.3M | **+2.47** |
+| 5 | Nicoletti | RR | R$ 3.6M | **+2.46** |
+| 6 | Giacobo | PR | R$ 7.5M | **+2.31** |
+| 7 | Carlos Zarattini | SP | R$ 7.2M | **+2.30** |
+| 8 | Benedita da Silva | RJ | R$ 6.0M | **+2.28** |
+| 9 | Augusto Coutinho | PE | R$ 7.2M | **+2.28** |
+| 10 | Hugo Leal | RJ | R$ 6.0M | **+2.28** |
 
-> **Como interpretar**: Um Z-Score de +2,76 (Cleber Verde) significa que seu gasto está **muito acima** do que seria esperado para um deputado do MDB. Se ele está na média de R$ 2,93M e gasta R$ 8M, a diferença não é aleatória — é um padrão que merece investigação.
+> **Como interpretar**: Um Z-Score de +2,76 (Cleber Verde) significa que seu gasto está **muito acima** do que seria esperado para um deputado do MDB. Se ele está na média de R$ 2,93M e gasta R$ 8M, a diferença não é aleatória — é um padrão que merece investigação. Um Z-Score por UF de +2,92 (Pedro Uczai) significa que ele gasta muito acima da média dos colegas do mesmo estado de Santa Catarina.
 
 ---
 
