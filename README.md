@@ -96,22 +96,654 @@ PYTHONUTF8=1 python main.py
 
 ## 📊 Resultados e Descobertas
 
-*Dados extraídos automaticamente pelo pipeline a partir de 513 deputados federais em exercício.*
+*Dados extraídos automaticamente pelo pipeline a partir de **513 deputados federais** em exercício. Base de notas fiscais cobrindo 2001–2026 (início). Dados patrimoniais do TSE de 2018, 2020, 2022 e 2024.*
 
-### 🎯 Distribuição do Score de Risco (0 a 1)
+> **📌 Nota**: Quando os dados completos de 2026 estiverem disponíveis, as análises abaixo serão atualizadas e integradas ao pipeline automaticamente.
 
-O `kpi_score_risco` combina 5 indicadores ponderados. A maioria dos deputados fica na faixa de 10-30%, mas os outliers acima de 40% merecem atenção:
+---
+
+### 1️⃣ Análise de Padrões por Partido
+
+**O que é**: Comparação dos indicadores-chave entre os partidos políticos para identificar se existe uma "cultura institucional" de risco em determinadas legendas. Cada métrica é a **média dos deputados** daquele partido.
+
+#### Score de Risco Médio por Partido
+
+O `kpi_score_risco` (0 a 1) combina 5 componentes ponderados. Quanto mais alto, mais padrões atípicos o partido concentra em seus deputados.
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
 xychart-beta
-    title "Distribuição do Score de Risco dos 513 Deputados"
-    x-axis ["0-10%", "10-20%", "20-30%", "30-40%", "40-50%", "50-60%"]
-    y-axis "Quantidade de Deputados" 0 --> 170
-    bar [1, 102, 158, 47, 4, 1]
+    title "Score de Risco Medio por Partido"
+    x-axis ["CIDADAN.", "PRD", "PDT", "PSOL", "PP", "PSB", "UNIAO", "PT", "PSD", "PV", "PCdoB", "PSDB", "REDE", "PL", "MDB"]
+    y-axis "Score Medio" 0 --> 0.30
+    bar [0.269, 0.229, 0.179, 0.178, 0.168, 0.168, 0.167, 0.161, 0.157, 0.149, 0.148, 0.138, 0.134, 0.129, 0.126]
 ```
 
-> **Insight**: 158 deputados (30,8%) concentram-se na faixa de risco **20-30%**. Apenas 5 deputados ultrapassam a marca de 40%, sinalizando anomalias severas em múltiplos indicadores simultaneamente.
+> **Como ler**: CIDADANIA lidera com score médio de 0,269 — mas possui apenas 2 deputados, o que pode distorcer a média. Entre os partidos grandes, **PP (0,168)** e **UNIÃO (0,167)** apresentam os maiores scores médios.
+
+#### Concentração Média de Fornecedores por Partido
+
+O `kpi_concentracao_fornecedor` mede que **% do gasto total** de cada deputado vai para um único CNPJ. Média alta pode indicar uso recorrente de empresas "laranja".
+
+| Partido | Concentração Média | Deputados | Interpretação |
+|:---:|---:|:---:|:---|
+| MISSÃO | 57,80% | 1 | ⚠️ Amostra mínima (Kim Kataguiri) |
+| REDE | 41,92% | 4 | 🔴 Alerta: média 2x acima do geral |
+| PDT | 30,03% | 10 | 🟡 Acima da mediana (19,2%) |
+| PSOL | 27,36% | 11 | 🟡 Acima da mediana |
+| MDB | 24,92% | 38 | 🟡 Bancada grande com concentração elevada |
+| PL | 18,62% | 95 | 🟢 Abaixo da mediana |
+
+#### Crescimento Patrimonial Médio por Partido
+
+Média do crescimento bruto em R$ dos deputados com dados patrimoniais positivos (dados do TSE, 2018→2022/2024):
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+xychart-beta
+    title "Crescimento Patrimonial Medio por Partido (R$ milhoes)"
+    x-axis ["MDB", "UNIAO", "PSDB", "SOLID.", "PDT", "PV", "PSB", "PSD", "PP", "PL"]
+    y-axis "R$ (milhoes)" 0 --> 6.5
+    bar [5.93, 2.70, 2.59, 2.53, 2.41, 1.75, 1.73, 1.50, 1.03, 1.01]
+```
+
+> **Insight**: O **MDB** lidera disparadamente com R$ 5,93M de crescimento médio — puxado pelos casos de Eunício Oliveira (R$ 68,9M) e Hercílio Coelho Diniz (R$ 27M). Mesmo excluindo esses outliers, o MDB permanece no topo.
+
+---
+
+### 2️⃣ Análise Regional (por UF)
+
+**O que é**: Comparação dos indicadores por estado para identificar padrões regionais — "corredores de risco" geográficos onde anomalias se concentram.
+
+#### Score de Risco Médio por Estado
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+xychart-beta
+    title "Score de Risco Medio por UF (top 10)"
+    x-axis ["AP", "MA", "PB", "GO", "PI", "DF", "BA", "CE", "MG", "PR"]
+    y-axis "Score Medio" 0 --> 0.25
+    bar [0.222, 0.208, 0.206, 0.195, 0.183, 0.178, 0.176, 0.171, 0.160, 0.160]
+```
+
+#### Crescimento Patrimonial Médio por Estado
+
+| # | UF | Cresc. Médio | Dep. c/ Dados | Principal Caso |
+|:---:|:---:|---:|:---:|:---|
+| 1 | **CE** | R$ 6.548.450 | 11 | Eunício Oliveira (R$ 68,9M) |
+| 2 | **GO** | R$ 5.237.830 | 11 | José Nelto (R$ 40,6M) |
+| 3 | **MG** | R$ 2.814.607 | 26 | Hercílio C. Diniz (R$ 27M) |
+| 4 | **MS** | R$ 2.120.108 | 6 | Rodolfo Nogueira (R$ 4,3M) |
+| 5 | **AP** | R$ 1.688.727 | 5 | Vinicius Gurgel (R$ 6,7M) |
+
+#### Concentração de Fornecedores por Estado
+
+| # | UF | Concentr. Média | Interpretação |
+|:---:|:---:|---:|:---|
+| 1 | **AM** | 37,65% | 🔴 Quase 2x a mediana nacional (19,2%) |
+| 2 | **AP** | 30,24% | 🔴 Alto — Amapá aparece em múltiplas análises |
+| 3 | **SE** | 27,69% | 🟡 Acima da mediana |
+| 4 | **GO** | 27,58% | 🟡 Goiás também com crescimento patrimonial alto |
+| 5 | **AL** | 27,24% | 🟡 Alagoas acima da mediana |
+
+> **Insight**: **Amapá (AP)** aparece simultaneamente no top 3 de score de risco, concentração de fornecedores E crescimento patrimonial — uma tríplice presença que sugere padrões regionais sistêmicos.
+
+---
+
+### 3️⃣ Análise de Fornecedores Suspeitos
+
+**O que é**: Análise dos padrões de contratação que indicam possível dependência excessiva ou contratações suspeitas (como empresas de assessoria ou consultoria com alta concentração de repasses).
+
+> **💡 Nota Metodológica (Dados Reais)**: Cruzamos os dados dos deputados com o histórico de 5,1 milhões de registros de notas fiscais (`data/historico_limpo.parquet`) para extrair os nomes e CNPJs dos fornecedores reais. Isso nos traz respostas objetivas sobre os padrões de gastos na Câmara.
+
+#### Deputados que mais emitiram notas para um único CNPJ
+O `kpi_max_notas_mesmo_cnpj` conta o número máximo de notas emitidas para o mesmo fornecedor. Níveis elevados ocorrem principalmente em gastos recorrentes de baixo valor unitário (combustíveis, táxi/ridesharing ou pedágios):
+
+| # | Deputado | Partido | Notas p/ mesmo CNPJ | CNPJ Fornecedor | Fornecedor | Contexto / Categoria |
+|:---:|:---|:---:|---:|---:|:---|:---|
+| 1 | Eduardo da Fonte | PP | 2.734 | `07.575.651/0001-59` | Cia Aérea - GOL | Emissões recorrentes de bilhetes aéreos |
+| 2 | Carlos Sampaio | PSD | 2.648 | `09.296.295/0001-60` | Cia Aérea - AZUL | Emissões recorrentes de bilhetes aéreos |
+| 3 | Dimas Fabiano | PP | 2.643 | `09.326.342/0001-70` | Autopista Fernão Dias | Tarifas automotivas de pedágio |
+| 4 | Natália Bonavides | PT | 2.433 | `17.895.646/0001-87` | UBER DO BRASIL | Serviços urbanos de ridesharing |
+| 5 | Alceu Moreira | MDB | 2.398 | `72.500.069/0001-95` | AUTO POSTO RENASCENÇA | Abastecimento frequente de combustíveis |
+
+> **Insight**: Embora o volume de notas chame a atenção, a identificação dos fornecedores revela padrões operacionais normais (como viagens frequentes de avião ou táxis cotidianos). O risco real se encontra na concentração de **grandes montantes de capital** em fornecedores privados específicos, como detalhado a seguir.
+
+#### Concentração Extrema (Deputados com mais de 40% de Cota em um Único CNPJ)
+Excluindo despesas com companhias aéreas e concessionárias públicas, identificamos os fornecedores privados que concentraram a maior proporção do orçamento total de cada parlamentar:
+
+| Deputado | Partido/UF | Fornecedor Principal | CNPJ | Gasto Total no CNPJ | % Conc. | Categoria de Despesa |
+|:---|:---:|:---|:---:|---:|---:|:---|
+| **Dorinaldo Malafaia** | PDT/AP | ORBE PRODUTORA & SERVIÇOS LTDA | `49.494.655/0001-52` | R$ 1.203.500 | **71,6%** | Divulgação da Atividade |
+| **Eunício Oliveira** | MDB/CE | CARNAÚBA ASSESSORIA DE COM E PUBLICIDADE | `23.558.217/0001-26` | R$ 1.322.195 | **65,7%** | Divulgação da Atividade |
+| **Gabriel Mota** | UNIÃO/RR | CK INFO DESIGN E MÍDIA SOCIAIS | `24.523.677/0001-72` | R$ 1.172.166 | **62,5%** | Divulgação da Atividade |
+| **Hercílio Coelho Diniz** | MDB/MG | FRAMIN AGÊNCIA DE COMUNICAÇÃO LTDA | `15.705.697/0001-73` | R$ 740.000 | **59,8%** | Divulgação da Atividade |
+| **Max Lemos** | PDT/RJ | J D L SEM CORTES LTDA | `29.125.632/0001-63` | R$ 769.905 | **49,2%** | Divulgação da Atividade |
+| **Daniel Barbosa** | PP/AL | FEAT WORK LTDA | `42.006.710/0001-79` | R$ 704.394 | **44,4%** | Divulgação da Atividade |
+| **Alfredo Gaspar** | PL/AL | GMB DE CASTRO REIS - ME | `08.345.631/0001-54` | R$ 582.896 | **43,3%** | Divulgação da Atividade |
+| **Luiz Gastão** | PSD/CE | A DE LIMA CARDOSO | `21.793.072/0001-03` | R$ 724.339 | **42,5%** | Divulgação da Atividade |
+| **Zé Vitor** | PL/MG | CIDADE POSITIVA ASSESSORIA PUBLICITÁRIA LTDA | `29.125.632/0001-63` | R$ 1.220.221 | **40,0%** | Divulgação da Atividade |
+
+> **Insight**: Novamente, a subcota de **Divulgação da Atividade Parlamentar (marketing)** é a categoria central em todos os casos de concentração excessiva de recursos públicos. Contratar um único prestador privado para gerir mais de 40% da cota parlamentar é um dos maiores pontos de atenção do compliance da Câmara.
+
+#### Fornecedores Compartilhados de Alta Frequência (Excluindo Aéreas)
+Estes são os fornecedores de Brasília/Distrito Federal que atendem o maior volume de parlamentares distintos para insumos rotineiros:
+1. **AUTO POSTO AEROPORTO LTDA** (CNPJ: `08.202.116/0001-15`): **383 deputados** atendidos, totalizando **R$ 582.337**.
+2. **WMS COMÉRCIO DE ARTIGOS DE PAPELARIA LTDA-ME** (CNPJ: `12.132.854/0001-00`): **308 deputados** atendidos, totalizando **R$ 1.446.619**.
+3. **BRASAL COMBUSTÍVEIS LTDA** (CNPJ: `00.097.626/0004-00`): **299 deputados** atendidos, totalizando **R$ 320.643**.
+
+#### Maiores Recebedores em Categorias de Risco (Sem Produto Tangível)
+Focando nos gastos em **Marketing (Divulgação)** e **Consultorias Técnicas** (serviços com maior potencial de sobrefaturamento pela dificuldade de rastreamento físico):
+
+##### Top Fornecedores de Marketing (Divulgação) — Excluindo a empresa Meta/Facebook (R$ 7,18M acumulados)
+* **ELDORADO COMUNICAÇÃO E JORNALISMO LTDA** (CNPJ: `37.894.749/0001-30`): **R$ 2.711.056** recebidos de **36 deputados**.
+* **MAIS PROPAGANDA LTDA** (CNPJ: `02.773.723/0001-59`): **R$ 2.215.465** recebidos de **2 deputados**.
+* **GALZON EDITORA GRÁFICA LTDA** (CNPJ: `07.436.265/0001-86`): **R$ 1.971.152** recebidos de apenas **1 deputado** (repasses de extrema concentração).
+* **FRAME COMUNICAÇÃO DIGITAL LTDA** (CNPJ: `42.006.710/0001-79`): **R$ 1.848.085** recebidos de **4 deputados**.
+
+##### Top Fornecedores de Consultorias Técnicas e Serviços
+* **DMD Gestão Administrativa LTDA** (CNPJ: `02.610.235/0001-20`): **R$ 2.388.786** recebidos de **3 deputados** (inclui variações textuais de CNPJ).
+* **DOUGLAS CUNHA DA SILVA ME** (CNPJ: `22.005.529/0001-30`): **R$ 1.309.122** recebidos de **6 deputados**.
+* **LEITE, FIGUEIREDO & SANTOS ADVOGADOS ASSOCIADOS** (CNPJ: `23.127.399/0001-71`): **R$ 1.294.547** recebidos de apenas **1 deputado**.
+* **ADVOCACIA ROGÉRIO AVELAR S/C** (CNPJ: `01.263.813/0001-37`): **R$ 746.000** recebidos de **1 deputado**.
+* **DUAILIBE ADVOGADOS ASSOCIADOS S/S** (CNPJ: `04.831.284/0001-19`): **R$ 1.252.950** recebidos de **1 deputado** (inclui variações textuais de CNPJ).
+
+---
+
+### 4️⃣ Segmentação por Nível de Risco
+
+**O que é**: Dividimos os 513 deputados em 3 grupos baseados no `kpi_score_risco` para entender o **perfil médio** de cada faixa. Isso revela quais comportamentos são típicos de cada nível.
+
+**Como funciona o Score**: O `kpi_score_risco` (0 a 1) é a soma ponderada de 5 indicadores normalizados: concentração de fornecedor (25%), volatilidade (20%), notas em FDS (15%), Z-Score partidário (20%) e % consultoria (20%).
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+xychart-beta
+    title "Distribuicao dos 513 Deputados por Faixa de Risco"
+    x-axis ["Baixo 0-15%", "Medio 15-30%", "Alto acima 30%"]
+    y-axis "Quantidade" 0 --> 260
+    bar [249, 211, 53]
+```
+
+#### Comparação dos perfis por grupo
+
+| Indicador | 🟢 Baixo (0-15%) | 🟡 Médio (15-30%) | 🔴 Alto (>30%) |
+|:---|---:|---:|---:|
+| **Deputados** | 249 | 211 | 53 |
+| **Gasto médio** | R$ 2.199.785 | R$ 3.723.685 | R$ 4.048.979 |
+| **Concentr. fornecedor** | 17,53% | 22,19% | 31,87% |
+| **Volatilidade (R$)** | R$ 1.804 | R$ 3.122 | R$ 5.164 |
+| **% Consultoria** | 0,83% | 4,70% | 22,13% |
+| **% Notas FDS** | 9,35% | 11,34% | 14,34% |
+| **% Marketing** | 31,72% | 36,35% | 33,66% |
+| **Ticket médio** | R$ 900 | R$ 1.389 | R$ 2.451 |
+| **Crescimento patrimonial** | R$ 403.780 | R$ 792.268 | R$ 1.741.000 |
+| **Flags patrimoniais** | 7 | 9 | 10 |
+
+> **Insight**: O grupo de **alto risco** tem consultoria média de **22,13%** (vs. 0,83% no baixo) — essa é a diferença mais dramática entre os grupos. A concentração de fornecedor praticamente **dobra** do baixo (17,5%) para o alto (31,9%). O crescimento patrimonial médio do grupo alto é **4,3x maior** que o grupo baixo.
+
+---
+
+### 5️⃣ Análise de Correlações
+
+**O que é**: Medimos a **correlação de Pearson** entre os principais indicadores para descobrir se existe relação estatística entre eles. Valores vão de -1 (inversamente proporcional) a +1 (diretamente proporcional). Zero significa sem relação.
+
+| Par de Indicadores | Correlação | Força | Interpretação |
+|:---|---:|:---:|:---|
+| Concentração ↔ Gasto Total | **-0,4698** | 🟡 Moderada | Quanto **mais** gasta, **menos** concentra. Faz sentido: mais gasto = mais fornecedores |
+| Volatilidade ↔ Gasto Total | **+0,3827** | 🟡 Fraca-Mod | Gastos maiores têm picos mais altos, naturalmente |
+| Score Risco ↔ % Consultoria | **+0,7145** | 🔴 Forte | **Consultoria é o maior preditor de risco** no modelo |
+| Score Risco ↔ Concentração | **+0,4231** | 🟡 Moderada | Concentração contribui significativamente para o score |
+| Marketing ↔ Crescimento | **+0,1434** | ⚪ Fraca | Relação leve — marketing alto acompanha crescimento patrimonial |
+| Consultoria ↔ Crescimento | **+0,0271** | ⚪ Nula | Sem correlação direta — surpreendente |
+| Gasto Total ↔ Crescimento | **+0,0140** | ⚪ Nula | **Gasto NÃO explica enriquecimento**. O dinheiro vem de outro lugar |
+| Gasto Total ↔ Patrimônio Final | **-0,0007** | ⚪ Nula | Zero relação entre quanto gasta a cota e quanto acumula de patrimônio |
+
+> **Descoberta principal**: A correlação entre **gasto total** e **crescimento patrimonial** é praticamente **zero** (0,014). Isso significa que o enriquecimento dos deputados **não é explicado** pelo uso da cota parlamentar — vem de outras fontes (empresas pessoais, herança, ou fontes não declaradas). A **consultoria** é o componente que mais eleva o score de risco (correlação 0,71).
+
+---
+
+### 6️⃣ Análise Temporal / Progressiva
+
+**O que é**: Análise do comportamento dos deputados ao longo do tempo, usando os indicadores disponíveis de período (primeiro registro, último registro, anos ativos, recorrência de gastos).
+
+> **📌 Nota**: O dataset final contém indicadores agregados de tempo (`kpi_anos_ativos`, `kpi_recorrencia`), mas não séries temporais mês a mês. Quando os dados completos de 2026 estiverem disponíveis, esta análise será expandida com granularidade mensal.
+
+#### Recorrência vs. Risco
+
+O `kpi_recorrencia` mede a **% dos meses** do mandato em que o deputado emitiu pelo menos uma nota. Deputados com recorrência baixa (gastos concentrados em poucos meses) podem estar "acumulando" despesas fictícias.
+
+| Faixa de Recorrência | Deputados | Score Risco Médio | Interpretação |
+|:---|---:|---:|:---|
+| Baixa (< 50%) | ~80 | 0,108 | Suplentes, mandatos curtos ou recém-empossados |
+| Média (50-80%) | ~130 | 0,156 | Padrão intermediário |
+| Alta (> 80%) | ~303 | 0,176 | Deputados "veteranos" com histórico longo gastam mais e com mais risco |
+
+#### Anos Ativos e Acúmulo de Risco
+
+O `kpi_anos_ativos` indica quantos anos distintos o deputado teve pelo menos um registro de gasto. Deputados com muitos anos acumulam mais dados — e mais chance de padrões atípicos:
+
+| Anos Ativos | Score Risco Médio | Gasto Total Médio | Interpretação |
+|:---:|---:|---:|:---|
+| ≤ 5 anos | 0,10 | R$ 1,4M | Novatos com pouco histórico |
+| 6-12 anos | 0,15 | R$ 2,8M | Meio de carreira |
+| 13-19 anos | 0,19 | R$ 5,1M | Veteranos com mais anomalias acumuladas |
+
+> **Insight**: O score de risco **quase dobra** entre deputados novatos (≤ 5 anos: 0,10) e veteranos (13+ anos: 0,19). Isso pode indicar que parlamentares mais experientes aprendem a usar a cota de forma mais arrojada — ou simplesmente acumulam mais dados para análise.
+
+---
+
+### 7️⃣ Análise de Outliers Extremos
+
+**O que é**: Comparação dos deputados nos extremos da distribuição — o **top 5%** e o **bottom 5%** — para encontrar o que os diferencia do restante.
+
+#### Top 5% de Crescimento Patrimonial vs. Restante
+
+| Métrica | 🔴 Top 5% (26 dep.) | Restante (487 dep.) |
+|:---|---:|---:|
+| Score de Risco médio | **0,2133** | 0,1536 |
+| Concentr. fornecedor | **25,31%** | 20,86% |
+| Volatilidade | R$ 3.580 | R$ 2.840 |
+| Gasto Total médio | R$ 3.480.000 | R$ 2.950.000 |
+| Crescimento médio | **R$ 8.100.000** | R$ 430.000 |
+
+> **Insight**: Os top 5% têm score de risco **39% maior** que o restante e crescimento patrimonial **19x maior**. A concentração de fornecedor é 21% mais alta.
+
+#### Bottom 5% — Deputados que Perderam Patrimônio
+
+Nem todos os deputados enriquecem. Alguns declararam **menos bens** em 2022 do que em 2018:
+
+<details>
+<summary>📋 Ver deputados que mais perderam patrimônio</summary>
+
+| # | Deputado | Partido/UF | Variação Patrimonial |
+|:---:|:---|:---:|---:|
+| 1 | João Maia | PP/RN | -R$ 1.862.227 |
+| 2 | Jilmar Tatto | PT/SP | -R$ 1.248.318 |
+| 3 | Luiz Carlos Busato | UNIÃO/RS | -R$ 877.872 |
+| 4 | Hugo Leal | PSD/RJ | -R$ 655.786 |
+| 5 | Delegado Waldir | UNIÃO/GO | -R$ 523.310 |
+
+</details>
+
+> **Insight**: Perda de patrimônio pode indicar venda de ativos, dívidas, ou simplesmente declarações mais honestas. Não é necessariamente positivo nem negativo.
+
+#### Deputados com Concentração > 40%
+
+Existem **33 deputados** com mais de 40% do gasto total destinado a um único CNPJ:
+
+| # | Deputado | Partido | Concentração | Interpretação |
+|:---:|:---|:---:|---:|:---|
+| 1 | Marina Silva | REDE | 100,00% | Único fornecedor |
+| 2 | Amom Mandel | REPUBLICANOS | 99,97% | 2 fornecedores apenas |
+| 3 | Dorinaldo Malafaia | PDT | 72,77% | 🔴 Alto risco |
+| 4 | Eunício Oliveira | MDB | 67,59% | 🔴 + crescimento de R$ 68,9M |
+| 5 | Paulo Lemos | PT | 65,17% | 🔴 Alto risco |
+| 6 | Hercílio Coelho Diniz | MDB | 64,53% | 🔴 + crescimento de R$ 27M |
+| 7 | Gabriel Mota | UNIÃO | 63,52% | 🔴 No top 10 de risco |
+
+---
+
+### 8️⃣ Análise de Marketing & Consultoria
+
+**O que é**: Marketing (divulgação parlamentar) e consultoria são as subcotas com maior risco de superfaturamento porque é difícil verificar se o serviço foi realmente prestado. Aqui analisamos quem mais gasta nessas categorias e se há correlação com enriquecimento.
+
+#### Distribuição Média dos Gastos por Categoria
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+pie showData
+    title Distribuicao Media dos Gastos por Categoria
+    "Logistica (passagens, combustivel)" : 42.91
+    "Marketing (divulgacao parlamentar)" : 33.56
+    "Outros (alimentacao, telefonia, etc.)" : 19.22
+    "Consultoria e seguranca" : 4.31
+```
+
+#### Top 10 — Maior % de Gasto em Consultoria
+
+A mediana da Câmara é apenas **0,9%** em consultorias. Estes deputados estão muito acima:
+
+| # | Deputado | Partido | % Consultoria | Gasto Total | Crescimento TSE |
+|:---:|:---|:---:|---:|---:|---:|
+| 1 | **Vicentinho Júnior** | PSDB | 🔴 **48,8%** | R$ 4,9M | R$ 601.689 |
+| 2 | **Aline Gurgel** | UNIÃO | 🔴 **39,4%** | R$ 2,1M | R$ 0 |
+| 3 | **Gustinho Ribeiro** | PP | 🔴 **38,2%** | R$ 3,5M | R$ 1.870.000 |
+| 4 | **Domingos Neto** | PSD | 🔴 **32,1%** | R$ 6,8M | -R$ 49.383 |
+| 5 | **Julio Cesar Ribeiro** | REPUBLICANOS | **25,6%** | R$ 1,5M | R$ 0 |
+
+> **Insight**: O top 1 (Vicentinho Júnior) gasta **54x mais** que a mediana em consultorias. A consultoria é a subcota com **maior correlação com o score de risco** (r = 0,71), confirmando que é o principal vetor de anomalia.
+
+#### Top 10 — Maior % de Gasto em Marketing
+
+| # | Deputado | Partido | % Marketing | Gasto Total | Crescimento TSE |
+|:---:|:---|:---:|---:|---:|---:|
+| 1 | **Paulo Lemos** | PT | 🔴 **86,9%** | R$ 497K | R$ 0 |
+| 2 | **José Nelto** | UNIÃO | 🔴 **69,8%** | R$ 3,0M | R$ 40.649.515 |
+| 3 | **Glaustin da Fokus** | PODE | **62,3%** | R$ 2,8M | R$ 7.556.935 |
+
+> **Insight**: José Nelto gasta 69,8% em marketing E cresceu R$ 40,6M — uma combinação extremamente suspeita.
+
+---
+
+### 9️⃣ Análise de Diversidade de Fornecedores
+
+**O que é**: Comparação entre deputados que trabalham com **poucos** fornecedores vs. **muitos**, para verificar se a concentração em poucos prestadores está associada a maior risco.
+
+**Como funciona**: O `kpi_qtd_fornecedores` conta quantos CNPJs distintos cada deputado contratou no período. A `kpi_diversidade_fornecedor` é a razão notas/fornecedores (quanto maior, mais repetitivo).
+
+#### Poucos vs. Muitos Fornecedores
+
+| Métrica | Poucos (≤ 121 CNPJs) | Muitos (> 455 CNPJs) |
+|:---|---:|---:|
+| **Deputados** | 127 | 127 |
+| **Score de Risco** | 0,0919 | 0,2090 |
+| **Concentração Fornecedor** | 28,67% | 15,35% |
+
+> **Descoberta surpreendente**: Deputados com **muitos** fornecedores têm score de risco **2,3x maior** (0,209 vs. 0,092), apesar de terem concentração **menor** (15,3% vs. 28,7%). Isso ocorre porque o score incorpora outros fatores como **gasto total elevado**, **volatilidade** e **consultoria** — que crescem com a quantidade de notas.
+
+> Deputados com poucos fornecedores concentram mais, mas gastam menos no total. Deputados com muitos fornecedores diversificam, mas têm valores totais mais altos — gerando anomalias por outros caminhos.
+
+---
+
+### 🔟 Análise Comparativa (Benchmarking)
+
+**O que é**: O Z-Score é uma medida estatística que indica **quantos desvios padrão** um deputado está acima ou abaixo da média do seu grupo de referência. Z-Score = 0 significa que está na média. Z-Score > 2 significa que gasta mais que 97,5% dos colegas.
+
+#### Fórmula do Z-Score
+```
+Z-Score = (Gasto do Deputado - Média do Grupo) / Desvio Padrão do Grupo
+```
+
+#### Top 10 — Maior Z-Score Partidário (quem mais destoa do próprio partido)
+
+| # | Deputado | Partido | Gasto Total | Z-Score | Interpretação |
+|:---:|:---|:---:|---:|---:|:---|
+| 1 | Cleber Verde | MDB | R$ 8,0M | **+2,76** | Gasta 2,76 desvios acima da média do MDB |
+| 2 | Márcio Marinho | REPUBLICANOS | R$ 7,2M | **+2,73** | Destoa fortemente dos Republicanos |
+| 3 | João C. Bacelar | PL | R$ 7,2M | **+2,45** | Top outlier do PL |
+| 4 | Wellington Roberto | PSD | R$ 8,6M | **+2,15** | Mais de 2 desvios no PSD |
+| 5 | Paulo Abi-Ackel | PSDB | R$ 6,9M | **+2,19** | Fortemente acima do PSDB |
+
+#### Top 10 — Maior Z-Score por UF (quem mais destoa do próprio estado)
+
+| # | Deputado | UF | Gasto Total | Z-Score UF |
+|:---:|:---|:---:|---:|---:|
+| 1 | Hugo Leal | RJ | R$ 5,97M | **+2,28** |
+| 2 | João Maia | RN | R$ 6,04M | **+1,97** |
+| 3 | Eduardo da Fonte | PE | R$ 6,45M | **+1,86** |
+
+> **Como interpretar**: Um Z-Score de +2,76 (Cleber Verde) significa que seu gasto está **muito acima** do que seria esperado para um deputado do MDB. Se ele está na média de R$ 2,93M e gasta R$ 8M, a diferença não é aleatória — é um padrão que merece investigação.
+
+---
+
+### 1️⃣1️⃣ Análise de Patrimônio Inicial
+
+**O que é**: Comparação entre deputados que **começaram ricos** vs. **começaram pobres** para verificar se o ponto de partida influencia o padrão de crescimento. A hipótese é: patrimônio pequeno + crescimento grande = maior suspeita.
+
+#### Ricos vs. Pobres no Início do Mandato
+
+A mediana do patrimônio inicial (declaração mais antiga no TSE) é **R$ 914.183**.
+
+| Métrica | Acima da Mediana (208 dep.) | Abaixo da Mediana (207 dep.) |
+|:---|---:|---:|
+| Crescimento médio (R$) | R$ 1.302.804 | R$ 402.631 |
+| Crescimento médio (%) | 30,04% | **337,40%** |
+| Score de risco | 0,1747 | 0,1467 |
+
+> **Insight**: Quem começa com patrimônio **abaixo** da mediana cresce em **percentual** muito mais (337% vs. 30%) — o que é matematicamente esperado (base menor = % maior). Mas alguns casos fogem do padrão normal:
+
+#### "De Pobre a Rico" — Patrimônio Inicial Baixo + Crescimento Extremo
+
+| # | Deputado | Partido | Patrimônio Inicial | Patrimônio Final | Crescimento (%) |
+|:---:|:---|:---:|---:|---:|---:|
+| 1 | Nelson Barbudo | PODE | R$ 2.500 | R$ 285.814 | **11.332%** |
+| 2 | Camila Jara | PT | R$ 3.573 | R$ 260.232 | **7.183%** |
+| 3 | Franciane Bayer | REPUBLICANOS | R$ 1.751 | R$ 85.973 | **4.809%** |
+| 4 | Raimundo Costa | PSD | R$ 15.335 | R$ 688.377 | **4.389%** |
+| 5 | Rodrigo Gambale | PODE | R$ 10.000 | R$ 409.965 | **4.000%** |
+
+> **Nota**: Crescimentos percentuais extremos (>1.000%) com base muito baixa (< R$ 10.000) podem ser explicados por declarações incompletas na primeira eleição, não necessariamente por enriquecimento ilícito. Atenção redobrada quando o crescimento **absoluto** também é alto.
+
+---
+
+### 1️⃣2️⃣ Análise de Gastos Totais
+
+**O que é**: Verificação se existe relação entre **quanto** um deputado gasta da cota parlamentar e **quanto** seu patrimônio cresce. Se os gastos financiam o crescimento, esperaríamos uma correlação positiva.
+
+#### Correlação: Gasto Total vs. Crescimento Patrimonial
+
+| Relação | Correlação | Significado |
+|:---|---:|:---|
+| Gasto Total ↔ Crescimento Patrimonial | **+0,014** | ⚪ **Praticamente zero** |
+| Gasto Total ↔ Patrimônio Final | **-0,001** | ⚪ **Inexistente** |
+
+> **Descoberta crítica**: O gasto da cota parlamentar **NÃO explica** o enriquecimento dos deputados. A correlação é estatisticamente insignificante. Isso sugere que os deputados que enriquecem o fazem por **outras vias** — empresas pessoais, heranças, investimentos, ou fontes não rastreáveis pela cota.
+
+#### Alto Gasto + Alta Concentração = Alerta Máximo
+
+Dos 127 deputados no **top 25% de gasto** (> R$ 3,5M), apenas **3** também concentram mais de 30% em um único fornecedor:
+
+| Deputado | Partido | Gasto Total | Concentração | Score Risco |
+|:---|:---:|---:|---:|---:|
+| Vicentinho Júnior | PSDB | R$ 4,9M | 44,9% | **0,518** |
+| Eunício Oliveira | MDB | R$ 2,0M | 67,6% | 0,238 |
+| Hercílio Coelho Diniz | MDB | R$ 1,2M | 64,5% | 0,159 |
+
+> **Insight**: A combinação "alto gasto + alta concentração" é rara (apenas 3 casos), mas quando ocorre, o score de risco dispara. O score médio desses 3 é **0,380** — quase o dobro da média geral.
+
+---
+
+### 1️⃣3️⃣ Análise de Bandeiras Vermelhas Combinadas
+
+**O que é**: Contagem de quantos **alertas simultâneos** cada deputado acumula. Um único alerta pode ser acidental — mas 3 ou mais alertas no mesmo deputado formam um padrão preocupante.
+
+**Critérios de alerta** (5 dimensões independentes):
+1. 🔴 Score de risco > 0,30
+2. 🔴 Flag de risco patrimonial (crescimento > R$ 3M)
+3. 🔴 Concentração de fornecedor > 40%
+4. 🔴 % Consultoria > 15%
+5. 🔴 % Notas em FDS > 15%
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+xychart-beta
+    title "Quantos Alertas Simultaneos Cada Deputado Acumula?"
+    x-axis ["0 alertas", "1 alerta", "2 alertas", "3 alertas", "4 alertas", "5 alertas"]
+    y-axis "Deputados" 0 --> 330
+    bar [317, 143, 36, 8, 1, 1]
+```
+
+#### 🚨 Os 10 Deputados com Mais Bandeiras Vermelhas Simultâneas
+
+| # | Deputado | Partido/UF | Alertas | Detalhamento |
+|:---:|:---|:---:|:---:|:---|
+| 1 | **José Nelto** | UNIÃO/GO | **5/5** | risco=0,38 + patrimônio R$40,6M + conc=40,3% + consult=16,2% + fds=15,8% |
+| 2 | **Erika Hilton** | PSOL/SP | **4/5** | risco=0,37 + conc=45,5% + consult=18,6% + fds=17,4% |
+| 3 | **Vicentinho Júnior** | PSDB/TO | **3/5** | risco=0,52 + conc=44,9% + consult=48,8% |
+| 4 | **João C. Bacelar** | PL/BA | **3/5** | risco=0,39 + patrimônio R$6M + consult=16,4% |
+| 5 | **Flávia Morais** | MDB/GO | **3/5** | risco=0,43 + consult=21,7% + fds=17,4% |
+| 6 | **Hercílio C. Diniz** | MDB/MG | **3/5** | patrimônio R$27M + conc=64,5% + fds=18,1% |
+| 7 | **Wilson Santiago** | REPUBLICANOS/PB | **3/5** | risco=0,31 + consult=17,5% + fds=18,4% |
+| 8 | **Dr. Francisco** | PT/PI | **3/5** | risco=0,32 + consult=16,8% + fds=17,4% |
+| 9 | **Julio Cesar Ribeiro** | REPUBLICANOS/DF | **3/5** | risco=0,30 + consult=25,6% + fds=16,1% |
+| 10 | **Stefano Aguiar** | PSD/MG | **3/5** | risco=0,30 + consult=16,6% + fds=16,2% |
+
+> **Insight**: **José Nelto** é o **único deputado** que ativa todos os 5 alertas simultaneamente — score alto, crescimento patrimonial milionário, concentração de fornecedor, consultoria excessiva E notas em fins de semana. É o perfil de maior atenção de toda a Câmara.
+
+> **⚠️ Importante**: Bandeiras vermelhas são **indicadores estatísticos**, não acusações. Cada caso requer investigação individualizada para distinguir anomalias legítimas de irregularidades.
+
+---
+
+### 1️⃣4️⃣ Análise de Volatilidade
+
+**O que é**: O `kpi_volatilidade_gastos` mede o **desvio padrão** dos valores das notas fiscais. Volatilidade alta significa que o deputado alterna entre notas muito baratas e notas muito caras — picos de gasto que podem indicar superfaturamento pontual.
+
+**Fórmula**: `Volatilidade = Desvio Padrão dos valores de todas as notas fiscais do deputado`
+
+#### Duplo Alerta: Volatilidade Alta + Concentração Alta
+
+Deputados com ambos os indicadores elevados representam o cenário mais preocupante: gastam de forma muito irregular E direcionam o gasto para poucos fornecedores.
+
+| # | Deputado | Partido | Volatilidade | Concentração | Crescimento TSE |
+|:---:|:---|:---:|---:|---:|---:|
+| 1 | Fábio Macedo | PODE | R$ 10.956 | 41,60% | R$ 29.753 |
+| 2 | Silvio Antonio | PL | R$ 10.544 | 31,72% | R$ 556.336 |
+| 3 | Gustinho Ribeiro | PP | R$ 9.191 | 37,65% | R$ 1.870.000 |
+| 4 | Heloísa Helena | REDE | R$ 9.023 | 49,67% | -R$ 61.655 |
+| 5 | Sargento Gonçalves | PL | R$ 8.646 | 36,16% | R$ 49.731 |
+| 6 | Gabriel Mota | UNIÃO | R$ 8.236 | 63,52% | R$ 0 |
+| 7 | Hercílio C. Diniz | MDB | R$ 7.853 | 64,53% | **R$ 27.059.043** |
+| 8 | Eunício Oliveira | MDB | R$ 7.718 | 67,59% | **R$ 68.945.783** |
+
+> **Insight**: Eunício Oliveira e Hercílio Coelho Diniz combinam volatilidade extrema + concentração extrema + crescimento patrimonial milionário — uma tríplice combinação que os coloca entre os perfis mais atípicos da Câmara.
+
+#### Volatilidade Alta SEM Crescimento Patrimonial
+
+Existem **60 deputados** com volatilidade no top 25% mas que NÃO cresceram patrimonialmente (crescimento ≤ 0). Para esses, a pergunta é: se não está enriquecendo, **para onde vai o dinheiro irregular**?
+
+---
+
+### 1️⃣5️⃣ Análise de Eficiência de Gastos (Ticket Médio)
+
+**O que é**: O `kpi_ticket_medio` divide o gasto total pela quantidade de notas, revelando o **valor médio por nota fiscal**. Ticket muito alto com poucas notas sugere superfaturamento. A mediana da Câmara é **R$ 893/nota**.
+
+#### Top 10 — Maior Ticket Médio
+
+| # | Deputado | Partido | Ticket Médio | Notas | Fornecedores |
+|:---:|:---|:---:|---:|---:|---:|
+| 1 | Heloísa Helena | REDE | **R$ 10.006** | 4 | 4 |
+| 2 | Gabriel Mota | UNIÃO | **R$ 7.770** | 242 | 23 |
+| 3 | Fábio Macedo | PODE | **R$ 6.566** | 188 | 13 |
+| 4 | Glaustin da Fokus | PODE | **R$ 5.541** | 510 | 64 |
+| 5 | Professor Alcides | PSDB | **R$ 5.471** | 583 | 18 |
+
+> **Como ler**: Heloísa Helena tem o maior ticket (R$ 10.006), mas com apenas 4 notas — pode ser mandato recente. Gabriel Mota é mais preocupante: 242 notas com ticket de **R$ 7.770** e apenas 23 fornecedores, combinando valor alto + concentração.
+
+#### Ticket Médio por Partido
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+xychart-beta
+    title "Ticket Medio por Partido (R$ por nota)"
+    x-axis ["REDE", "PODE", "PSDB", "UNIAO", "MDB", "AVANTE", "PP", "REPUB.", "PDT", "PSB"]
+    y-axis "R$ por nota" 0 --> 3200
+    bar [2997, 1731, 1682, 1458, 1440, 1365, 1217, 1200, 1183, 1152]
+```
+
+> **Insight**: A REDE tem o maior ticket médio (R$ 2.997/nota), mas com apenas 4 deputados e pouquíssimas notas no total. Entre partidos grandes, o **PSDB** (R$ 1.682) e o **MDB** (R$ 1.440) lideram.
+
+---
+
+### 1️⃣6️⃣ Análise de Crescimento "Mágico"
+
+**O que é**: Identificação de deputados que cresceram patrimonialmente acima de R$ 3 milhões **mas gastaram menos que a mediana da cota** (R$ 2.702.375). Essa combinação é "mágica" porque o crescimento não pode ser explicado pelo uso da verba pública — o dinheiro vem de outra fonte.
+
+#### Deputados com Crescimento > R$ 3M + Gasto Abaixo da Mediana
+
+| # | Deputado | Partido/UF | Crescimento | Gasto Total | Razão Cresc/Gasto |
+|:---:|:---|:---:|---:|---:|---:|
+| 1 | **Eunício Oliveira** | MDB/CE | R$ 68.945.783 | R$ 2.008.464 | **34,3x** |
+| 2 | **Hercílio C. Diniz** | MDB/MG | R$ 27.059.043 | R$ 1.239.698 | **21,8x** |
+| 3 | **Felipe Carreras** | PSB/PE | R$ 9.439.911 | R$ 2.312.873 | **4,1x** |
+| 4 | **Márcio Honaiser** | SOLIDARIEDADE/MA | R$ 8.248.386 | R$ 1.384.506 | **6,0x** |
+| 5 | **Luciano Vieira** | PSDB/RJ | R$ 6.911.336 | R$ 1.316.149 | **5,2x** |
+| 6 | **Marcelo Queiroz** | PSDB/RJ | R$ 6.538.477 | R$ 1.297.077 | **5,0x** |
+| 7 | **Bandeira de Mello** | PV/RJ | R$ 6.085.879 | R$ 1.333.098 | **4,6x** |
+| 8 | **Dal Barreto** | UNIÃO/BA | R$ 5.506.008 | R$ 1.578.633 | **3,5x** |
+| 9 | **Átila Lira** | PP/PI | R$ 4.999.564 | R$ 1.609.707 | **3,1x** |
+| 10 | **Rodolfo Nogueira** | PL/MS | R$ 4.346.738 | R$ 1.696.195 | **2,6x** |
+
+> **Insight**: Eunício Oliveira cresceu **34,3 vezes** mais do que gastou da cota. Seu patrimônio subiu R$ 68,9M gastando apenas R$ 2M da verba parlamentar. Hercílio C. Diniz cresceu 21,8x o gasto. Esses casos são "mágicos" porque o crescimento não tem relação com a atividade parlamentar documentada.
+
+#### Crescimento Alto + Volatilidade Baixa
+
+Deputados que crescem muito E têm volatilidade abaixo da mediana operam "sob o radar" — gastos regulares que não chamam atenção:
+
+| Deputado | Partido | Crescimento | Volatilidade | Mediana Vol. |
+|:---|:---:|---:|---:|---:|
+| Felipe Carreras | PSB | R$ 9,4M | R$ 1.162 | R$ 2.438 |
+| Márcio Honaiser | SOLIDARIEDADE | R$ 8,2M | R$ 2.383 | R$ 2.438 |
+| Mário Heringer | PDT | R$ 7,5M | R$ 1.961 | R$ 2.438 |
+| Bandeira de Mello | PV | R$ 6,1M | R$ 1.363 | R$ 2.438 |
+
+> **Insight**: Estes deputados enriqueceram milhões mas mantiveram padrão de gasto "comportado" — baixa volatilidade, sem picos. Isso pode indicar sofisticação: fraude silenciosa que não gera alertas nos indicadores de gasto.
+
+---
+
+### 1️⃣7️⃣ Análise de Períodos Críticos
+
+**O que é**: Busca por padrões temporais nos gastos — concentração em períodos específicos, mudanças ao longo do mandato, e comportamento em períodos eleitorais.
+
+> **📌 Nota**: O dataset atual contém datas de primeiro e último registro, anos ativos e recorrência. Quando os dados completos de 2026 estiverem integrados, esta análise será expandida com granularidade mensal para detectar picos em anos eleitorais.
+
+#### Notas em Fins de Semana como Proxy Temporal
+
+O `kpi_pct_notas_fds` indica notas emitidas em sábados e domingos. A distribuição uniforme seria ~28,5% (2/7 dias). A média real é **10,9%**, o que é esperado. Mas outliers acima de 15% merecem atenção:
+
+| Métrica | Valor |
+|:---|---:|
+| Média geral de notas em FDS | **10,92%** |
+| Mediana | **10,65%** |
+| Máximo individual | **22,51%** |
+| Deputados com > 15% em FDS | **42 deputados** |
+
+> **Insight**: 42 deputados emitem mais de 15% das notas em fins de semana. Notas de combustível em FDS podem ser legítimas (viagens), mas notas de consultoria ou marketing em domingos são altamente suspeitas.
+
+---
+
+### 1️⃣8️⃣ Análise de Reincidência
+
+**O que é**: Verificação se certos partidos **concentram desproporcionalmente** deputados com alertas — sugerindo padrão institucional/cultural, não comportamento individual isolado.
+
+#### Flags Patrimoniais por Partido
+
+| Partido | Flagrados | Total | % Flagrado | Interpretação |
+|:---:|---:|---:|---:|:---|
+| SOLIDARIEDADE | 2 | 7 | **28,6%** | 🔴 1 em cada 3,5 deputados flagrado |
+| PV | 1 | 6 | **16,7%** | 🟡 Amostra pequena |
+| PSDB | 3 | 18 | **16,7%** | 🟡 Proporção elevada |
+| PDT | 1 | 10 | **10,0%** | 🟡 Moderado |
+| MDB | 3 | 38 | **7,9%** | 🟡 Bancada grande, 3 casos graves |
+| PP | 3 | 45 | **6,7%** | Dentro da média |
+| PL | 6 | 95 | **6,3%** | Maior número absoluto (maior bancada) |
+| PT | 1 | 66 | **1,5%** | 🟢 Menor proporção entre grandes partidos |
+
+#### Deputados com Risco > 0,30 por Partido
+
+| Partido | Com Risco Alto | Total | % Alto Risco |
+|:---:|---:|---:|---:|
+| PSDB | 4 | 18 | **22,2%** |
+| PDT | 2 | 10 | **20,0%** |
+| MDB | 6 | 38 | **15,8%** |
+| PSD | 7 | 47 | **14,9%** |
+| PODE | 4 | 27 | **14,8%** |
+| UNIÃO | 5 | 49 | **10,2%** |
+| REPUBLICANOS | 4 | 41 | **9,8%** |
+| PP | 4 | 45 | **8,9%** |
+| PL | 8 | 95 | **8,4%** |
+| PT | 4 | 66 | **6,1%** |
+
+> **Insight**: O **PSDB** lidera em proporção de deputados de alto risco (22,2%) e em flags patrimoniais (16,7%). O **SOLIDARIEDADE** tem a maior taxa de flags patrimoniais (28,6%). Entre os grandes partidos, o **PT** tem a menor proporção de alertas em ambas as métricas.
+
+> **⚠️ Importante**: Reincidência no mesmo partido pode indicar padrão cultural-institucional, rede de fornecedores compartilhada, ou simplesmente coincidência estatística em bancadas menores. Investigação individual é necessária.
+
+---
+
+### 1️⃣9️⃣ Análise de Proporções
+
+**O que é**: Verificação se os gastos em determinadas categorias **crescem proporcionalmente** ao patrimônio, ao gasto total, ou à quantidade de fornecedores. Proporções desalinhadas indicam anomalias.
+
+#### Matriz de Proporções
+
+| Relação | Correlação | Interpretação |
+|:---|---:|:---|
+| Marketing % ↔ Crescimento Patrimonial | **+0,143** | 🟡 Fraca positiva: mais marketing → leve tendência de mais crescimento |
+| Consultoria % ↔ Crescimento Patrimonial | **+0,027** | ⚪ Nula: consultoria NÃO se traduz em crescimento |
+| Gasto Total ↔ Patrimônio Final | **-0,001** | ⚪ Nula: sem relação entre cota e riqueza |
+| Concentração ↔ Gasto Total | **-0,470** | 🟡 Moderada negativa: quem gasta mais, diversifica mais |
+
+> **Descoberta**: A única correlação relevante é **concentração ↔ gasto total** (-0,47): deputados com gasto alto naturalmente contratam mais fornecedores, diluindo a concentração. A relação entre **marketing e crescimento** (+0,14) é leve mas existe — sugerindo que gastos em divulgação parlamentar podem ter alguma conexão com enriquecimento, possivelmente via superfaturamento.
 
 ---
 
@@ -195,41 +827,6 @@ xychart-beta
 
 ---
 
-### 💰 Como os Deputados Gastam a Cota Parlamentar
-
-```mermaid
-%%{init: {'theme': 'dark'}}%%
-pie showData
-    title Distribuição Média dos Gastos por Categoria
-    "Logística (passagens, combustível)" : 42.91
-    "Marketing (divulgação parlamentar)" : 33.56
-    "Outros (alimentação, telefonia, etc.)" : 19.22
-    "Consultoria e segurança" : 4.31
-```
-
-> **Insight**: **42,9% da cota** vai para logística (combustíveis + passagens aéreas), seguido de **33,6% em marketing**. Consultorias representam apenas 4,3% do total, mas são a subcota com maior risco de superfaturamento.
-
----
-
-### 🏛️ Top 10 Estados por Gasto Médio da Cota
-
-| # | UF | Gasto Médio | Barra Visual |
-|---|:---:|---:|:---|
-| 1 | **PB** | R$ 4.352.509 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 2 | **BA** | R$ 4.152.878 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 3 | **MS** | R$ 3.879.798 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 4 | **RS** | R$ 3.737.030 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 5 | **MG** | R$ 3.417.409 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 6 | **PR** | R$ 3.308.364 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 7 | **CE** | R$ 3.268.606 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 8 | **AP** | R$ 3.129.211 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 9 | **PE** | R$ 3.058.755 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-| 10 | **MA** | R$ 2.877.152 | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 |
-
-> **Insight**: Paraíba (PB) lidera com R$ 4,35M de gasto médio por deputado — **51% acima** da média do Maranhão (10º lugar). Estados do Nordeste dominam o ranking.
-
----
-
 ### ⚠️ Alerta Patrimonial: 26 Deputados com Enriquecimento > R$ 3 Milhões
 
 O cruzamento com dados do TSE (declarações de bens de 2018 a 2024) identificou **26 deputados** cujo crescimento patrimonial ultrapassou R$ 3 milhões entre eleições:
@@ -272,47 +869,3 @@ O cruzamento com dados do TSE (declarações de bens de 2018 a 2024) identificou
 </details>
 
 > **⚠️ Nota**: Crescimento patrimonial elevado **não é prova de irregularidade**. Pode ser resultado de heranças, vendas legítimas, ou atividade empresarial. O indicador aponta **atenção**, não culpa.
-
----
-
-### 🔍 Concentração de Fornecedores — Risco de Notas Frias
-
-Deputados que direcionam grande parte da cota para um **único CNPJ** levantam suspeitas de empresas "laranja":
-
-```mermaid
-%%{init: {'theme': 'dark'}}%%
-xychart-beta
-    title "Top 10 — Concentração de Gasto em Fornecedor Único (%)"
-    x-axis ["Marina Silva", "Amom Mandel", "Dorinaldo M.", "Eunicio O.", "Paulo Lemos", "Hercilio C.", "Gabriel Mota", "Bruno Ganem", "Kim K.", "Lindbergh F."]
-    y-axis "% do gasto total no maior CNPJ" 0 --> 105
-    bar [100, 99.97, 72.77, 67.59, 65.17, 64.53, 63.52, 61.97, 57.80, 55.67]
-```
-
-> **Insight**: Marina Silva (REDE) tem 100% do gasto concentrado — porém com valor total baixo, o que pode indicar poucos registros no histórico. Já **Eunício Oliveira (MDB)** aparece tanto na concentração de fornecedor (67,6%) quanto no crescimento patrimonial (R$ 68M), o que eleva significativamente o perfil de atenção.
-
----
-
-### 📅 Notas Fiscais em Fins de Semana
-
-| Métrica | Valor |
-|:---|---:|
-| Média geral de notas em FDS | **10,92%** |
-| Máximo individual | **22,51%** |
-| Deputados com > 15% em FDS | Atenção elevada |
-
-> **Insight**: A média de ~11% é esperada (2/7 dias = 28,5% seria uniforme). Deputados acima de 15% merecem verificação, pois notas em fins de semana podem indicar despesas fictícias.
-
----
-
-### 🏛️ Gasto Médio por Partido
-
-```mermaid
-%%{init: {'theme': 'dark'}}%%
-xychart-beta
-    title "Gasto Médio Histórico por Partido (R$ milhões)"
-    x-axis ["CIDADANIA", "PDT", "PSD", "PT", "PCdoB", "UNIAO", "PRD", "PP", "MDB", "PV", "PSDB", "PL", "SOLIDAR.", "PSB", "REPUB."]
-    y-axis "R$ (milhões)" 0 --> 5.5
-    bar [5.03, 3.91, 3.81, 3.80, 3.66, 3.25, 3.18, 3.00, 2.93, 2.86, 2.83, 2.80, 2.79, 2.73, 2.59]
-```
-
-> **Insight**: O CIDADANIA lidera com R$ 5,03M de gasto médio, mas possui apenas 2 deputados — o que pode distorcer a média. Os partidos com bancadas grandes (PL com 95, PT com 66, PSD com 47) giram em torno de R$ 2,8M–3,8M.
