@@ -306,6 +306,6 @@ def atualizar_dashboard(uf_sel, partido_sel, risco_min):
 
 # Execução do Servidor local
 if __name__ == '__main__':
-    print("🛸 Inicializando o servidor do dashboard local...")
-    print("👉 Acesse o link: http://127.0.0.1:8050")
-    app.run_server(debug=True, port=8050)
+    print("Inicializando o servidor do dashboard local...")
+    print("Acesse o link: http://127.0.0.1:8050")
+    app.run(debug=True, port=8050)
