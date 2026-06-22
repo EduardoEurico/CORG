@@ -25,6 +25,7 @@ df['kpi_concentracao_fornecedor'] = df['kpi_concentracao_fornecedor'] * 100
 
 # 2. Inicializar o App Dash
 app = Dash(__name__, title="Corrup.ORG - Compliance Dashboard")
+app.config.suppress_callback_exceptions = True
 
 # 3. Estilos Dark Theme Premium
 DARK_STYLE = {
@@ -135,7 +136,7 @@ def render_content(tab):
             'Gasto Médio (%)': [42.91, 33.56, 4.31, 19.22]
         })
         fig_pie = px.pie(df_categories, values='Gasto Médio (%)', names='Categoria', 
-                         color_discrete_sequence=px.colors.sequential.Deep)
+                         color_discrete_sequence=px.colors.qualitative.Plotly)
         fig_pie.update_layout(template='plotly_dark', paper_bgcolor='rgba(0,0,0,0)', margin=dict(l=10, r=10, t=20, b=10))
 
         # 2. Distribuição do Risco
