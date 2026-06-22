@@ -234,40 +234,40 @@ pie showData
 
 O cruzamento com dados do TSE (declarações de bens de 2018 a 2024) identificou **26 deputados** cujo crescimento patrimonial ultrapassou R$ 3 milhões entre eleições:
 
-| # | Deputado | Partido/UF | Crescimento Bruto | Período |
-|---|:---|:---:|---:|:---:|
-| 1 | **Eunício Oliveira** | MDB/CE | R$ 68.945.783 | 2018→2022 |
-| 2 | **José Nelto** | UNIÃO/GO | R$ 40.649.515 | 2018→2022 |
-| 3 | **Hercílio Coelho Diniz** | MDB/MG | R$ 27.059.043 | 2018→2022 |
-| 4 | **Misael Varella** | PSD/MG | R$ 22.992.335 | 2018→2022 |
-| 5 | **Felipe Carreras** | PSB/PE | R$ 9.439.911 | 2018→2022 |
-| 6 | **Márcio Honaiser** | SOLIDARIEDADE/MA | R$ 8.248.386 | 2018→2022 |
-| 7 | **Glaustin da Fokus** | PODE/GO | R$ 7.556.935 | 2018→2022 |
-| 8 | **Mário Heringer** | PDT/MG | R$ 7.505.997 | 2018→2022 |
-| 9 | **Luciano Vieira** | PSDB/RJ | R$ 6.911.336 | 2020→2022 |
-| 10 | **Vinicius Gurgel** | PL/AP | R$ 6.713.167 | 2018→2022 |
+| # | Deputado | Partido/UF | Crescimento Bruto | Crescimento (%) | Período |
+|---|:---|:---:|---:|---:|:---:|
+| 1 | **Eunício Oliveira** | MDB/CE | R$ 68.945.783 | 77,26% | 2018→2022 |
+| 2 | **José Nelto** | UNIÃO/GO | R$ 40.649.515 | 518,31% | 2018→2022 |
+| 3 | **Hercílio Coelho Diniz** | MDB/MG | R$ 27.059.043 | 69,66% | 2018→2022 |
+| 4 | **Misael Varella** | PSD/MG | R$ 22.992.335 | 114,53% | 2018→2022 |
+| 5 | **Felipe Carreras** | PSB/PE | R$ 9.439.911 | 157,97% | 2018→2022 |
+| 6 | **Márcio Honaiser** | SOLIDARIEDADE/MA | R$ 8.248.386 | 68,84% | 2018→2022 |
+| 7 | **Glaustin da Fokus** | PODE/GO | R$ 7.556.935 | 340,88% | 2018→2022 |
+| 8 | **Mário Heringer** | PDT/MG | R$ 7.505.997 | 265,26% | 2018→2022 |
+| 9 | **Luciano Vieira** | PSDB/RJ | R$ 6.911.336 | 897,25% | 2020→2022 |
+| 10 | **Vinicius Gurgel** | PL/AP | R$ 6.713.167 | 760,39% | 2018→2022 |
 
 <details>
 <summary>📋 Ver todos os 26 deputados flagrados</summary>
 
-| # | Deputado | Partido/UF | Crescimento Bruto |
-|---|:---|:---:|---:|
-| 11 | Marcelo Queiroz | PSDB/RJ | R$ 6.538.477 |
-| 12 | Bandeira de Mello | PV/RJ | R$ 6.085.879 |
-| 13 | João Carlos Bacelar | PL/BA | R$ 6.048.260 |
-| 14 | Dal Barreto | UNIÃO/BA | R$ 5.506.008 |
-| 15 | Átila Lira | PP/PI | R$ 4.999.564 |
-| 16 | Giovani Cherini | PL/RS | R$ 4.779.885 |
-| 17 | Rodolfo Nogueira | PL/MS | R$ 4.346.738 |
-| 18 | Arthur Lira | PP/AL | R$ 4.246.946 |
-| 19 | Magda Mofatto | PL/GO | R$ 3.932.329 |
-| 20 | Eduardo Velloso | SOLIDARIEDADE/AC | R$ 3.822.171 |
-| 21 | Vander Loubet | PT/MS | R$ 3.801.009 |
-| 22 | Josivaldo JP | UNIÃO/MA | R$ 3.795.835 |
-| 23 | Paulo Abi-Ackel | PSDB/MG | R$ 3.553.367 |
-| 24 | Filipe Martins | PL/TO | R$ 3.280.558 |
-| 25 | Ricardo Barros | PP/PR | R$ 3.224.282 |
-| 26 | Elcione Barbalho | MDB/PA | R$ 3.010.258 |
+| # | Deputado | Partido/UF | Crescimento Bruto | Crescimento (%) | Período |
+|---|:---|:---:|---:|---:|:---:|
+| 11 | Marcelo Queiroz | PSDB/RJ | R$ 6.538.477 | 598,75% | 2018→2024 |
+| 12 | Bandeira de Mello | PV/RJ | R$ 6.085.879 | 1.228,96% | 2018→2022 |
+| 13 | João Carlos Bacelar | PL/BA | R$ 6.048.260 | 156,30% | 2018→2022 |
+| 14 | Dal Barreto | UNIÃO/BA | R$ 5.506.008 | 296,82% | 2018→2022 |
+| 15 | Átila Lira | PP/PI | R$ 4.999.564 | 256,86% | 2018→2022 |
+| 16 | Giovani Cherini | PL/RS | R$ 4.779.885 | 109,97% | 2018→2022 |
+| 17 | Rodolfo Nogueira | PL/MS | R$ 4.346.738 | 127,33% | 2018→2022 |
+| 18 | Arthur Lira | PP/AL | R$ 4.246.946 | 247,07% | 2018→2022 |
+| 19 | Magda Mofatto | PL/GO | R$ 3.932.329 | 13,95% | 2018→2022 |
+| 20 | Eduardo Velloso | SOLIDARIEDADE/AC | R$ 3.822.171 | 77,62% | 2018→2022 |
+| 21 | Vander Loubet | PT/MS | R$ 3.801.009 | 1.022,54% | 2018→2022 |
+| 22 | Josivaldo JP | UNIÃO/MA | R$ 3.795.835 | 452,29% | 2018→2024 |
+| 23 | Paulo Abi-Ackel | PSDB/MG | R$ 3.553.367 | 300,38% | 2018→2022 |
+| 24 | Filipe Martins | PL/TO | R$ 3.280.558 | 535,51% | 2018→2022 |
+| 25 | Ricardo Barros | PP/PR | R$ 3.224.282 | 58,31% | 2018→2022 |
+| 26 | Elcione Barbalho | MDB/PA | R$ 3.010.258 | 83,30% | 2018→2022 |
 
 </details>
 
