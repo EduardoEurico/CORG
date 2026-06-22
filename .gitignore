@@ -20,5 +20,8 @@ data/transparencia.db
 *.log
 .DS_Store
  
-# Arquivos ZIP temporários
+# Arquivos ZIP temporrios
 *.zip
+
+#velhos_dados
+/velhos/
