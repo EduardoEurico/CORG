@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
+# pyrefly: ignore [missing-import]
 import plotly.express as px
 import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output, dash_table
@@ -154,17 +155,18 @@ app.layout = html.Div(style=DARK_STYLE, children=[
         dash_table.DataTable(
             id='deputados-table',
             columns=[
-                {"name": "Nome", "id": "nome", "sortable": True},
-                {"name": "Partido", "id": "siglaPartido", "sortable": True},
-                {"name": "UF", "id": "siglaUf", "sortable": True},
-                {"name": "Score de Risco", "id": "kpi_score_risco", "sortable": True},
-                {"name": "Gasto Cota (R$)", "id": "total_gasto_historico", "sortable": True},
-                {"name": "Concentração (%)", "id": "kpi_concentracao_fornecedor", "sortable": True},
-                {"name": "Consultoria (%)", "id": "kpi_pct_consultoria", "sortable": True},
-                {"name": "Marketing (%)", "id": "kpi_pct_marketing", "sortable": True},
-                {"name": "Crescimento Bens (R$)", "id": "crescimento_bruto_R$", "sortable": True},
-                {"name": "Var. Patrimonial (%)", "id": "crescimento_percentual_%", "sortable": True}
+                {"name": "Nome", "id": "nome"},
+                {"name": "Partido", "id": "siglaPartido"},
+                {"name": "UF", "id": "siglaUf"},
+                {"name": "Score de Risco", "id": "kpi_score_risco"},
+                {"name": "Gasto Cota (R$)", "id": "total_gasto_historico"},
+                {"name": "Concentração (%)", "id": "kpi_concentracao_fornecedor"},
+                {"name": "Consultoria (%)", "id": "kpi_pct_consultoria"},
+                {"name": "Marketing (%)", "id": "kpi_pct_marketing"},
+                {"name": "Crescimento Bens (R$)", "id": "crescimento_bruto_R$"},
+                {"name": "Var. Patrimonial (%)", "id": "crescimento_percentual_%"}
             ],
+            sort_action="native",
             page_size=10,
             style_table={'overflowX': 'auto'},
             style_header={
